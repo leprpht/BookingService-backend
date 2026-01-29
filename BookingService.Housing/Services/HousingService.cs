@@ -1,28 +1,41 @@
 using BookingService.Housing.Data;
-using BookingService.Housing.Models;
+using BookingService.Housing.DTOs;
+using BookingService.Housing.Utils;
 
 namespace BookingService.Housing.Services;
 
 public class HousingService(IHousingRepository repository) : IHousingService
 {
-    public async Task<IEnumerable<HousingInfo>> GetAllHousings()
+    public async Task<List<HousingInfoDto>> GetAllHousings(int page, int pageSize)
     {
-        return await repository.GetAll();
+        var housing = await repository.GetAll(page, pageSize);
+        return housing
+            .Select(h => h.ToHousingInfoDto())
+            .ToList();
     }
 
-    public async Task<HousingInfo?> GetHousingById(int id)
+    public async Task<HousingInfoDto?> GetHousingById(int id)
     {
-        return await repository.GetById(id);
+        var housing = await repository.GetById(id);
+        return housing?.ToHousingInfoDto();
     }
 
-    public async Task CreateHousing(HousingInfo housing)
+    public async Task<List<HousingInfoDto>> GetHousingsByFilters(FilterOptions filter, int page, int pageSize)
     {
-        await repository.Create(housing);
+        var housings = await repository.GetByFilters(filter, page, pageSize);
+        return housings
+            .Select(h => h.ToHousingInfoDto())
+            .ToList();
     }
 
-    public async Task UpdateHousing(HousingInfo housing)
+    public async Task CreateHousing(HousingInfoDto housing)
     {
-        await repository.Update(housing);
+        await repository.Create(housing.ToModel());
+    }
+
+    public async Task UpdateHousing(HousingInfoDto housing)
+    {
+        await repository.Update(housing.ToModel());
     }
 
     public async Task DeleteHousing(int id)

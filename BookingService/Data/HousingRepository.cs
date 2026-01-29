@@ -8,28 +8,36 @@ namespace BookingService.Data;
 
 public class HousingRepository(BookingDbContext context) : IHousingRepository
 {
-    public async Task<IEnumerable<HousingInfo>> GetAll(int page, int pageSize)
-    {
-        return await context.Housings
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync();
-    }
-
     public async Task<HousingInfo?> GetById(int id)
     {
         return await context.Housings.SingleOrDefaultAsync(h => h.Id == id);
     }
 
-    public async Task<IEnumerable<HousingInfo>> GetByFilters(FilterOptions filter, int page, int pageSize)
+    public async Task<IEnumerable<HousingInfoDto>> GetByFilters(
+        FilterOptions filter,
+        int page,
+        int pageSize)
     {
         return await context.Housings
             .Where(h =>
-                (string.IsNullOrEmpty(filter.Name) || h.Name.Contains(filter.Name)) &&
-                (string.IsNullOrEmpty(filter.City) || h.City.Contains(filter.City)) &&
-                (string.IsNullOrEmpty(filter.Country) || h.Country.Contains(filter.Country)) &&
-                (!filter.AvailableOnly.HasValue || h.Capacity > 0)
+                (filter.City == null || h.City == filter.City) &&
+                (filter.Country == null || h.Country == filter.Country) &&
+                (filter.MinPrice == null || h.Price >= filter.MinPrice) &&
+                (filter.MaxPrice == null || h.Price <= filter.MaxPrice)
             )
+            .Select(h => new HousingInfoDto
+            {
+                Id = h.Id,
+                Name = h.Name,
+                Address = h.Address,
+                City = h.City,
+                State = h.State,
+                Country = h.Country,
+
+                Available = h.Capacity - h.Stays
+                    .Count(stay => stay.StartDate < filter.To && stay.EndDate > filter.From)
+            })
+            .Where(h => h.Available > 0)
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();
@@ -41,10 +49,26 @@ public class HousingRepository(BookingDbContext context) : IHousingRepository
         await context.SaveChangesAsync();
     }
 
-    public async Task Update(HousingInfo housing)
+    public async Task Update(HousingUpdateDto housing)
     {
-        context.Housings.Update(housing);
-        await context.SaveChangesAsync();
+        var housingEntity = await GetById(housing.Id);
+        if (housingEntity is not null)
+        {
+            var updatedHousing = new HousingInfo
+            {
+                Id = housingEntity.Id,
+                Name = housing.Name,
+                Address = housing.Address,
+                City = housing.City,
+                State = housing.State,
+                Country = housing.Country,
+                Capacity = housing.Capacity,
+                Price = housing.Price,
+                Stays = housingEntity.Stays
+            };
+            context.Housings.Update(updatedHousing);
+            await context.SaveChangesAsync();
+        }
     }
 
     public async Task Delete(int id)

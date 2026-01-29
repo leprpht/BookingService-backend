@@ -22,6 +22,6 @@ public sealed class HousingInfoDto
     [JsonPropertyName("country")]
     public string Country { get; init; } = string.Empty;
     
-    [JsonPropertyName("capacity")]
-    public int Capacity { get; init; }
+    [JsonPropertyName("available")]
+    public int Available { get; init; }
 }

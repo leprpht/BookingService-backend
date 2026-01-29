@@ -5,29 +5,17 @@ namespace BookingService.Housing.Utils;
 
 public static class Extensions
 {
-    public static HousingInfoDto ToHousingInfoDto(this HousingInfo housing)
+    public static HousingInfo ToModel(this HousingCreationDto dto)
     {
         return new()
         {
-            Id = housing.Id,
-            Name = housing.Name,
-            Address = housing.Address,
-            City = housing.City,
-            State = housing.State,
-            Country = housing.Country,
-            Capacity = housing.Capacity
+            Name = dto.Name,
+            Address = dto.Address,
+            City = dto.City,
+            State = dto.State,
+            Country = dto.Country,
+            Capacity = dto.Capacity,
+            Price = dto.Price
         };
-    }
-    
-    public static HousingInfo ToModel(this HousingInfoDto housingDto)
-    {
-        return new(
-            housingDto.Id,
-            housingDto.Name,
-            housingDto.Address,
-            housingDto.City,
-            housingDto.State,
-            housingDto.Country,
-            housingDto.Capacity);
     }
 }

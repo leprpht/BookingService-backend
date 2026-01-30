@@ -1,8 +1,9 @@
 namespace BookingService.Housing.Models;
 
-public sealed record Stay(
-    int Id,
-    int HousingId,
-    HousingInfo Housing,
-    DateOnly StartDate,
-    DateOnly EndDate);
+public sealed class Stay
+{
+    public int Id { get; init; }
+    public DateOnly From { get; init; }
+    public DateOnly To { get; init; }
+    public int HousingInfoId { get; init; }
+}

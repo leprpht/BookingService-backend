@@ -6,9 +6,10 @@ namespace BookingService.Housing.Services;
 
 public interface IHousingService
 {
-    Task<HousingInfo?> GetHousingById(int id);
+    Task<HousingInfoDto?> GetHousingById(int id, DateOnly from, DateOnly to);
     Task<List<HousingInfoDto>> GetHousingsByFilters(FilterOptions filter, int page, int pageSize);
     Task CreateHousing(HousingCreationDto housing);
     Task UpdateHousing(HousingUpdateDto housing);
     Task DeleteHousing(int id);
+    Task<HousingInfoDto?> GetHousingByStayId(int id);
 }

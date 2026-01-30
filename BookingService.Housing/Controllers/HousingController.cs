@@ -1,5 +1,6 @@
 using BookingService.Housing.DTOs;
 using BookingService.Housing.Services;
+using BookingService.Housing.Utils;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookingService.Housing.Controllers;
@@ -9,9 +10,12 @@ namespace BookingService.Housing.Controllers;
 public class HousingController(IHousingService service) : ControllerBase
 {
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetHousing(int id)
+    public async Task<IActionResult> GetHousing(
+        int id,
+        [FromQuery] DateOnly from,
+        [FromQuery] DateOnly to)
     {
-        var housing = await service.GetHousingById(id);
+        var housing = await service.GetHousingById(id, from, to);
         if (housing is null)
             return NotFound();
         return Ok(housing);
@@ -29,7 +33,7 @@ public class HousingController(IHousingService service) : ControllerBase
         [FromQuery] int page,
         [FromQuery] int pageSize)
     {
-        var filter = new Utils.FilterOptions
+        var filter = new FilterOptions
         {
             From = from,
             To = to,
@@ -66,5 +70,14 @@ public class HousingController(IHousingService service) : ControllerBase
     {
         await service.DeleteHousing(id);
         return NoContent();
+    }
+
+    [HttpGet("stay/{id}")]
+    public async Task<IActionResult> GetHousingByStayId(int id)
+    {
+        var housing = await service.GetHousingByStayId(id);
+        if (housing is null)
+            return NotFound();
+        return Ok(housing);
     }
 }

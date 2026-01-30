@@ -23,5 +23,5 @@ public sealed class HousingInfoDto
     public string Country { get; init; } = string.Empty;
     
     [JsonPropertyName("available")]
-    public int Available { get; init; }
+    public int? Available { get; init; }
 }

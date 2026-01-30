@@ -7,9 +7,9 @@ namespace BookingService.Housing.Services;
 
 public class HousingService(IHousingRepository repository) : IHousingService
 {
-    public async Task<HousingInfo?> GetHousingById(int id)
+    public async Task<HousingInfoDto?> GetHousingById(int id, DateOnly from, DateOnly to)
     {
-        var housing = await repository.GetById(id);
+        var housing = await repository.GetById(id, from, to);
         return housing;
     }
 
@@ -33,5 +33,10 @@ public class HousingService(IHousingRepository repository) : IHousingService
     public async Task DeleteHousing(int id)
     {
         await repository.Delete(id);
+    }
+    
+    public async Task<HousingInfoDto?> GetHousingByStayId(int id)
+    { 
+        return await repository.GetHousingByStayId(id);
     }
 }

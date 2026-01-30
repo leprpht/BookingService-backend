@@ -1,6 +1,6 @@
 namespace BookingService.Housing.Models;
 
-public sealed class HousingInfo()
+public sealed class HousingInfo
 {
     public int Id { get; init; }
     public string Name { get; init; } = string.Empty;

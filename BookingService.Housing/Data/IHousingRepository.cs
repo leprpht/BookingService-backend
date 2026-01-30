@@ -6,9 +6,10 @@ namespace BookingService.Housing.Data;
 
 public interface IHousingRepository
 {
-    Task<HousingInfo?> GetById(int id);
+    Task<HousingInfoDto?> GetById(int id, DateOnly from, DateOnly to);
     Task<IEnumerable<HousingInfoDto>> GetByFilters(FilterOptions filter, int page, int pageSize);
     Task Create(HousingInfo housing);
     Task Update(HousingUpdateDto housing);
     Task Delete(int id);
+    Task<HousingInfoDto?> GetHousingByStayId(int id);
 }

@@ -8,9 +8,23 @@ namespace BookingService.Data;
 
 public class HousingRepository(BookingDbContext context) : IHousingRepository
 {
-    public async Task<HousingInfo?> GetById(int id)
+    public async Task<HousingInfoDto?> GetById(int id, DateOnly from, DateOnly to)
     {
-        return await context.Housings.SingleOrDefaultAsync(h => h.Id == id);
+        var housing = await context.Housings
+            .Include(h => h.Stays)
+            .SingleOrDefaultAsync(h => h.Id == id);
+
+        return new HousingInfoDto
+        {
+            Id = housing.Id,
+            Name = housing.Name,
+            Address = housing.Address,
+            City = housing.City,
+            State = housing.State,
+            Country = housing.Country,
+            Available = housing.Capacity - housing.Stays
+                .Count(stay => stay.From < to && stay.To > from)
+        };
     }
 
     public async Task<IEnumerable<HousingInfoDto>> GetByFilters(
@@ -20,6 +34,7 @@ public class HousingRepository(BookingDbContext context) : IHousingRepository
     {
         return await context.Housings
             .Where(h =>
+                (filter.Name == null || h.Name.Contains(filter.Name)) &&
                 (filter.City == null || h.City == filter.City) &&
                 (filter.Country == null || h.Country == filter.Country) &&
                 (filter.MinPrice == null || h.Price >= filter.MinPrice) &&
@@ -35,7 +50,7 @@ public class HousingRepository(BookingDbContext context) : IHousingRepository
                 Country = h.Country,
 
                 Available = h.Capacity - h.Stays
-                    .Count(stay => stay.StartDate < filter.To && stay.EndDate > filter.From)
+                    .Count(stay => stay.From < filter.To && stay.To > filter.From)
             })
             .Where(h => h.Available > 0)
             .Skip((page - 1) * pageSize)
@@ -79,5 +94,28 @@ public class HousingRepository(BookingDbContext context) : IHousingRepository
             context.Housings.Remove(housing);
             await context.SaveChangesAsync();
         }
+    }
+    
+    public async Task<HousingInfoDto?> GetHousingByStayId(int id)
+    {
+        return await context.Housings
+            .Where(h => h.Stays.Any(s => s.Id == id))
+            .Select(h => new HousingInfoDto
+            {
+                Id = h.Id,
+                Name = h.Name,
+                Address = h.Address,
+                City = h.City,
+                State = h.State,
+                Country = h.Country
+            })
+            .FirstOrDefaultAsync();
+    }
+    
+    private async Task<HousingInfo?> GetById(int id)
+    {
+        return await context.Housings
+            .Include(h => h.Stays)
+            .SingleOrDefaultAsync(h => h.Id == id);
     }
 }

@@ -5,7 +5,7 @@ namespace BookingService.Housing.Utils;
 
 public static class Extensions
 {
-    public static HousingInfo ToModel(this HousingCreationDto dto)
+    public static HousingInfo ToHousingInfo(this HousingCreationDto dto)
     {
         return new()
         {
@@ -16,6 +16,16 @@ public static class Extensions
             Country = dto.Country,
             Capacity = dto.Capacity,
             Price = dto.Price
+        };
+    }
+
+    public static StayDto ToStayDto(this Stay stay)
+    {
+        return new()
+        {
+            Id = stay.Id,
+            From = stay.From,
+            To = stay.To
         };
     }
 }

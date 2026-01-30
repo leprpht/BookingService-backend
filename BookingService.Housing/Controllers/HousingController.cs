@@ -1,6 +1,7 @@
 using BookingService.Housing.DTOs;
 using BookingService.Housing.Services;
 using BookingService.Housing.Utils;
+using BookingService.Shared;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookingService.Housing.Controllers;
@@ -12,10 +13,9 @@ public class HousingController(IHousingService service) : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetHousing(
         int id,
-        [FromQuery] DateOnly from,
-        [FromQuery] DateOnly to)
+        [FromQuery] PeriodRequest period)
     {
-        var housing = await service.GetHousingById(id, from, to);
+        var housing = await service.GetHousingById(id, period);
         if (housing is null)
             return NotFound();
         return Ok(housing);
@@ -23,27 +23,10 @@ public class HousingController(IHousingService service) : ControllerBase
     
     [HttpGet]
     public async Task<IActionResult> GetHousingsByFilters(
-        [FromQuery] DateOnly from,
-        [FromQuery] DateOnly to,
-        [FromQuery] string? name,
-        [FromQuery] string? city,
-        [FromQuery] string? country,
-        [FromQuery] decimal? minPrice,
-        [FromQuery] decimal? maxPrice,
-        [FromQuery] int page,
-        [FromQuery] int pageSize)
+        [FromQuery] FilterOptions filter,
+        [FromQuery] PageRequest page)
     {
-        var filter = new FilterOptions
-        {
-            From = from,
-            To = to,
-            Name = name,
-            City = city,
-            Country = country,
-            MinPrice = minPrice,
-            MaxPrice = maxPrice
-        };
-        var housings = await service.GetHousingsByFilters(filter, page, pageSize);
+        var housings = await service.GetHousingsByFilters(filter, page);
         return Ok(housings);
     }
 

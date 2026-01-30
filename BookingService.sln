@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{533F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingService.Housing", "BookingService.Housing\BookingService.Housing.csproj", "{FEF4262D-7690-4645-B40C-5AC17EC0FB92}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingService.Shared", "BookingService.Shared\BookingService.Shared.csproj", "{CFADA386-F9A9-47CF-864E-EAE03AB95975}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,8 +27,13 @@ Global
 		{FEF4262D-7690-4645-B40C-5AC17EC0FB92}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FEF4262D-7690-4645-B40C-5AC17EC0FB92}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FEF4262D-7690-4645-B40C-5AC17EC0FB92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFADA386-F9A9-47CF-864E-EAE03AB95975}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFADA386-F9A9-47CF-864E-EAE03AB95975}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFADA386-F9A9-47CF-864E-EAE03AB95975}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFADA386-F9A9-47CF-864E-EAE03AB95975}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{FEF4262D-7690-4645-B40C-5AC17EC0FB92} = {533F245A-5931-48EB-B860-EA0780FE70D6}
+		{CFADA386-F9A9-47CF-864E-EAE03AB95975} = {533F245A-5931-48EB-B860-EA0780FE70D6}
 	EndGlobalSection
 EndGlobal

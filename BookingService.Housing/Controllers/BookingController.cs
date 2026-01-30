@@ -1,4 +1,5 @@
 using BookingService.Housing.Services;
+using BookingService.Shared;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookingService.Housing.Controllers;
@@ -17,9 +18,11 @@ public class BookingController(IBookingService service) : ControllerBase
     }
 
     [HttpGet("location/{id}")]
-    public async Task<IActionResult> GetStaysByLocationId(int id)
+    public async Task<IActionResult> GetStaysByLocationId(
+        int id,
+        [FromQuery] PeriodRequest period)
     {
-        var stays = await service.GetStaysByLocationId(id);
+        var stays = await service.GetStaysByLocationId(id, period);
         return Ok(stays);
     }
 }

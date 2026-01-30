@@ -6,4 +6,5 @@ public sealed class Stay
     public DateOnly From { get; init; }
     public DateOnly To { get; init; }
     public int HousingInfoId { get; init; }
+    public int UserId { get; init; }
 }

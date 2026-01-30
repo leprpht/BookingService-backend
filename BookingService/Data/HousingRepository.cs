@@ -1,18 +1,21 @@
 using BookingService.Housing.Data;
 using BookingService.Housing.DTOs;
 using BookingService.Housing.Models;
-using BookingService.Housing.Utils;
+using BookingService.Shared;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookingService.Data;
 
 public class HousingRepository(BookingDbContext context) : IHousingRepository
 {
-    public async Task<HousingInfoDto?> GetById(int id, DateOnly from, DateOnly to)
+    public async Task<HousingInfoDto?> GetById(int id, PeriodRequest period)
     {
         var housing = await context.Housings
             .Include(h => h.Stays)
             .SingleOrDefaultAsync(h => h.Id == id);
+        
+        if (housing is null)
+            return null;
 
         return new HousingInfoDto
         {
@@ -23,14 +26,13 @@ public class HousingRepository(BookingDbContext context) : IHousingRepository
             State = housing.State,
             Country = housing.Country,
             Available = housing.Capacity - housing.Stays
-                .Count(stay => stay.From < to && stay.To > from)
+                .Count(stay => stay.From < period.To && stay.To > period.From)
         };
     }
 
     public async Task<IEnumerable<HousingInfoDto>> GetByFilters(
         FilterOptions filter,
-        int page,
-        int pageSize)
+        PageRequest page)
     {
         return await context.Housings
             .Where(h =>
@@ -53,8 +55,8 @@ public class HousingRepository(BookingDbContext context) : IHousingRepository
                     .Count(stay => stay.From < filter.To && stay.To > filter.From)
             })
             .Where(h => h.Available > 0)
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
+            .Skip((page.PageNumber - 1) * page.PageSize)
+            .Take(page.PageSize)
             .ToListAsync();
     }
 

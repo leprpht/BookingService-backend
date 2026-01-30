@@ -1,9 +1,11 @@
-using BookingService.Housing.Models;
+using BookingService.Housing.DTOs;
+using BookingService.Shared;
 
 namespace BookingService.Housing.Services;
 
 public interface IBookingService
 {
-    Task<Stay?> GetStayById(int id);
-    Task<List<Stay>> GetStaysByLocationId(int id);
+    Task<StayDto?> GetStayById(int id);
+    Task<List<StayDto>> GetStaysByLocationId(int id, PeriodRequest period);
+    Task<List<StayDto>> GetStaysByUserId(int id, PeriodRequest period);
 }

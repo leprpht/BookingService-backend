@@ -1,4 +1,4 @@
-namespace BookingService.Housing.Utils;
+namespace BookingService.Shared;
 
 public sealed class FilterOptions
 {

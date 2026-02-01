@@ -1,5 +1,8 @@
 namespace BookingService.Shared;
 
-public sealed record PeriodRequest(
-    DateOnly From,
-    DateOnly To);
+public sealed class PeriodRequest
+{
+    public required DateOnly From { get; init; }
+    public required DateOnly To { get; init; }
+    public int DaysCount => To.DayNumber - From.DayNumber;
+}

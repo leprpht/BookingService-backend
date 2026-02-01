@@ -1,6 +1,5 @@
 using BookingService.Housing.DTOs;
 using BookingService.Housing.Services;
-using BookingService.Housing.Utils;
 using BookingService.Shared;
 using Microsoft.AspNetCore.Mvc;
 

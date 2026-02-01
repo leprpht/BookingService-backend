@@ -8,7 +8,8 @@
 
     <ItemGroup>
       <ProjectReference Include="..\BookingService.Housing.DTOs\BookingService.Housing.DTOs.csproj" />
-      <ProjectReference Include="..\BookingService.Housing.Models\BookingService.Housing.Models.csproj" />
+      <ProjectReference Include="..\BookingService.Shared\BookingService.Shared.csproj" />
+      <ProjectReference Include="..\BookingServices.Housing.Data\BookingServices.Housing.Data.csproj" />
     </ItemGroup>
 
 </Project>

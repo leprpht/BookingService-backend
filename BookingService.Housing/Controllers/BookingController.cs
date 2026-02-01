@@ -25,4 +25,13 @@ public class BookingController(IBookingService service) : ControllerBase
         var stays = await service.GetStaysByLocationId(id, period);
         return Ok(stays);
     }
+
+    [HttpGet("user/{id}")]
+    public async Task<IActionResult> GetStaysByUserId(
+        int id,
+        [FromQuery] PeriodRequest period)
+    {
+        var stays = await service.GetStaysByUserId(id, period);
+        return Ok(stays);
+    }
 }

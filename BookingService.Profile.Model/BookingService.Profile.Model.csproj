@@ -7,7 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\BookingService.Housing.DTOs\BookingService.Housing.DTOs.csproj" />
       <ProjectReference Include="..\BookingService.Housing.Models\BookingService.Housing.Models.csproj" />
     </ItemGroup>
 

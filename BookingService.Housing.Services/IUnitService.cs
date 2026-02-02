@@ -1,6 +1,7 @@
 using BookingService.Housing.DTOs;
 using BookingService.Housing.DTOs.Unit;
 using BookingService.Shared;
+using BookingService.Shared.Requests;
 
 namespace BookingService.Housing.Services;
 

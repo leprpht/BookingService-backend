@@ -1,7 +1,7 @@
 using BookingService.Housing.DTOs.Stay;
 using BookingService.Housing.Models;
 
-namespace BookingService.Shared;
+namespace BookingService.Shared.Extensions;
 
 public static class StayExtensions
 {

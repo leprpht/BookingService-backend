@@ -1,7 +1,7 @@
-using BookingService.Housing.DTOs;
 using BookingService.Housing.DTOs.Unit;
-using BookingService.Housing.Models;
 using BookingService.Shared;
+using BookingService.Shared.Extensions;
+using BookingService.Shared.Requests;
 using BookingServices.Housing.Data;
 
 namespace BookingService.Housing.Services;

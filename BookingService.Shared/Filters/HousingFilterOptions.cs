@@ -1,4 +1,6 @@
-namespace BookingService.Shared;
+using BookingService.Shared.Requests;
+
+namespace BookingService.Shared.Filters;
 
 public sealed class HousingFilterOptions
 {

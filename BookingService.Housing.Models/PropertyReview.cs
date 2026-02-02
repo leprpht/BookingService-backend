@@ -6,6 +6,7 @@ public sealed class PropertyReview
     public int Rating { get; init; }
     public string? Comment { get; init; }
     public DateTime CreatedAt { get; init; }
+    public string? Response { get; init; }
     
     public int GuestId { get; init; }
     

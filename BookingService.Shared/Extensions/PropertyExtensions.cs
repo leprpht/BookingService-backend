@@ -1,7 +1,8 @@
 using BookingService.Housing.DTOs.Property;
 using BookingService.Housing.Models;
+using BookingService.Shared.Requests;
 
-namespace BookingService.Shared;
+namespace BookingService.Shared.Extensions;
 
 public static class PropertyExtensions
 {
@@ -73,6 +74,18 @@ public static class PropertyExtensions
             Country = propertyUpdateDto.Country,
             Description = propertyUpdateDto.Description,
             OwnerId = propertyUpdateDto.OwnerId
+        };
+    }
+
+    public static PropertyReview ToPropertyReview(this PropertyReviewCreationDto review)
+    {
+        return new PropertyReview
+        {
+            PropertyId = review.PropertyId,
+            GuestId = review.GuestId,
+            Rating = review.Rating,
+            Comment = review.Comment,
+            CreatedAt = DateTime.UtcNow
         };
     }
 }

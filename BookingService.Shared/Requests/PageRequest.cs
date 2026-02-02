@@ -1,4 +1,4 @@
-namespace BookingService.Shared;
+namespace BookingService.Shared.Requests;
 
 public sealed class PageRequest
 {

@@ -1,6 +1,9 @@
 using BookingService.Housing.DTOs;
 using BookingService.Housing.DTOs.Property;
 using BookingService.Shared;
+using BookingService.Shared.Extensions;
+using BookingService.Shared.Filters;
+using BookingService.Shared.Requests;
 using BookingServices.Housing.Data;
 
 namespace BookingService.Housing.Services;

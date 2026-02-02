@@ -1,5 +1,6 @@
 using BookingService.Housing.Models;
 using BookingService.Shared;
+using BookingService.Shared.Requests;
 
 namespace BookingServices.Housing.Data;
 

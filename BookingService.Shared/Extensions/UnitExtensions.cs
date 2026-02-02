@@ -1,7 +1,8 @@
 using BookingService.Housing.DTOs.Unit;
 using BookingService.Housing.Models;
+using BookingService.Shared.Requests;
 
-namespace BookingService.Shared;
+namespace BookingService.Shared.Extensions;
 
 public static class UnitExtensions
 {

@@ -1,4 +1,4 @@
-namespace BookingService.Housing.DTOs;
+namespace BookingService.Housing.DTOs.Unit;
 
 public sealed class UnitCustomizationDto
 {

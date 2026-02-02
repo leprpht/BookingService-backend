@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace BookingService.Housing.DTOs;
+namespace BookingService.Housing.DTOs.Property;
 
 public sealed class PropertyPageDto
 {
@@ -27,4 +27,10 @@ public sealed class PropertyPageDto
     
     [JsonPropertyName("picture")]
     public required string? PictureUrl { get; init; }
+    
+    [JsonPropertyName("rating")]
+    public required double Rating { get; init; }
+    
+    [JsonPropertyName("reviewsCount")]
+    public required int ReviewCount { get; init; }
 }

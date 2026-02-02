@@ -1,4 +1,4 @@
-using BookingService.Housing.DTOs;
+using BookingService.Housing.DTOs.Unit;
 using BookingService.Housing.Models;
 
 namespace BookingService.Shared;
@@ -13,7 +13,11 @@ public static class UnitExtensions
             Name = unit.Name,
             Capacity = unit.Capacity,
             Price = unit.Price * period.DaysCount,
-            Size = unit.Size
+            Size = unit.Size,
+            IsAvailable = unit.Stays
+                .Any(s => s.Status != StayStatus.Cancelled
+                          && s.From < period.To
+                          && s.To > period.From)
         };
     }
     
@@ -40,6 +44,31 @@ public static class UnitExtensions
                 Text = u.Select(c => c.Text).ToList()
             })
             .ToList();
+    }
+
+    public static Unit ToUnit(this UnitCreationDto unitCreationDto)
+    {
+        return new Unit
+        {
+            Name = unitCreationDto.Name,
+            Capacity = unitCreationDto.Capacity,
+            Price = unitCreationDto.Price,
+            Size = unitCreationDto.Size,
+            PropertyId = unitCreationDto.PropertyId
+        };
+    }
+
+    public static Unit ToUnit(this UnitUpdateDto unitUpdateDto)
+    {
+        return new Unit
+        {
+            Id = unitUpdateDto.Id,
+            Name = unitUpdateDto.Name,
+            Capacity = unitUpdateDto.Capacity,
+            Price = unitUpdateDto.Price,
+            Size = unitUpdateDto.Size,
+            PropertyId = unitUpdateDto.PropertyId
+        };
     }
 
     private static string UnitCustomizationToString(this CustomizationType customization)

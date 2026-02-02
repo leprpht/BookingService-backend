@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
+using BookingService.Housing.DTOs.Unit;
 
-namespace BookingService.Housing.DTOs;
+namespace BookingService.Housing.DTOs.Property;
 
 public sealed class PropertyListingDto
 {
@@ -30,4 +31,10 @@ public sealed class PropertyListingDto
     
     [JsonPropertyName("units")]
     public List<UnitListDto> Units { get; init; } = new();
+    
+    [JsonPropertyName("rating")]
+    public required double Rating { get; init; }
+    
+    [JsonPropertyName("reviewsCount")]
+    public required int ReviewCount { get; init; }
 }

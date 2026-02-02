@@ -8,8 +8,10 @@ public class BookingServiceDbContext(DbContextOptions<BookingServiceDbContext> o
 {
     public DbSet<Property> Properties { get; set; } = null!;
     public DbSet<PropertyPicture> PropertyPictures { get; set; } = null!;
+    public DbSet<PropertyReview> PropertyReviews { get; set; } = null!;
     public DbSet<Unit> Units { get; set; } = null!;
     public DbSet<UnitCustomization> UnitCustomizations { get; set; } = null!;
+    public DbSet<UnitPicture> UnitPictures { get; set; } = null!;
     public DbSet<Stay> Stays { get; set; } = null!;
     public DbSet<Guest> Guests { get; set; } = null!;
     public DbSet<Owner> Owners { get; set; } = null!;
@@ -24,6 +26,12 @@ public class BookingServiceDbContext(DbContextOptions<BookingServiceDbContext> o
         
         modelBuilder.Entity<Property>()
             .HasMany(e => e.Pictures)
+            .WithOne(e => e.Property)
+            .HasForeignKey(e => e.PropertyId)
+            .IsRequired();
+        
+        modelBuilder.Entity<Property>()
+            .HasMany(e => e.Reviews)
             .WithOne(e => e.Property)
             .HasForeignKey(e => e.PropertyId)
             .IsRequired();
@@ -49,7 +57,13 @@ public class BookingServiceDbContext(DbContextOptions<BookingServiceDbContext> o
         modelBuilder.Entity<Guest>()
             .HasMany(e => e.Stays)
             .WithOne()
-            .HasForeignKey(e => e.UserId)
+            .HasForeignKey(e => e.GuestId)
+            .IsRequired();
+        
+        modelBuilder.Entity<Guest>()
+            .HasMany(e => e.Reviews)
+            .WithOne()
+            .HasForeignKey(e => e.GuestId)
             .IsRequired();
         
         modelBuilder.Entity<Owner>()

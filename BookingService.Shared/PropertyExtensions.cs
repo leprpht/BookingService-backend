@@ -1,4 +1,4 @@
-using BookingService.Housing.DTOs;
+using BookingService.Housing.DTOs.Property;
 using BookingService.Housing.Models;
 
 namespace BookingService.Shared;
@@ -21,7 +21,9 @@ public static class PropertyExtensions
                 .ToList(),
             Units = property.Units
                 .Select(u => u.ToUnitListDto(period))
-                .ToList()
+                .ToList(),
+            Rating = property.Reviews.Any() ? property.Reviews.Average(r => r.Rating) : 0,
+            ReviewCount = property.ReviewCount
         };
     }
 
@@ -40,7 +42,37 @@ public static class PropertyExtensions
             PictureUrl = property.Pictures
                 .Where(u => u.IsCover)
                 .Select(p => p.Url)
-                .FirstOrDefault()
+                .FirstOrDefault(),
+            Rating = property.AverageRating,
+            ReviewCount = property.ReviewCount
+        };
+    }
+    
+    public static Property ToProperty(this PropertyCreationDto propertyCreationDto)
+    {
+        return new Property
+        {
+            Name = propertyCreationDto.Name,
+            Address = propertyCreationDto.Address,
+            City = propertyCreationDto.City,
+            State = propertyCreationDto.State,
+            Country = propertyCreationDto.Country,
+            Description = propertyCreationDto.Description,
+            OwnerId = propertyCreationDto.OwnerId
+        };
+    }
+
+    public static Property ToProperty(this PropertyUpdateDto propertyUpdateDto)
+    {
+        return new Property
+        {
+            Id = propertyUpdateDto.Id,
+            Name = propertyUpdateDto.Name,
+            Address = propertyUpdateDto.Address,
+            City = propertyUpdateDto.City,
+            Country = propertyUpdateDto.Country,
+            Description = propertyUpdateDto.Description,
+            OwnerId = propertyUpdateDto.OwnerId
         };
     }
 }

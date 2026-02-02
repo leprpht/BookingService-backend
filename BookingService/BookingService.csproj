@@ -18,8 +18,4 @@
       </Content>
     </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\BookingService.Housing\BookingService.Housing.csproj" />
-    </ItemGroup>
-
 </Project>

@@ -2,11 +2,11 @@ namespace BookingService.Housing.Models;
 
 public sealed class Unit
 {
-    public int Id { get; init; }
-    public required string Name { get; init; }
-    public int Capacity { get; init; }
-    public decimal Price { get; init; }
-    public int Size { get; init; }
+    public int Id { get; set; }
+    public required string Name { get; set; }
+    public int Capacity { get; set; }
+    public decimal Price { get; set; }
+    public int Size { get; set; }
     
     public ICollection<Stay> Stays { get; init; } = new List<Stay>();
     public ICollection<UnitCustomization> Customizations { get; init; } = new List<UnitCustomization>();

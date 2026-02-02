@@ -2,7 +2,7 @@ namespace BookingService.Housing.Models;
 
 public sealed class PropertyPicture
 {
-    public int Id { get; init; }
+    public int Id { get; set; }
     public string Url { get; init; } = null!;
     public bool IsCover { get; init; }
     

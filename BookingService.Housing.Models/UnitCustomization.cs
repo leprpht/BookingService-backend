@@ -2,7 +2,7 @@ namespace BookingService.Housing.Models;
 
 public sealed class UnitCustomization
 {
-    public int Id { get; init; }
+    public int Id { get; set; }
     public CustomizationType Type { get; init; }
     public required string Text { get; init; }
     

@@ -10,5 +10,6 @@ public interface IReviewService
     Task<List<PropertyReviewDto>> GetReviewsByUserIdAsync(int id, ReviewFilterOptions filterOptions, PageRequest pageRequest);
     Task<PropertyReviewDto?> GetReviewById(int reviewId);
     Task CreateReviewAsync(PropertyReviewCreationDto propertyReviewCreationDto);
+    Task AddReviewResponseAsync(int reviewId, string response);
     Task DeleteReviewAsync(int id);
 }

@@ -16,7 +16,7 @@ public class ReviewService(IReviewRepository repository) : IReviewService
 
     public async Task<List<PropertyReviewDto>> GetReviewsByUserIdAsync(int id, ReviewFilterOptions filterOptions, PageRequest pageRequest)
     {
-        var reviews = await repository.GetReviewsByUserIdAsync(id, pageRequest);
+        var reviews = await repository.GetReviewsByUserIdAsync(id, pageRequest, filterOptions);
         return reviews.Select(r => r.PropertyReview.ToPropertyReviewDto(r.Guest)).ToList();
     }
 
@@ -30,6 +30,11 @@ public class ReviewService(IReviewRepository repository) : IReviewService
     {
         var review = propertyReviewCreationDto.ToPropertyReview();
         await repository.CreateReviewAsync(review);
+    }
+
+    public async Task AddReviewResponseAsync(int reviewId, string response)
+    {
+        await repository.AddReviewResponseAsync(reviewId, response);
     }
 
     public async Task DeleteReviewAsync(int id)

@@ -8,8 +8,9 @@ namespace BookingServices.Housing.Data;
 public interface IReviewRepository
 {
     Task<List<(PropertyReview PropertyReview, Guest Guest)>> GetReviewsByPropertyIdAsync(int id, PageRequest pageRequest, ReviewFilterOptions filterOptions);
-    Task<List<(PropertyReview PropertyReview, Guest Guest)>> GetReviewsByUserIdAsync(int id, PageRequest pageRequest);
+    Task<List<(PropertyReview PropertyReview, Guest Guest)>> GetReviewsByUserIdAsync(int id, PageRequest pageRequest, ReviewFilterOptions filterOptions);
     Task<(PropertyReview PropertyReview, Guest Guest)?> GetReviewByIdAsync(int reviewId);
     Task CreateReviewAsync(PropertyReview review);
+    Task AddReviewResponseAsync(int reviewId, string response);
     Task DeleteReviewAsync(int reviewId);
 }

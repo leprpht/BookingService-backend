@@ -48,6 +48,15 @@ public class ReviewController(IReviewService reviewService) : ControllerBase
         await reviewService.CreateReviewAsync(propertyReviewCreationDto);
         return Created();
     }
+    
+    [HttpPatch("{reviewId}/response")]
+    public async Task<IActionResult> AddReviewResponseAsync(
+        int reviewId,
+        [FromBody] string response)
+    {
+        await reviewService.AddReviewResponseAsync(reviewId, response);
+        return Ok();
+    }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteReviewAsync(int id)

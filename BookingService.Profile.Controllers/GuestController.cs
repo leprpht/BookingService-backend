@@ -8,7 +8,7 @@ namespace BookingService.Profile.Controllers;
 [Route("api/[controller]")]
 public class GuestController(IGuestService guestService) : ControllerBase
 {
-    [HttpGet("info/{id}")]
+    [HttpGet("{id}")]
     public async Task<IActionResult> GetGuestInfoAsync(int id)
     {
         var guest = await guestService.GetGuestInfoAsync(id);
@@ -19,7 +19,7 @@ public class GuestController(IGuestService guestService) : ControllerBase
         return Ok(guest);
     }
     
-    [HttpGet("{id}")]
+    [HttpGet("{id}/profile")]
     public async Task<IActionResult> GetGuestByIdAsync(int id)
     {
         var guest = await guestService.GetGuestByIdAsync(id);

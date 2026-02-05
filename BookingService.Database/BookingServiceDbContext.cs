@@ -18,58 +18,9 @@ public class BookingServiceDbContext(DbContextOptions<BookingServiceDbContext> o
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Property>()
-            .HasMany(e => e.Units)
-            .WithOne(e => e.Property)
-            .HasForeignKey(e => e.PropertyId)
-            .IsRequired();
-        
-        modelBuilder.Entity<Property>()
-            .HasMany(e => e.Pictures)
-            .WithOne(e => e.Property)
-            .HasForeignKey(e => e.PropertyId)
-            .IsRequired();
-        
-        modelBuilder.Entity<Property>()
-            .HasMany(e => e.Reviews)
-            .WithOne(e => e.Property)
-            .HasForeignKey(e => e.PropertyId)
-            .IsRequired();
-        
-        modelBuilder.Entity<Unit>()
-            .HasMany(e => e.Stays)
-            .WithOne(e => e.Unit)
-            .HasForeignKey(e => e.UnitId)
-            .IsRequired();
-        
-        modelBuilder.Entity<Unit>()
-            .HasMany(e => e.Customizations)
-            .WithOne()
-            .HasForeignKey(e => e.UnitId)
-            .IsRequired();
-        
-        modelBuilder.Entity<Unit>()
-            .HasMany(e => e.Pictures)
-            .WithOne()
-            .HasForeignKey(e => e.UnitId)
-            .IsRequired();
-        
-        modelBuilder.Entity<Guest>()
-            .HasMany(e => e.Stays)
-            .WithOne()
-            .HasForeignKey(e => e.GuestId)
-            .IsRequired();
-        
-        modelBuilder.Entity<Guest>()
-            .HasMany(e => e.Reviews)
-            .WithOne()
-            .HasForeignKey(e => e.GuestId)
-            .IsRequired();
-        
-        modelBuilder.Entity<Owner>()
-            .HasMany(e => e.Properties)
-            .WithOne()
-            .HasForeignKey(e => e.OwnerId)
-            .IsRequired();
+        modelBuilder.RegisterAll(ModelRegistration.RegisterPropertyModels,
+            ModelRegistration.RegisterUnitModels,
+            ModelRegistration.RegisterGuestModels,
+            ModelRegistration.RegisterOwnerModels);
     }
 }

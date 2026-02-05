@@ -16,7 +16,7 @@ public class StayService(IStayRepository repository) : IStayService
             .ToList();
     }
 
-    public async Task<StayDto?> GetStayById(int stayId)
+    public async Task<StayDto?> GetStayByIdAsync(int stayId)
     {
         var (stay, property, unit) =  await repository.GetStayById(stayId);
         return stay?.ToStayDto(property, unit);

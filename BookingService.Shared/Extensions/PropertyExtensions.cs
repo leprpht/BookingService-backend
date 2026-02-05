@@ -1,5 +1,7 @@
+using System.Reflection;
 using BookingService.Housing.DTOs.Property;
 using BookingService.Housing.Models;
+using BookingService.Profile.Model;
 using BookingService.Shared.Requests;
 
 namespace BookingService.Shared.Extensions;
@@ -86,6 +88,33 @@ public static class PropertyExtensions
             Rating = review.Rating,
             Comment = review.Comment,
             CreatedAt = DateTime.UtcNow
+        };
+    }
+
+    public static PropertyInfoDto ToPropertyInfoDto(this Property property)
+    {
+        return new PropertyInfoDto
+        {
+            Id = property.Id,
+            Name = property.Name,
+            PictureUrl = property.Pictures
+                .Where(p => p.IsCover)
+                .Select(p => p.Url)
+                .FirstOrDefault()
+        };
+    }
+    
+    public static PropertyReviewDto ToPropertyReviewDto(this PropertyReview review, Guest guest)
+    {
+        return new PropertyReviewDto
+        {
+            Id = review.Id,
+            Rating = review.Rating,
+            Comment = review.Comment,
+            CreatedAt = review.CreatedAt,
+            Response = review.Response,
+            Guest = guest.ToUserInfoDto(),
+            Property = review.Property.ToPropertyInfoDto()
         };
     }
 }

@@ -10,7 +10,7 @@ public class UnitService(IUnitRepository repository) : IUnitService
 {
     public async Task<UnitDto?> GetUnitDetailsAsync(int unitId, PeriodRequest periodRequest)
     {
-        var unit = await repository.GetUnitAsync(unitId, periodRequest);
+        var unit = await repository.GetUnitAsync(unitId);
         return unit?.ToUnitDto(periodRequest);
     }
 

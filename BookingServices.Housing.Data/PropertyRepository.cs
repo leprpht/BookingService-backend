@@ -10,7 +10,9 @@ namespace BookingServices.Housing.Data;
 
 public class PropertyRepository(BookingServiceDbContext context) : IPropertyRepository
 {
-    public async Task<List<Property>> GetAvailablePropertiesAsync(HousingFilterOptions housingFilterOptions, PageRequest pageRequest)
+    public async Task<List<Property>> GetAvailablePropertiesAsync(
+        HousingFilterOptions housingFilterOptions,
+        PageRequest pageRequest)
     {
         return await context.Properties
             .Include(p => p.Units)

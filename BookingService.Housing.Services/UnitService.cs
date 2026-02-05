@@ -17,17 +17,17 @@ public class UnitService(IUnitRepository repository) : IUnitService
     public async Task CreateUnitAsync(UnitCreationDto createUnitDto)
     {
         var unit = createUnitDto.ToUnit();
-        await repository.CreateUnitAsync(unit);
+        await repository.AddAsync(unit);
     }
 
     public async Task UpdateUnitAsync(UnitUpdateDto unitUpdateDto)
     {
         var unit = unitUpdateDto.ToUnit();
-        await repository.UpdateUnitAsync(unit);
+        await repository.UpdateAsync(unit);
     }
 
     public async Task DeleteUnitAsync(int id)
     {
-        await repository.DeleteUnitAsync(id);
+        await repository.DeleteAsync(id);
     }
 }

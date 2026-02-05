@@ -25,17 +25,17 @@ public class PropertyService(IPropertyRepository repository) : IPropertyService
     public async Task CreatePropertyAsync(PropertyCreationDto createPropertyDto)
     {
         var property = createPropertyDto.ToProperty();
-        await repository.CreatePropertyAsync(property);
+        await repository.AddAsync(property);
     }
 
     public async Task UpdatePropertyAsync(PropertyUpdateDto propertyUpdateDto)
     {
         var property = propertyUpdateDto.ToProperty();
-        await repository.UpdatePropertyAsync(property);
+        await repository.UpdateAsync(property);
     }
 
     public async Task DeletePropertyAsync(int id)
     {
-        await repository.DeletePropertyAsync(id);
+        await repository.DeleteAsync(id);
     }
 }

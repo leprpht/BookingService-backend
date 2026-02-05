@@ -1,18 +1,20 @@
 using BookingService.Database;
 using BookingService.Housing.Models;
+using BookingService.Shared.Repository;
 using BookingService.Shared.Requests;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookingServices.Housing.Data;
 
-public class StayRepository(BookingServiceDbContext context) : IStayRepository
+public class StayRepository(BookingServiceDbContext context)
+    : Repository<Stay>(context), IStayRepository
 {
     public async Task<List<(Stay Stay, string Property, string Unit)>> GetStays(
         int guestId,
         PeriodRequest periodRequest,
         PageRequest pageRequest)
     {
-        return (await context.Stays
+        return (await DbSet
                 .Where(s => s.GuestId == guestId &&
                             s.From >= periodRequest.From &&
                             s.To <= periodRequest.To)
@@ -32,7 +34,7 @@ public class StayRepository(BookingServiceDbContext context) : IStayRepository
 
     public async Task<(Stay? Stay, string Property, string Unit)> GetStayById(int stayId)
     {
-        var result = await context.Stays
+        var result = await DbSet
             .Where(s => s.Id == stayId)
             .Select(s => new
             {
@@ -45,27 +47,5 @@ public class StayRepository(BookingServiceDbContext context) : IStayRepository
         return result == null 
             ? (Stay: null, Property: string.Empty, Unit: string.Empty) 
             : (result.Stay, result.Property, result.Unit);
-    }
-
-    public async Task CreateStayAsync(Stay stay)
-    {
-        await context.Stays.AddAsync(stay);
-        await context.SaveChangesAsync();
-    }
-
-    public async Task UpdateStayAsync(Stay stay)
-    {
-        context.Stays.Update(stay);
-        await context.SaveChangesAsync();
-    }
-
-    public async Task DeleteStayAsync(int id)
-    {
-        var stay = await context.Stays.FindAsync(id);
-        if (stay != null)
-        {
-            context.Stays.Remove(stay);
-            await context.SaveChangesAsync();
-        }
     }
 }

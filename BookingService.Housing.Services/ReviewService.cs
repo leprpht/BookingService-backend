@@ -29,7 +29,7 @@ public class ReviewService(IReviewRepository repository) : IReviewService
     public async Task CreateReviewAsync(PropertyReviewCreationDto propertyReviewCreationDto)
     {
         var review = propertyReviewCreationDto.ToPropertyReview();
-        await repository.CreateReviewAsync(review);
+        await repository.AddAsync(review);
     }
 
     public async Task AddReviewResponseAsync(int reviewId, string response)
@@ -39,6 +39,6 @@ public class ReviewService(IReviewRepository repository) : IReviewService
 
     public async Task DeleteReviewAsync(int id)
     {
-        await repository.DeleteReviewAsync(id);
+        await repository.DeleteAsync(id);
     }
 }

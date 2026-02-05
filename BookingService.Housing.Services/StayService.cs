@@ -25,17 +25,17 @@ public class StayService(IStayRepository repository) : IStayService
     public async Task CreateStayAsync(StayCreationDto stayCreationDto)
     {
         var stay = stayCreationDto.ToStay();
-        await repository.CreateStayAsync(stay);
+        await repository.AddAsync(stay);
     }
 
     public async Task UpdateStayAsync(StayUpdateDto stayUpdateDto)
     {
         var stay = stayUpdateDto.ToStay();
-        await repository.UpdateStayAsync(stay);
+        await repository.UpdateAsync(stay);
     }
 
     public async Task DeleteStayAsync(int id)
     {
-        await repository.DeleteStayAsync(id);
+        await repository.DeleteAsync(id);
     }
 }

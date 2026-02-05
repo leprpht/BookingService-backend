@@ -7,9 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\BookingService.Database\BookingService.Database.csproj" />
       <ProjectReference Include="..\BookingService.Housing.DTOs\BookingService.Housing.DTOs.csproj" />
       <ProjectReference Include="..\BookingService.Housing.Models\BookingService.Housing.Models.csproj" />
       <ProjectReference Include="..\BookingService.Profile.Model\BookingService.Profile.Model.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.12" />
     </ItemGroup>
 
 </Project>

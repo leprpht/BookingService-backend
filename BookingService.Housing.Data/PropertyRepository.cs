@@ -1,20 +1,21 @@
 using System.Linq.Expressions;
 using BookingService.Database;
 using BookingService.Housing.Models;
-using BookingService.Shared;
 using BookingService.Shared.Filters;
+using BookingService.Shared.Repository;
 using BookingService.Shared.Requests;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookingServices.Housing.Data;
 
-public class PropertyRepository(BookingServiceDbContext context) : IPropertyRepository
+public class PropertyRepository(BookingServiceDbContext context)
+    : Repository<Property>(context), IPropertyRepository
 {
     public async Task<List<Property>> GetAvailablePropertiesAsync(
         HousingFilterOptions housingFilterOptions,
         PageRequest pageRequest)
     {
-        return await context.Properties
+        return await DbSet
             .Include(p => p.Units)
             .Include(p => p.Pictures)
             .Include(p => p.Reviews)
@@ -27,54 +28,55 @@ public class PropertyRepository(BookingServiceDbContext context) : IPropertyRepo
 
     public async Task<Property?> GetPropertyAsync(int propertyId)
     {
-        return await context.Properties
+        return await DbSet
             .Include(p => p.Units)
             .Include(p => p.Pictures)
             .Include(p => p.Reviews)
             .SingleOrDefaultAsync(p => p.Id == propertyId);
     }
 
-    public async Task CreatePropertyAsync(Property property)
+    public override async Task AddAsync(Property property)
     {
         property.UpdateRating();
-        await context.Properties.AddAsync(property);
-        await context.SaveChangesAsync();
+        await base.AddAsync(property);
     }
 
-    public async Task UpdatePropertyAsync(Property property)
+    public override async Task UpdateAsync(Property property)
     {
         property.UpdateRating();
-        context.Properties.Update(property);
-        await context.SaveChangesAsync();
+        await base.UpdateAsync(property);
     }
 
-
-    public async Task DeletePropertyAsync(int id)
+    public override async Task DeleteAsync(int id)
     {
-        var units = context.Units.Where(u => u.PropertyId == id);
-        await units.ExecuteDeleteAsync();
-        
-        var reviews = context.PropertyReviews.Where(r => r.PropertyId == id);
-        await reviews.ExecuteDeleteAsync();
+        await Context.Units
+            .Where(u => u.PropertyId == id)
+            .ExecuteDeleteAsync();
 
-        var pictures = context.PropertyPictures.Where(p => p.PropertyId == id);
-        await pictures.ExecuteDeleteAsync();
-        
-        var property = await context.Properties.FindAsync(id);
-        if (property != null)
-        {
-            context.Properties.Remove(property);
-            await context.SaveChangesAsync();
-        }
+        await Context.PropertyReviews
+            .Where(r => r.PropertyId == id)
+            .ExecuteDeleteAsync();
+
+        await Context.PropertyPictures
+            .Where(p => p.PropertyId == id)
+            .ExecuteDeleteAsync();
+
+        await base.DeleteAsync(id);
     }
 
     private static Expression<Func<Property, bool>> MatchesFilters(HousingFilterOptions filter)
     {
-        return property => property.Units.Any(u => u.Stays.Any(s => s.Status != StayStatus.Cancelled && s.From < filter.Period.To && s.To > filter.Period.From)) &&
-                           (string.IsNullOrEmpty(filter.Name) || property.Name.Contains(filter.Name)) &&
-                           (string.IsNullOrEmpty(filter.City) || property.City.Contains(filter.City)) &&
-                           (string.IsNullOrEmpty(filter.Country) || property.Country.Contains(filter.Country)) &&
-                           (!filter.MinPrice.HasValue || property.Units.Max(u => u.Price) >= filter.MinPrice.Value) && 
-                           (!filter.MaxPrice.HasValue || property.Units.Min(u => u.Price) <= filter.MaxPrice.Value);
+        return property =>
+            property.Units.Any(u =>
+                u.Stays.Any(s =>
+                    s.Status != StayStatus.Cancelled &&
+                    s.From < filter.Period.To &&
+                    s.To > filter.Period.From)) &&
+            (string.IsNullOrEmpty(filter.Name) || property.Name.Contains(filter.Name)) &&
+            (string.IsNullOrEmpty(filter.City) || property.City.Contains(filter.City)) &&
+            (string.IsNullOrEmpty(filter.Country) || property.Country.Contains(filter.Country)) &&
+            (!filter.MinPrice.HasValue || property.Units.Max(u => u.Price) >= filter.MinPrice.Value) &&
+            (!filter.MaxPrice.HasValue || property.Units.Min(u => u.Price) <= filter.MaxPrice.Value);
     }
 }
+

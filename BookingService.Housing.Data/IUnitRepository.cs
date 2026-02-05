@@ -1,11 +1,9 @@
 using BookingService.Housing.Models;
+using BookingService.Shared.Repository;
 
 namespace BookingServices.Housing.Data;
 
-public interface IUnitRepository
+public interface IUnitRepository : IRepository<Unit>
 {
     Task<Unit?> GetUnitAsync(int unitId);
-    Task CreateUnitAsync(Unit unit);
-    Task UpdateUnitAsync(Unit unit);
-    Task DeleteUnitAsync(int id);
 }

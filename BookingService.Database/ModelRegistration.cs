@@ -1,5 +1,3 @@
-using BookingService.Housing.Models;
-using BookingService.Profile.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookingService.Database;

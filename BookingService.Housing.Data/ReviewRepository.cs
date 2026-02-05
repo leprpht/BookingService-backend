@@ -2,19 +2,21 @@ using BookingService.Database;
 using BookingService.Housing.Models;
 using BookingService.Profile.Model;
 using BookingService.Shared.Filters;
+using BookingService.Shared.Repository;
 using BookingService.Shared.Requests;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookingServices.Housing.Data;
 
-public class ReviewRepository(BookingServiceDbContext context) : IReviewRepository
+public class ReviewRepository(BookingServiceDbContext context)
+    : Repository<PropertyReview>(context), IReviewRepository
 {
     public async Task<List<(PropertyReview PropertyReview, Guest Guest)>> GetReviewsByPropertyIdAsync(
         int id,
         PageRequest pageRequest,
         ReviewFilterOptions filterOptions)
     {
-        var reviews = context.PropertyReviews.Where(x => x.PropertyId == id);
+        var reviews = DbSet.Where(x => x.PropertyId == id);
 
         reviews = filterOptions switch
         {
@@ -28,7 +30,7 @@ public class ReviewRepository(BookingServiceDbContext context) : IReviewReposito
         var pagedReviews = await reviews
             .Skip((pageRequest.PageNumber - 1) * pageRequest.PageSize)
             .Take(pageRequest.PageSize)
-            .Join(context.Guests,
+            .Join(Context.Guests,
                 review => review.GuestId,
                 guest => guest.Id,
                 (review, guest) => new { review, guest })
@@ -38,9 +40,12 @@ public class ReviewRepository(BookingServiceDbContext context) : IReviewReposito
     }
 
 
-    public async Task<List<(PropertyReview PropertyReview, Guest Guest)>> GetReviewsByUserIdAsync(int id, PageRequest pageRequest, ReviewFilterOptions filterOptions)
+    public async Task<List<(PropertyReview PropertyReview, Guest Guest)>> GetReviewsByUserIdAsync(
+        int id,
+        PageRequest pageRequest,
+        ReviewFilterOptions filterOptions)
     {
-        var reviews = context.PropertyReviews.Where(x => x.GuestId == id);
+        var reviews = DbSet.Where(x => x.GuestId == id);
 
         reviews = filterOptions switch
         {
@@ -54,7 +59,7 @@ public class ReviewRepository(BookingServiceDbContext context) : IReviewReposito
         var pagedReviews = await reviews
             .Skip((pageRequest.PageNumber - 1) * pageRequest.PageSize)
             .Take(pageRequest.PageSize)
-            .Join(context.Guests,
+            .Join(Context.Guests,
                 review => review.GuestId,
                 guest => guest.Id,
                 (review, guest) => new { review, guest })
@@ -65,9 +70,9 @@ public class ReviewRepository(BookingServiceDbContext context) : IReviewReposito
 
     public async Task<(PropertyReview PropertyReview, Guest Guest)?> GetReviewByIdAsync(int reviewId)
     {
-        var result = await context.PropertyReviews
+        var result = await DbSet
             .Where(x => x.Id == reviewId)
-            .Join(context.Guests,
+            .Join(Context.Guests,
                 review => review.GuestId,
                 guest => guest.Id,
                 (review, guest) => new { review, guest })
@@ -76,37 +81,31 @@ public class ReviewRepository(BookingServiceDbContext context) : IReviewReposito
         return result == null ? null : (result.review, result.guest);
     }
 
-    public async Task CreateReviewAsync(PropertyReview review)
+    public override async Task AddAsync(PropertyReview review)
     {
-        await context.PropertyReviews.AddAsync(review);
-        var property = await context.Properties.Where(x => x.Id == review.PropertyId).SingleOrDefaultAsync();
+        var property = await Context.Properties.SingleOrDefaultAsync(x => x.Id == review.PropertyId);
         property?.UpdateRating();
         
-        await context.SaveChangesAsync();
+        await base.AddAsync(review);
+    }
+    
+    public override async Task DeleteAsync(int reviewId)
+    {
+        var property = await Context.Properties.SingleOrDefaultAsync(x => x.Id == reviewId);
+        property?.UpdateRating();
+        
+        await base.DeleteAsync(reviewId);
     }
 
     public async Task AddReviewResponseAsync(int reviewId, string response)
     {
-        var review = await context.PropertyReviews.SingleOrDefaultAsync(x => x.Id == reviewId);
+        var review = await DbSet.SingleOrDefaultAsync(x => x.Id == reviewId);
         if (review == null)
         {
             return;
         }
         
         review.Response = response;
-        await context.SaveChangesAsync();
-    }
-
-    public async Task DeleteReviewAsync(int reviewId)
-    {
-        var review = await context.PropertyReviews.FindAsync(reviewId);
-        if (review != null)
-        {
-            context.PropertyReviews.Remove(review);
-            var property = await context.Properties.Where(x => x.Id == review.PropertyId).SingleOrDefaultAsync();
-            property?.UpdateRating();
-            
-            await context.SaveChangesAsync();
-        }
+        await Context.SaveChangesAsync();
     }
 }

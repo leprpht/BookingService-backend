@@ -40,8 +40,14 @@ public class StayController(IStayService stayService) : ControllerBase
 
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateStayAsync(
+        int id,
         [FromBody] StayUpdateDto stayUpdateDto)
     {
+        if (id != stayUpdateDto.Id)
+        {
+            return BadRequest("Stay ID mismatch.");
+        }
+        
         await stayService.UpdateStayAsync(stayUpdateDto);
         return Ok();
     }

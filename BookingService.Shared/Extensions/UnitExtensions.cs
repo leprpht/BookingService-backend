@@ -30,21 +30,10 @@ public static class UnitExtensions
             Name = unit.Name,
             Capacity = unit.Capacity,
             Price = unit.Price * period.DaysCount,
-            Size = unit.Size
+            Size = unit.Size,
+            Customizations = unit.Customizations.ToUnitCustomizationDtoList(),
+            Pictures = unit.Pictures.Select(p => p.Url).ToList()
         };
-    }
-
-    public static List<UnitCustomizationDto> ToUnitCustomizationDtoList(
-        this ICollection<UnitCustomization> unitCustomizationList)
-    {
-        return unitCustomizationList
-            .GroupBy(u => u.Type)
-            .Select(u => new UnitCustomizationDto
-            {
-                Type = u.Key.UnitCustomizationToString(),
-                Text = u.Select(c => c.Text).ToList()
-            })
-            .ToList();
     }
 
     public static Unit ToUnit(this UnitCreationDto unitCreationDto)
@@ -70,6 +59,44 @@ public static class UnitExtensions
             Size = unitUpdateDto.Size,
             PropertyId = unitUpdateDto.PropertyId
         };
+    }
+    
+    public static UnitCustomization ToUnitCustomization(this UnitCustomizationCreationDto unitCustomizationCreationDto, int unitId)
+    {
+        return new UnitCustomization
+        {
+            Type = unitCustomizationCreationDto.Type,
+            Text = unitCustomizationCreationDto.Text,
+            UnitId = unitId
+        };
+    }
+
+    public static UnitCustomization ToUnitCustomization(this UnitCustomizationUpdateDto unitCustomizationUpdateDto, int unitId)
+    {
+        return new UnitCustomization
+        {
+            Id = unitCustomizationUpdateDto.Id,
+            Type = unitCustomizationUpdateDto.Type,
+            Text = unitCustomizationUpdateDto.Text,
+            UnitId = unitId
+        };
+    }
+    
+    public static List<UnitCustomizationDto> ToUnitCustomizationDtoList(
+        this ICollection<UnitCustomization> unitCustomizationList)
+    {
+        return unitCustomizationList
+            .GroupBy(u => u.Type)
+            .Select(u => new UnitCustomizationDto
+            {
+                Type = u.Key.UnitCustomizationToString(),
+                Customizations = u.Select(c => new UnitCustomizationGroupedDto
+                {
+                    Id = c.Id,
+                    Text = c.Text
+                }).ToList()
+            })
+            .ToList();
     }
 
     private static string UnitCustomizationToString(this CustomizationType customization)

@@ -11,4 +11,19 @@ public class UnitRepository(BookingServiceDbContext context)
     {
         return await DbSet.FindAsync(unitId);
     }
+
+    public override async Task DeleteAsync(int id)
+    {
+        Context.UnitCustomizations
+            .RemoveRange(Context.UnitCustomizations
+                .Where(u => u.UnitId == id));
+        await Context.SaveChangesAsync();
+
+        Context.UnitPictures
+            .RemoveRange(Context.UnitPictures
+                .Where(u => u.UnitId == id));
+        await Context.SaveChangesAsync();
+
+        await base.DeleteAsync(id);
+    }
 }

@@ -20,6 +20,7 @@ public static class PropertyExtensions
             Country = property.Country,
             Description = property.Description,
             Pictures = property.Pictures
+                .OrderByDescending(p => p.IsCover)
                 .Select(p => p.Url)
                 .ToList(),
             Units = property.Units

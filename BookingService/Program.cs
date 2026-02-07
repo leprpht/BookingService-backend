@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using BookingService.Housing;
 using BookingService.Profile;
 
@@ -7,13 +8,20 @@ builder.Services
     .RegisterHousingModule()
     .RegisterProfileModule();
 
-builder.Services.AddControllers();
+builder.Services
+    .AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 
 var app = builder.Build();
 
-app.UseHttpsRedirection();
-app.UseAuthentication();
-app.UseAuthorization();
+app
+    .UseHttpsRedirection()
+    .UseAuthentication()
+    .UseAuthorization();
+
 app.MapControllers();
 
 app.Run();

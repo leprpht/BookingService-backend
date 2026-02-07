@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace BookingServices.Housing.Data;
 
 public class ReviewRepository(BookingServiceDbContext context)
-    : Repository<PropertyReview>(context), IReviewRepository
+    : BaseRepository<PropertyReview>(context), IReviewRepository
 {
     public async Task<List<(PropertyReview PropertyReview, Guest Guest)>> GetReviewsByPropertyIdAsync(
         int id,

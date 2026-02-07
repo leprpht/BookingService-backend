@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace BookingServices.Housing.Data;
 
 public class PropertyRepository(BookingServiceDbContext context)
-    : Repository<Property>(context), IPropertyRepository
+    : BaseRepository<Property>(context), IPropertyRepository
 {
     public async Task<List<Property>> GetAvailablePropertiesAsync(
         HousingFilterOptions housingFilterOptions,

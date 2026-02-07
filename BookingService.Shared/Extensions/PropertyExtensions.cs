@@ -92,6 +92,20 @@ public static class PropertyExtensions
         };
     }
 
+    public static PropertyReview ToPropertyReview(this PropertyReviewUpdateDto propertyUpdateDto)
+    {
+        return new PropertyReview
+        {
+            Id = propertyUpdateDto.Id,
+            Rating = propertyUpdateDto.Rating,
+            Comment = propertyUpdateDto.Comment,
+            CreatedAt = propertyUpdateDto.CreatedAt,
+            Response = propertyUpdateDto.Response,
+            GuestId = propertyUpdateDto.GuestId,
+            PropertyId = propertyUpdateDto.PropertyId
+        };
+    }
+
     public static PropertyInfoDto ToPropertyInfoDto(this Property property)
     {
         return new PropertyInfoDto

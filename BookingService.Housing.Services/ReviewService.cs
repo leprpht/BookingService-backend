@@ -1,12 +1,15 @@
 using BookingService.Housing.DTOs.Property;
+using BookingService.Housing.Models;
 using BookingService.Shared.Extensions;
 using BookingService.Shared.Filters;
 using BookingService.Shared.Requests;
+using BookingService.Shared.Service;
 using BookingServices.Housing.Data;
 
 namespace BookingService.Housing.Services;
 
-public class ReviewService(IReviewRepository repository) : IReviewService
+public class ReviewService(IReviewRepository repository)
+    : BaseService<PropertyReview, PropertyReviewCreationDto, PropertyReviewUpdateDto>(repository), IReviewService
 {
     public async Task<List<PropertyReviewDto>> GetReviewsByPropertyIdAsync(int id, ReviewFilterOptions filterOptions, PageRequest pageRequest)
     {
@@ -26,19 +29,8 @@ public class ReviewService(IReviewRepository repository) : IReviewService
         return review?.PropertyReview.ToPropertyReviewDto(review.Value.Guest);
     }
 
-    public async Task CreateReviewAsync(PropertyReviewCreationDto propertyReviewCreationDto)
-    {
-        var review = propertyReviewCreationDto.ToPropertyReview();
-        await repository.AddAsync(review);
-    }
-
     public async Task AddReviewResponseAsync(int reviewId, string response)
     {
         await repository.AddReviewResponseAsync(reviewId, response);
-    }
-
-    public async Task DeleteReviewAsync(int id)
-    {
-        await repository.DeleteAsync(id);
     }
 }

@@ -45,7 +45,7 @@ public class ReviewController(IReviewService reviewService) : ControllerBase
     public async Task<IActionResult> CreateReviewAsync(
         [FromBody] PropertyReviewCreationDto propertyReviewCreationDto)
     {
-        await reviewService.CreateReviewAsync(propertyReviewCreationDto);
+        await reviewService.CreateAsync(propertyReviewCreationDto);
         return Created();
     }
     
@@ -61,7 +61,7 @@ public class ReviewController(IReviewService reviewService) : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteReviewAsync(int id)
     {
-        await reviewService.DeleteReviewAsync(id);
+        await reviewService.DeleteAsync(id);
         return NoContent();
     }
 }

@@ -6,7 +6,7 @@ using BookingService.Shared.Requests;
 
 namespace BookingServices.Housing.Data;
 
-public interface IReviewRepository : IRepository<PropertyReview>
+public interface IReviewRepository : IBaseRepository<PropertyReview>
 {
     Task<List<(PropertyReview PropertyReview, Guest Guest)>> GetReviewsByPropertyIdAsync(int id, PageRequest pageRequest, ReviewFilterOptions filterOptions);
     Task<List<(PropertyReview PropertyReview, Guest Guest)>> GetReviewsByUserIdAsync(int id, PageRequest pageRequest, ReviewFilterOptions filterOptions);

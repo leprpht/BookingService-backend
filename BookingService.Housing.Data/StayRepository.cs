@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace BookingServices.Housing.Data;
 
 public class StayRepository(BookingServiceDbContext context)
-    : Repository<Stay>(context), IStayRepository
+    : BaseRepository<Stay>(context), IStayRepository
 {
     public async Task<List<(Stay Stay, string Property, string Unit)>> GetStays(
         int guestId,

@@ -2,7 +2,7 @@ using BookingService.Housing.DTOs.Unit;
 using BookingService.Shared.Extensions;
 using BookingServices.Housing.Data;
 
-namespace BookingService.Housing.Services;
+namespace BookingService.Housing.Services.Subservices;
 
 public class UnitCustomizationService(IUnitCustomizationRepository repository) : IUnitCustomizationService
 {

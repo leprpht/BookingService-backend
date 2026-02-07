@@ -26,7 +26,7 @@ public class UnitController(IUnitService unitService) : ControllerBase
     public async Task<IActionResult> CreateUnitAsync(
         [FromBody] UnitCreationDto createUnitDto)
     {
-        await unitService.CreateUnitAsync(createUnitDto);
+        await unitService.CreateAsync(createUnitDto);
         return Created();
     }
 
@@ -40,14 +40,14 @@ public class UnitController(IUnitService unitService) : ControllerBase
             return BadRequest("Unit ID mismatch.");
         }
 
-        await unitService.UpdateUnitAsync(unitUpdateDto);
+        await unitService.UpdateAsync(unitUpdateDto);
         return Ok();
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteUnitAsync(int id)
     {
-        await unitService.DeleteUnitAsync(id);
+        await unitService.DeleteAsync(id);
         return NoContent();
     }
 }

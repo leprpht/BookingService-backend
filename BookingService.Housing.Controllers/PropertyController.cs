@@ -36,7 +36,7 @@ public class PropertyController(IPropertyService propertyService) : ControllerBa
     public async Task<IActionResult> CreatePropertyAsync(
         [FromBody] PropertyCreationDto createPropertyDto)
     {
-        await propertyService.CreatePropertyAsync(createPropertyDto);
+        await propertyService.CreateAsync(createPropertyDto);
         return Created();
     }
 
@@ -50,14 +50,14 @@ public class PropertyController(IPropertyService propertyService) : ControllerBa
             return BadRequest("Property ID mismatch.");
         }
 
-        await propertyService.UpdatePropertyAsync(propertyUpdateDto);
+        await propertyService.UpdateAsync(propertyUpdateDto);
         return Ok();
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeletePropertyAsync(int id)
     {
-        await propertyService.DeletePropertyAsync(id);
+        await propertyService.DeleteAsync(id);
         return NoContent();
     }
 }

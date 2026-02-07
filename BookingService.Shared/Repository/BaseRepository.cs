@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookingService.Shared.Repository;
 
-public abstract class Repository<T>(BookingServiceDbContext context) where T : class
+public abstract class BaseRepository<T>(BookingServiceDbContext context) where T : class
 {
     protected readonly BookingServiceDbContext Context = context;
     protected readonly DbSet<T> DbSet = context.Set<T>();

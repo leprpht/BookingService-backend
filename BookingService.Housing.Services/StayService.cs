@@ -1,12 +1,15 @@
 using BookingService.Housing.DTOs.Stay;
+using BookingService.Housing.Models;
 using BookingService.Shared;
 using BookingService.Shared.Extensions;
 using BookingService.Shared.Requests;
+using BookingService.Shared.Service;
 using BookingServices.Housing.Data;
 
 namespace BookingService.Housing.Services;
 
-public class StayService(IStayRepository repository) : IStayService
+public class StayService(IStayRepository repository)
+    : BaseService<Stay, StayCreationDto, StayUpdateDto>(repository), IStayService
 {
     public async Task<List<StayDto>> GetStays(int guestId, PeriodRequest periodRequest, PageRequest pageRequest)
     {
@@ -20,22 +23,5 @@ public class StayService(IStayRepository repository) : IStayService
     {
         var (stay, property, unit) =  await repository.GetStayById(stayId);
         return stay?.ToStayDto(property, unit);
-    }
-
-    public async Task CreateStayAsync(StayCreationDto stayCreationDto)
-    {
-        var stay = stayCreationDto.ToStay();
-        await repository.AddAsync(stay);
-    }
-
-    public async Task UpdateStayAsync(StayUpdateDto stayUpdateDto)
-    {
-        var stay = stayUpdateDto.ToStay();
-        await repository.UpdateAsync(stay);
-    }
-
-    public async Task DeleteStayAsync(int id)
-    {
-        await repository.DeleteAsync(id);
     }
 }

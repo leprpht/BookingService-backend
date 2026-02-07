@@ -5,7 +5,7 @@ using BookingService.Shared.Requests;
 
 namespace BookingServices.Housing.Data;
 
-public interface IPropertyRepository : IRepository<Property>
+public interface IPropertyRepository : IBaseRepository<Property>
 {
     Task<List<Property>> GetAvailablePropertiesAsync(HousingFilterOptions housingFilterOptions, PageRequest pageRequest);
     Task<Property?> GetPropertyAsync(int propertyId);

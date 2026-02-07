@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace BookingServices.Housing.Data;
 
 public class UnitCustomizationRepository(BookingServiceDbContext context)
-    : Repository<List<UnitCustomization>>(context), IUnitCustomizationRepository
+    : BaseRepository<List<UnitCustomization>>(context), IUnitCustomizationRepository
 {
     public async Task<List<UnitCustomization>> GetCustomizationsByUnitIdAsync(int id)
     {

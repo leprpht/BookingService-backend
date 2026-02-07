@@ -34,7 +34,7 @@ public class StayController(IStayService stayService) : ControllerBase
     public async Task<IActionResult> CreateStayAsync(
         [FromBody] StayCreationDto stayCreationDto)
     {
-        await stayService.CreateStayAsync(stayCreationDto);
+        await stayService.CreateAsync(stayCreationDto);
         return Created();
     }
 
@@ -48,14 +48,14 @@ public class StayController(IStayService stayService) : ControllerBase
             return BadRequest("Stay ID mismatch.");
         }
         
-        await stayService.UpdateStayAsync(stayUpdateDto);
+        await stayService.UpdateAsync(stayUpdateDto);
         return Ok();
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteStayAsync(int id)
     {
-        await stayService.DeleteStayAsync(id);
+        await stayService.DeleteAsync(id);
         return NoContent();
     }
 }

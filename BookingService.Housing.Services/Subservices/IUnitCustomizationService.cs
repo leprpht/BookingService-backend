@@ -1,6 +1,6 @@
 using BookingService.Housing.DTOs.Unit;
 
-namespace BookingService.Housing.Services;
+namespace BookingService.Housing.Services.Subservices;
 
 public interface IUnitCustomizationService
 {

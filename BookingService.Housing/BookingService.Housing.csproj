@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.12" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\BookingService.Housing.Controllers\BookingService.Housing.Controllers.csproj" />
+      <ProjectReference Include="..\BookingService.Housing.Data\BookingService.Housing.Data.csproj" />
+      <ProjectReference Include="..\BookingService.Housing.Services\BookingService.Housing.Services.csproj" />
+    </ItemGroup>
+
+</Project>

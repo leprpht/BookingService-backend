@@ -1,3 +1,4 @@
+using AutoMapper;
 using BookingService.Housing.DTOs.Unit;
 using BookingService.Housing.Models;
 using BookingService.Shared.Requests;
@@ -6,82 +7,35 @@ namespace BookingService.Shared.Extensions;
 
 public static class UnitExtensions
 {
-    public static UnitListDto ToUnitListDto(this Unit unit, PeriodRequest period)
+    public static UnitDto ToUnitDto(this Unit unit, PeriodRequest period, IMapper mapper)
     {
-        return new UnitListDto
-        {
-            Id = unit.Id,
-            Name = unit.Name,
-            Capacity = unit.Capacity,
-            Price = unit.Price * period.DaysCount,
-            Size = unit.Size,
-            IsAvailable = unit.Stays
-                .Any(s => s.Status != StayStatus.Cancelled
-                          && s.From < period.To
-                          && s.To > period.From)
-        };
-    }
-    
-    public static UnitDto ToUnitDto(this Unit unit, PeriodRequest period)
-    {
-        return new UnitDto
-        {
-            Id = unit.Id,
-            Name = unit.Name,
-            Capacity = unit.Capacity,
-            Price = unit.Price * period.DaysCount,
-            Size = unit.Size,
-            Customizations = unit.Customizations.ToUnitCustomizationDtoList(),
-            Pictures = unit.Pictures.Select(p => p.Url).ToList()
-        };
+        return mapper.Map<UnitDto>(unit, opt => opt.Items["Period"] = period);
     }
 
-    public static Unit ToUnit(this UnitCreationDto unitCreationDto)
+    public static Unit ToUnit(this UnitCreationDto dto, IMapper mapper)
     {
-        return new Unit
-        {
-            Name = unitCreationDto.Name,
-            Capacity = unitCreationDto.Capacity,
-            Price = unitCreationDto.Price,
-            Size = unitCreationDto.Size,
-            PropertyId = unitCreationDto.PropertyId
-        };
+        return mapper.Map<Unit>(dto);
     }
 
-    public static Unit ToUnit(this UnitUpdateDto unitUpdateDto)
+    public static Unit ToUnit(this UnitUpdateDto dto, IMapper mapper)
     {
-        return new Unit
-        {
-            Id = unitUpdateDto.Id,
-            Name = unitUpdateDto.Name,
-            Capacity = unitUpdateDto.Capacity,
-            Price = unitUpdateDto.Price,
-            Size = unitUpdateDto.Size,
-            PropertyId = unitUpdateDto.PropertyId
-        };
-    }
-    
-    public static UnitCustomization ToUnitCustomization(this UnitCustomizationCreationDto unitCustomizationCreationDto, int unitId)
-    {
-        return new UnitCustomization
-        {
-            Type = unitCustomizationCreationDto.Type,
-            Text = unitCustomizationCreationDto.Text,
-            UnitId = unitId
-        };
+        return mapper.Map<Unit>(dto);
     }
 
-    public static UnitCustomization ToUnitCustomization(this UnitCustomizationUpdateDto unitCustomizationUpdateDto, int unitId)
+    public static UnitCustomization ToUnitCustomization(this UnitCustomizationCreationDto dto, int unitId, IMapper mapper)
     {
-        return new UnitCustomization
-        {
-            Id = unitCustomizationUpdateDto.Id,
-            Type = unitCustomizationUpdateDto.Type,
-            Text = unitCustomizationUpdateDto.Text,
-            UnitId = unitId
-        };
+        var customization = mapper.Map<UnitCustomization>(dto);
+        customization.UnitId = unitId;
+        return customization;
     }
-    
+
+    public static UnitCustomization ToUnitCustomization(this UnitCustomizationUpdateDto dto, int unitId, IMapper mapper)
+    {
+        var customization = mapper.Map<UnitCustomization>(dto);
+        customization.UnitId = unitId;
+        return customization;
+    }
+
     public static List<UnitCustomizationDto> ToUnitCustomizationDtoList(
         this ICollection<UnitCustomization> unitCustomizationList)
     {

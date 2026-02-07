@@ -10,6 +10,6 @@ public class PropertyReviewDto
     public required DateTime CreatedAt { get; init; }
     public string? Response { get; init; }
     
-    public required UserInfoDto Guest { get; init; }
-    public required PropertyInfoDto Property { get; init; }
+    public required UserInfoDto Guest { get; set; }
+    public required PropertyInfoDto Property { get; set; }
 }

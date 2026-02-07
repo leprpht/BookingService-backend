@@ -1,6 +1,4 @@
-﻿using BookingService.Housing.Models;
-
-namespace BookingService.Profile.Model;
+﻿namespace BookingService.Profile.Model;
 
 public class User
 {

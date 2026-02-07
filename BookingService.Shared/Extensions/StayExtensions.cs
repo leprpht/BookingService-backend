@@ -1,3 +1,4 @@
+using AutoMapper;
 using BookingService.Housing.DTOs.Stay;
 using BookingService.Housing.Models;
 
@@ -5,45 +6,25 @@ namespace BookingService.Shared.Extensions;
 
 public static class StayExtensions
 {
-    public static Stay ToStay(this StayCreationDto stayCreationDto)
+    public static Stay ToStay(this StayCreationDto dto, IMapper mapper)
     {
-        return new Stay
-        {
-            UnitId = stayCreationDto.UnitId,
-            GuestId = stayCreationDto.GuestId,
-            From = stayCreationDto.From,
-            To = stayCreationDto.To,
-            Status = Enum.Parse<StayStatus>(stayCreationDto.Status.ToUpper())
-        };
+        return mapper.Map<Stay>(dto);
     }
 
-    public static Stay ToStay(this StayUpdateDto stayUpdateDto)
+    public static Stay ToStay(this StayUpdateDto dto, IMapper mapper)
     {
-        return new Stay
-        {
-            Id = stayUpdateDto.Id,
-            UnitId = stayUpdateDto.UnitId,
-            GuestId = stayUpdateDto.GuestId,
-            From = stayUpdateDto.From,
-            To = stayUpdateDto.To,
-            TotalPrice = stayUpdateDto.TotalPrice,
-            Status = Enum.Parse<StayStatus>(stayUpdateDto.Status.ToUpper())
-        };
+        return mapper.Map<Stay>(dto);
     }
 
-    public static StayDto ToStayDto(this Stay stay, string property, string unit)
+    public static StayDto ToStayDto(this Stay stay, string property, string unit, IMapper mapper)
     {
-        return new StayDto
-        {
-            Id = stay.Id,
-            PropertyName = property,
-            UnitName = unit,
-            From = stay.From,
-            To = stay.To,
-            Status = stay.Status.StayStatusToString()
-        };
+        var dto = mapper.Map<StayDto>(stay);
+        dto.PropertyName = property;
+        dto.UnitName = unit;
+        dto.Status = stay.Status.StayStatusToString();
+        return dto;
     }
-    
+
     private static string StayStatusToString(this StayStatus status)
     {
         return status switch

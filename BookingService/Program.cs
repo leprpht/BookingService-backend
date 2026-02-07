@@ -1,10 +1,12 @@
 using System.Text.Json.Serialization;
 using BookingService.Housing;
 using BookingService.Profile;
+using BookingService.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
+    .RegisterSharedModule()
     .RegisterHousingModule()
     .RegisterProfileModule();
 

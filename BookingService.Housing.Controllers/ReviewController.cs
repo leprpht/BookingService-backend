@@ -14,7 +14,7 @@ public class ReviewController(IReviewService reviewService) : ControllerBase
     public async Task<IActionResult> GetReviewsByPropertyIdAsync(
         int propertyId,
         [FromQuery] ReviewFilterOptions filterOptions,
-        [FromBody] PageRequest pageRequest)
+        [FromQuery] PageRequest pageRequest)
     {
         var reviews = await reviewService.GetReviewsByPropertyIdAsync(propertyId, filterOptions, pageRequest);
         return Ok(reviews);
@@ -24,7 +24,7 @@ public class ReviewController(IReviewService reviewService) : ControllerBase
     public async Task<IActionResult> GetReviewsByUserIdAsync(
         int userId,
         [FromQuery] ReviewFilterOptions filterOptions,
-        [FromBody] PageRequest pageRequest)
+        [FromQuery] PageRequest pageRequest)
     {
         var reviews = await reviewService.GetReviewsByUserIdAsync(userId, filterOptions, pageRequest);
         return Ok(reviews);

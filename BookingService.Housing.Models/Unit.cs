@@ -5,7 +5,7 @@ public sealed class Unit
     public int Id { get; set; }
     public required string Name { get; set; }
     public int Capacity { get; set; }
-    public decimal Price { get; set; }
+    public double Price { get; set; }
     public int Size { get; set; }
     
     public ICollection<Stay> Stays { get; init; } = new List<Stay>();

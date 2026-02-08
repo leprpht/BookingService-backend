@@ -13,7 +13,7 @@ public class PropertyController(IPropertyService propertyService) : ControllerBa
     [HttpGet]
     public async Task<IActionResult> GetPropertiesAsync(
         [FromQuery] HousingFilterOptions housingFilterOptions,
-        [FromBody] PageRequest pageRequest)
+        [FromQuery] PageRequest pageRequest)
     {
         var properties = await propertyService.GetAvailablePropertiesAsync(housingFilterOptions, pageRequest);
         return Ok(properties);
@@ -22,7 +22,7 @@ public class PropertyController(IPropertyService propertyService) : ControllerBa
     [HttpGet("{propertyId}")]
     public async Task<IActionResult> GetPropertyDetails(
         int propertyId,
-        [FromBody] PeriodRequest periodRequest)
+        [FromQuery] PeriodRequest periodRequest)
     {
         var property = await propertyService.GetPropertyDetailsAsync(propertyId, periodRequest);
         if (property == null)

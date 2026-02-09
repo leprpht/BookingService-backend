@@ -29,4 +29,7 @@ public class PropertyService(IPropertyRepository repository, IMapper mapper)
     
     public async Task UpdateNameAsync(int id, string name) =>
         await repository.UpdateNameAsync(id, name);
+    
+    public async Task UpdateDescriptionAsync(int id, string description) =>
+        await repository.UpdateDescriptionAsync(id, description);
 }

@@ -34,8 +34,10 @@ public static class HousingModule
     private static IServiceCollection RegisterSubrepositories(this IServiceCollection services)
     {
         services
+            .AddScoped<IPropertyPictureRepository, IPropertyPictureRepository>()
             .AddScoped<IUnitCustomizationRepository, UnitCustomizationRepository>()
             .AddScoped<IUnitPictureRepository, UnitPictureRepository>();
+            
         
         return services;
     }
@@ -55,7 +57,9 @@ public static class HousingModule
     private static IServiceCollection RegisterSubservices(this IServiceCollection services)
     {
         services
-            .AddScoped<IUnitCustomizationService, UnitCustomizationService>();
+            .AddScoped<IPropertyService, PropertyService>()
+            .AddScoped<IUnitCustomizationService, UnitCustomizationService>()
+            .AddScoped<IUnitPictureService, UnitPictureService>();
         
         return services;
     }

@@ -81,6 +81,15 @@ public class PropertyController(IPropertyService service, IPropertyPictureServic
         await service.UpdateNameAsync(id, name);
         return Ok();
     }
+    
+    [HttpPatch("{id}/description")]
+    public async Task<IActionResult> UpdatePropertyDescriptionAsync(
+        int id,
+        [FromBody] string description)
+    {
+        await service.UpdateDescriptionAsync(id, description);
+        return Ok();
+    }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeletePropertyAsync(int id)

@@ -88,5 +88,15 @@ public class PropertyRepository(BookingServiceDbContext context)
             await Context.SaveChangesAsync();
         }
     }
+    
+    public async Task UpdateDescriptionAsync(int propertyId, string description)
+    {
+        var property = await DbSet.SingleOrDefaultAsync(p => p.Id == propertyId);
+        if (property != null)
+        {
+            property.Description = description;
+            await Context.SaveChangesAsync();
+        }
+    }
 }
 

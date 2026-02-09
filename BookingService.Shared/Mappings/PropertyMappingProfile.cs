@@ -62,5 +62,11 @@ public class PropertyMappingProfile : AutoMapper.Profile
         CreateMap<PropertyReviewResponse, PropertyReviewResponseDto>()
             .ForMember(d => d.User, o => o.Ignore())
             .ForMember(d => d.Property, o => o.MapFrom(s => s.Property));
+        
+        CreateMap<PropertyPictureCreationDto, PropertyPicture>()
+            .ForMember(d => d.PropertyId, o => o.Ignore());
+        
+        CreateMap<PropertyPictureUpdateDto, PropertyPicture>()
+            .ForMember(d => d.PropertyId, o => o.Ignore());
     }
 }

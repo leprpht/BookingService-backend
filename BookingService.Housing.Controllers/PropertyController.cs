@@ -1,5 +1,6 @@
 using BookingService.Housing.DTOs.Property;
 using BookingService.Housing.Services;
+using BookingService.Housing.Services.Subservices;
 using BookingService.Shared.Filters;
 using BookingService.Shared.Requests;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +9,7 @@ namespace BookingService.Housing.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class PropertyController(IPropertyService service) : ControllerBase
+public class PropertyController(IPropertyService service, IPropertyPictureService pictureService) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> GetPropertiesAsync(
@@ -39,6 +40,15 @@ public class PropertyController(IPropertyService service) : ControllerBase
         await service.CreateAsync(createPropertyDto);
         return Created();
     }
+    
+    [HttpPost("{propertyId}/pictures")]
+    public async Task<IActionResult> AddPropertyPictureAsync(
+        int propertyId,
+        [FromBody] List<PropertyPictureCreationDto> pictureCreationDto)
+    {
+        await pictureService.AddRangeAsync(propertyId, pictureCreationDto);
+        return Created();
+    }
 
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdatePropertyAsync(
@@ -51,6 +61,15 @@ public class PropertyController(IPropertyService service) : ControllerBase
         }
 
         await service.UpdateAsync(propertyUpdateDto);
+        return Ok();
+    }
+    
+    [HttpPut("{id}/pictures")]
+    public async Task<IActionResult> UpdatePropertyPicturesAsync(
+        int id,
+        [FromBody] List<PropertyPictureUpdateDto> pictureUpdateDtos)
+    {
+        await pictureService.UpdateRangeAsync(id, pictureUpdateDtos);
         return Ok();
     }
     
@@ -67,6 +86,13 @@ public class PropertyController(IPropertyService service) : ControllerBase
     public async Task<IActionResult> DeletePropertyAsync(int id)
     {
         await service.DeleteAsync(id);
+        return NoContent();
+    }
+    
+    [HttpDelete("{propertyId}/pictures")]
+    public async Task<IActionResult> DeletePropertyPicturesAsync(int propertyId)
+    {
+        await pictureService.DeleteRangeAsync(propertyId);
         return NoContent();
     }
 }

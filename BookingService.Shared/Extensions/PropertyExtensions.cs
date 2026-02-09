@@ -63,4 +63,18 @@ public static class PropertyExtensions
         dto.User = mapper.Map<UserInfoDto>(user);
         return dto;
     }
+    
+    public static PropertyPicture ToPropertyPicture(this PropertyPictureCreationDto dto, int propertyId, IMapper mapper)
+    {
+        var picture = mapper.Map<PropertyPicture>(dto);
+        picture.PropertyId = propertyId;
+        return picture;
+    }
+    
+    public static PropertyPicture ToPropertyPicture(this PropertyPictureUpdateDto dto, int propertyId, IMapper mapper)
+    {
+        var picture = mapper.Map<PropertyPicture>(dto);
+        picture.PropertyId = propertyId;
+        return picture;
+    }
 }

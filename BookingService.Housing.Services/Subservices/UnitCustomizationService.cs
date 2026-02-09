@@ -1,7 +1,7 @@
 using AutoMapper;
 using BookingService.Housing.DTOs.Unit;
 using BookingService.Shared.Extensions;
-using BookingServices.Housing.Data;
+using BookingServices.Housing.Data.Subrepositories;
 
 namespace BookingService.Housing.Services.Subservices;
 
@@ -9,7 +9,7 @@ public class UnitCustomizationService(IUnitCustomizationRepository repository, I
 {
     public async Task<List<UnitCustomizationDto>> GetUnitCustomizationsAsync(int id)
     {
-        var customizations = await repository.GetCustomizationsByUnitIdAsync(id);
+        var customizations = await repository.GetAllAsync(id);
         return customizations.ToUnitCustomizationDtoList();
     }
 
@@ -19,7 +19,7 @@ public class UnitCustomizationService(IUnitCustomizationRepository repository, I
             .Select(c => c.ToUnitCustomization(id, mapper))
             .ToList();
         
-        await repository.AddAsync(customizations);
+        await repository.AddRangeAsync(customizations);
     }
 
     public async Task UpdateUnitCustomizationsAsync(int id, List<UnitCustomizationUpdateDto> updateList)
@@ -28,11 +28,11 @@ public class UnitCustomizationService(IUnitCustomizationRepository repository, I
             .Select(c => c.ToUnitCustomization(id, mapper))
             .ToList();
         
-        await repository.UpdateAsync(customizations);
+        await repository.UpdateRangeAsync(customizations);
     }
 
     public async Task DeleteUnitCustomizationsAsync(int id)
     {
-        await repository.DeleteAsync(id);
+        await repository.DeleteRangeAsync(id);
     }
 }

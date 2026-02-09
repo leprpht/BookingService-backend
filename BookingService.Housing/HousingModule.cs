@@ -1,5 +1,7 @@
 ﻿using BookingService.Housing.Services;
+using BookingService.Housing.Services.Subservices;
 using BookingServices.Housing.Data;
+using BookingServices.Housing.Data.Subrepositories;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BookingService.Housing;
@@ -10,7 +12,9 @@ public static class HousingModule
     {
         services
             .RegisterRepositories()
-            .RegisterServices();
+            .RegisterSubrepositories()
+            .RegisterServices()
+            .RegisterSubservices();
         
         return services;
     }
@@ -26,6 +30,15 @@ public static class HousingModule
         
         return services;
     }
+    
+    private static IServiceCollection RegisterSubrepositories(this IServiceCollection services)
+    {
+        services
+            .AddScoped<IUnitCustomizationRepository, UnitCustomizationRepository>()
+            .AddScoped<IUnitPictureRepository, UnitPictureRepository>();
+        
+        return services;
+    }
 
     private static IServiceCollection RegisterServices(this IServiceCollection services)
     {
@@ -35,6 +48,14 @@ public static class HousingModule
             .AddScoped<IReviewService, ReviewService>()
             .AddScoped<IStayService, StayService>()
             .AddScoped<IUnitService, UnitService>();
+        
+        return services;
+    }
+
+    private static IServiceCollection RegisterSubservices(this IServiceCollection services)
+    {
+        services
+            .AddScoped<IUnitCustomizationService, UnitCustomizationService>();
         
         return services;
     }

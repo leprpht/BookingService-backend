@@ -1,0 +1,16 @@
+using System.Linq.Expressions;
+using BookingService.Database;
+using BookingService.Housing.Models;
+using BookingService.Shared.Repository;
+using Microsoft.EntityFrameworkCore;
+
+namespace BookingServices.Housing.Data.Subrepositories;
+
+public class UnitCustomizationRepository(BookingServiceDbContext context)
+    : BaseSubrepository<UnitCustomization>(context), IUnitCustomizationRepository
+{
+    protected override Expression<Func<UnitCustomization, bool>> ByParentId(int unitId) 
+        => uc => uc.UnitId == unitId;
+    
+    protected override string ParentIdPropertyName => "UnitId";
+}

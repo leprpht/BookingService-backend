@@ -1,5 +1,5 @@
 using AutoMapper;
-using BookingService.Housing.DTOs.Property;
+using BookingService.Housing.DTOs.PropertyReview;
 using BookingService.Housing.Models;
 using BookingService.Shared.Extensions;
 using BookingService.Shared.Filters;
@@ -31,10 +31,5 @@ public class ReviewService(IReviewRepository repository, IMapper mapper)
     {
         var review = await repository.GetReviewByIdAsync(reviewId);
         return review?.PropertyReview.ToPropertyReviewDto(review.Value.Guest, mapper);
-    }
-
-    public async Task AddReviewResponseAsync(int reviewId, string response)
-    {
-        await repository.AddReviewResponseAsync(reviewId, response);
     }
 }

@@ -1,4 +1,4 @@
-using BookingService.Housing.DTOs.Property;
+using BookingService.Housing.DTOs.PropertyReview;
 using BookingService.Shared.Filters;
 using BookingService.Shared.Requests;
 using BookingService.Shared.Service;
@@ -10,5 +10,4 @@ public interface IReviewService : IBaseService<PropertyReviewCreationDto, Proper
     Task<List<PropertyReviewDto>> GetReviewsByPropertyIdAsync(int id, ReviewFilterOptions filterOptions, PageRequest pageRequest);
     Task<List<PropertyReviewDto>> GetReviewsByUserIdAsync(int id, ReviewFilterOptions filterOptions, PageRequest pageRequest);
     Task<PropertyReviewDto?> GetReviewById(int reviewId);
-    Task AddReviewResponseAsync(int reviewId, string response);
 }

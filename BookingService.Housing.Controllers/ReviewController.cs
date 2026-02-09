@@ -1,4 +1,4 @@
-using BookingService.Housing.DTOs.Property;
+using BookingService.Housing.DTOs.PropertyReview;
 using BookingService.Housing.Services;
 using BookingService.Shared.Filters;
 using BookingService.Shared.Requests;
@@ -49,15 +49,6 @@ public class ReviewController(IReviewService reviewService) : ControllerBase
         return Created();
     }
     
-    [HttpPatch("{reviewId}/response")]
-    public async Task<IActionResult> AddReviewResponseAsync(
-        int reviewId,
-        [FromBody] string response)
-    {
-        await reviewService.AddReviewResponseAsync(reviewId, response);
-        return Ok();
-    }
-
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteReviewAsync(int id)
     {

@@ -1,4 +1,5 @@
 using BookingService.Housing.DTOs.Property;
+using BookingService.Housing.DTOs.PropertyReview;
 using BookingService.Housing.Models;
 using BookingService.Shared.Requests;
 
@@ -49,7 +50,17 @@ public class PropertyMappingProfile : AutoMapper.Profile
         CreateMap<PropertyReviewUpdateDto, PropertyReview>();
 
         CreateMap<PropertyReview, PropertyReviewDto>()
-            .ForMember(d => d.Guest, o => o.Ignore())
+            .ForMember(d => d.User, o => o.Ignore())
+            .ForMember(d => d.Property, o => o.MapFrom(s => s.Property));
+        
+        CreateMap<PropertyReviewResponseCreationDto, PropertyReviewResponse>()
+            .ForMember(d => d.CreatedAt,
+                o => o.MapFrom(_ => DateTime.UtcNow));
+        
+        CreateMap<PropertyReviewResponseUpdateDto, PropertyReviewResponse>();
+        
+        CreateMap<PropertyReviewResponse, PropertyReviewResponseDto>()
+            .ForMember(d => d.User, o => o.Ignore())
             .ForMember(d => d.Property, o => o.MapFrom(s => s.Property));
     }
 }

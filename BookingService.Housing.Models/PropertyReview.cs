@@ -6,10 +6,11 @@ public sealed class PropertyReview
     public int Rating { get; init; }
     public string? Comment { get; init; }
     public DateTime CreatedAt { get; init; }
-    public string? Response { get; set; }
     
     public int GuestId { get; init; }
     
     public int PropertyId { get; init; }
     public Property Property { get; init; } = null!;
+    
+    public ICollection<PropertyReviewResponse> PropertyReviewResponses { get; init; } = new List<PropertyReviewResponse>();
 }

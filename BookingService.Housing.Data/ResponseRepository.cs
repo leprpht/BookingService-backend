@@ -1,0 +1,27 @@
+using BookingService.Database;
+using BookingService.Housing.Models;
+using BookingService.Profile.Model;
+using BookingService.Shared.Repository;
+using Microsoft.EntityFrameworkCore;
+
+namespace BookingServices.Housing.Data;
+
+public class ResponseRepository(BookingServiceDbContext context)
+    : BaseRepository<PropertyReviewResponse>(context), IResponseRepository
+{
+    public async Task<(PropertyReviewResponse Response, Guest User)?> GetPropertyReviewByIdAsync(int id)
+    {
+        var response = await DbSet
+            .Where(r => r.Id == id)
+            .Join(Context.Guests,
+                response => response.UserId,
+                user => user.Id,
+                (response, user) => new { response, user })
+            .SingleOrDefaultAsync();
+        
+        if (response == null)
+            return null;
+        
+        return (response.response, response.user);
+    }
+}

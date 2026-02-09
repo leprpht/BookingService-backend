@@ -19,6 +19,7 @@ public static class HousingModule
     {
         services
             .AddScoped<IPropertyRepository, PropertyRepository>()
+            .AddScoped<IResponseRepository, ResponseRepository>()
             .AddScoped<IReviewRepository, ReviewRepository>()
             .AddScoped<IStayRepository, StayRepository>()
             .AddScoped<IUnitRepository, UnitRepository>();
@@ -30,6 +31,7 @@ public static class HousingModule
     {
         services
             .AddScoped<IPropertyService, PropertyService>()
+            .AddScoped<IResponseService, ResponseService>()
             .AddScoped<IReviewService, ReviewService>()
             .AddScoped<IStayService, StayService>()
             .AddScoped<IUnitService, UnitService>();

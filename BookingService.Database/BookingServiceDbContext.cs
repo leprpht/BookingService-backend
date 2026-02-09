@@ -9,6 +9,7 @@ public class BookingServiceDbContext(DbContextOptions<BookingServiceDbContext> o
     public DbSet<Property> Properties { get; set; } = null!;
     public DbSet<PropertyPicture> PropertyPictures { get; set; } = null!;
     public DbSet<PropertyReview> PropertyReviews { get; set; } = null!;
+    public DbSet<PropertyReviewResponse> PropertyReviewResponses { get; set; } = null!;
     public DbSet<Unit> Units { get; set; } = null!;
     public DbSet<UnitCustomization> UnitCustomizations { get; set; } = null!;
     public DbSet<UnitPicture> UnitPictures { get; set; } = null!;
@@ -19,6 +20,7 @@ public class BookingServiceDbContext(DbContextOptions<BookingServiceDbContext> o
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.RegisterAll(ModelRegistration.RegisterPropertyModels,
+            ModelRegistration.RegisterPropertyReviewModels,
             ModelRegistration.RegisterUnitModels,
             ModelRegistration.RegisterGuestModels,
             ModelRegistration.RegisterOwnerModels);

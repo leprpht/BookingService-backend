@@ -24,4 +24,14 @@ public class ResponseRepository(BookingServiceDbContext context)
         
         return (response.response, response.user);
     }
+    
+    public async Task UpdateCommentAsync(int id, string comment)
+    {
+        var response = await DbSet.SingleOrDefaultAsync(r => r.Id == id);
+        if (response != null)
+        {
+            response.Comment = comment;
+            await Context.SaveChangesAsync();
+        }
+    }
 }

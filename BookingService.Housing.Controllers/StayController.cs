@@ -1,4 +1,5 @@
 using BookingService.Housing.DTOs.Stay;
+using BookingService.Housing.Models;
 using BookingService.Housing.Services;
 using BookingService.Shared.Requests;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +8,7 @@ namespace BookingService.Housing.Controllers;
 
 [ApiController]
 [Route("api/stays")]
-public class StayController(IStayService stayService) : ControllerBase
+public class StayController(IStayService service) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> GetStay(
@@ -15,14 +16,14 @@ public class StayController(IStayService stayService) : ControllerBase
         [FromQuery] PeriodRequest periodRequest,
         [FromBody] PageRequest pageRequest)
     {
-        var stays = await stayService.GetStays(guestId, periodRequest, pageRequest);
+        var stays = await service.GetStays(guestId, periodRequest, pageRequest);
         return Ok(stays);
     }
     
     [HttpGet("{stayId}")]
     public async Task<IActionResult> GetStayDetailsAsync(int stayId)
     {
-        var stay = await stayService.GetStayByIdAsync(stayId);
+        var stay = await service.GetStayByIdAsync(stayId);
         if (stay == null)
         {
             return NotFound();
@@ -34,7 +35,7 @@ public class StayController(IStayService stayService) : ControllerBase
     public async Task<IActionResult> CreateStayAsync(
         [FromBody] StayCreationDto stayCreationDto)
     {
-        await stayService.CreateAsync(stayCreationDto);
+        await service.CreateAsync(stayCreationDto);
         return Created();
     }
 
@@ -48,14 +49,23 @@ public class StayController(IStayService stayService) : ControllerBase
             return BadRequest("Stay ID mismatch.");
         }
         
-        await stayService.UpdateAsync(stayUpdateDto);
+        await service.UpdateAsync(stayUpdateDto);
+        return Ok();
+    }
+    
+    [HttpPatch("{id}/status")]
+    public async Task<IActionResult> UpdateStatusAsync(
+        int id,
+        [FromBody] StayStatus status)
+    {
+        await service.UpdateStatusAsync(id, status);
         return Ok();
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteStayAsync(int id)
     {
-        await stayService.DeleteAsync(id);
+        await service.DeleteAsync(id);
         return NoContent();
     }
 }

@@ -7,4 +7,5 @@ namespace BookingService.Housing.Services;
 public interface IUnitService : IBaseService<UnitCreationDto, UnitUpdateDto>
 {
     Task<UnitDto?> GetUnitDetailsAsync(int unitId, PeriodRequest periodRequest);
+    Task UpdateNameAsync(int id, string name);
 }

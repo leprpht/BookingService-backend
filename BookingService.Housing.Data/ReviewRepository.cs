@@ -89,6 +89,16 @@ public class ReviewRepository(BookingServiceDbContext context)
         await base.AddAsync(review);
     }
     
+    public async Task UpdateCommentAsync(int id, string comment)
+    {
+        var review = await DbSet.SingleOrDefaultAsync(r => r.Id == id);
+        if (review != null)
+        {
+            review.Comment = comment;
+            await Context.SaveChangesAsync();
+        }
+    }
+    
     public override async Task DeleteAsync(int reviewId)
     {
         var property = await Context.Properties.SingleOrDefaultAsync(x => x.Id == reviewId);

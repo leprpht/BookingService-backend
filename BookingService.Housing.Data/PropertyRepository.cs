@@ -78,5 +78,15 @@ public class PropertyRepository(BookingServiceDbContext context)
             (!filter.MinPrice.HasValue || property.Units.Max(u => u.Price) >= filter.MinPrice.Value) &&
             (!filter.MaxPrice.HasValue || property.Units.Min(u => u.Price) <= filter.MaxPrice.Value);
     }
+    
+    public async Task UpdateNameAsync(int propertyId, string name)
+    {
+        var property = await DbSet.SingleOrDefaultAsync(p => p.Id == propertyId);
+        if (property != null)
+        {
+            property.Name = name;
+            await Context.SaveChangesAsync();
+        }
+    }
 }
 

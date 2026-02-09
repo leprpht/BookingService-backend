@@ -9,4 +9,5 @@ public interface IPropertyService : IBaseService<PropertyCreationDto, PropertyUp
 {
     Task<List<PropertyPageDto>> GetAvailablePropertiesAsync(HousingFilterOptions housingFilterOptions, PageRequest pageRequest);
     Task<PropertyListingDto?> GetPropertyDetailsAsync(int propertyId, PeriodRequest periodRequest);
+    Task UpdateNameAsync(int id, string name);
 }

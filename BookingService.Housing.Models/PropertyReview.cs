@@ -4,7 +4,7 @@ public sealed class PropertyReview
 {
     public int Id { get; set; }
     public int Rating { get; init; }
-    public string? Comment { get; init; }
+    public string? Comment { get; set; }
     public DateTime CreatedAt { get; init; }
     
     public int GuestId { get; init; }

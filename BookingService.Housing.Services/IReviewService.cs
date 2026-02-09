@@ -10,4 +10,5 @@ public interface IReviewService : IBaseService<PropertyReviewCreationDto, Proper
     Task<List<PropertyReviewDto>> GetReviewsByPropertyIdAsync(int id, ReviewFilterOptions filterOptions, PageRequest pageRequest);
     Task<List<PropertyReviewDto>> GetReviewsByUserIdAsync(int id, ReviewFilterOptions filterOptions, PageRequest pageRequest);
     Task<PropertyReviewDto?> GetReviewById(int reviewId);
+    Task UpdateCommentAsync(int id, string comment);
 }

@@ -3,7 +3,7 @@ namespace BookingService.Housing.Models;
 public sealed class PropertyReviewResponse
 {
     public int Id { get; set; }
-    public required string Comment { get; init; }
+    public required string Comment { get; set; }
     public DateTime CreatedAt { get; init; }
     
     public int PropertyReviewId { get; init; }

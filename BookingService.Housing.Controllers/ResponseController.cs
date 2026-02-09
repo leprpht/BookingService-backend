@@ -40,6 +40,15 @@ public class ResponseController(IResponseService service) : ControllerBase
         await service.UpdateAsync(responseUpdateDto);
         return NoContent();
     }
+
+    [HttpPatch("{id}/comment")]
+    public async Task<IActionResult> UpdateResponseCommentAsync(
+        int id,
+        [FromBody] string comment)
+    {
+        await service.UpdateCommentAsync(id, comment);
+        return NoContent();
+    }
     
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteResponseAsync(int id)

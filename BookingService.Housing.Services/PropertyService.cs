@@ -26,4 +26,7 @@ public class PropertyService(IPropertyRepository repository, IMapper mapper)
         var property = await repository.GetPropertyAsync(propertyId);
         return property?.ToPropertyListingDto(periodRequest, mapper);
     }
+    
+    public async Task UpdateNameAsync(int id, string name) =>
+        await repository.UpdateNameAsync(id, name);
 }

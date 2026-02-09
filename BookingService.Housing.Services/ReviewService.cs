@@ -32,4 +32,7 @@ public class ReviewService(IReviewRepository repository, IMapper mapper)
         var review = await repository.GetReviewByIdAsync(reviewId);
         return review?.PropertyReview.ToPropertyReviewDto(review.Value.Guest, mapper);
     }
+    
+    public async Task UpdateCommentAsync(int id, string comment) =>
+        await repository.UpdateCommentAsync(id, comment);
 }

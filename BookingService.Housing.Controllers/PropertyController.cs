@@ -8,14 +8,14 @@ namespace BookingService.Housing.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class PropertyController(IPropertyService propertyService) : ControllerBase
+public class PropertyController(IPropertyService service) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> GetPropertiesAsync(
         [FromQuery] HousingFilterOptions housingFilterOptions,
         [FromQuery] PageRequest pageRequest)
     {
-        var properties = await propertyService.GetAvailablePropertiesAsync(housingFilterOptions, pageRequest);
+        var properties = await service.GetAvailablePropertiesAsync(housingFilterOptions, pageRequest);
         return Ok(properties);
     }
     
@@ -24,7 +24,7 @@ public class PropertyController(IPropertyService propertyService) : ControllerBa
         int propertyId,
         [FromQuery] PeriodRequest periodRequest)
     {
-        var property = await propertyService.GetPropertyDetailsAsync(propertyId, periodRequest);
+        var property = await service.GetPropertyDetailsAsync(propertyId, periodRequest);
         if (property == null)
         {
             return NotFound();
@@ -36,7 +36,7 @@ public class PropertyController(IPropertyService propertyService) : ControllerBa
     public async Task<IActionResult> CreatePropertyAsync(
         [FromBody] PropertyCreationDto createPropertyDto)
     {
-        await propertyService.CreateAsync(createPropertyDto);
+        await service.CreateAsync(createPropertyDto);
         return Created();
     }
 
@@ -50,14 +50,23 @@ public class PropertyController(IPropertyService propertyService) : ControllerBa
             return BadRequest("Property ID mismatch.");
         }
 
-        await propertyService.UpdateAsync(propertyUpdateDto);
+        await service.UpdateAsync(propertyUpdateDto);
+        return Ok();
+    }
+    
+    [HttpPatch("{id}/name")]
+    public async Task<IActionResult> UpdatePropertyNameAsync(
+        int id,
+        [FromBody] string name)
+    {
+        await service.UpdateNameAsync(id, name);
         return Ok();
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeletePropertyAsync(int id)
     {
-        await propertyService.DeleteAsync(id);
+        await service.DeleteAsync(id);
         return NoContent();
     }
 }

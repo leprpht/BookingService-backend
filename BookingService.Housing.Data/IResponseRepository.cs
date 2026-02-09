@@ -7,4 +7,5 @@ namespace BookingServices.Housing.Data;
 public interface IResponseRepository : IBaseRepository<PropertyReviewResponse>
 {
     Task<(PropertyReviewResponse Response, Guest User)?> GetPropertyReviewByIdAsync(int id);
+    Task UpdateCommentAsync(int id, string comment);
 }

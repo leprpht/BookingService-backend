@@ -8,7 +8,7 @@ namespace BookingService.Housing.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ReviewController(IReviewService reviewService) : ControllerBase
+public class ReviewController(IReviewService service) : ControllerBase
 {
     [HttpGet("property/{propertyId}")]
     public async Task<IActionResult> GetReviewsByPropertyIdAsync(
@@ -16,7 +16,7 @@ public class ReviewController(IReviewService reviewService) : ControllerBase
         [FromQuery] ReviewFilterOptions filterOptions,
         [FromQuery] PageRequest pageRequest)
     {
-        var reviews = await reviewService.GetReviewsByPropertyIdAsync(propertyId, filterOptions, pageRequest);
+        var reviews = await service.GetReviewsByPropertyIdAsync(propertyId, filterOptions, pageRequest);
         return Ok(reviews);
     }
 
@@ -26,14 +26,14 @@ public class ReviewController(IReviewService reviewService) : ControllerBase
         [FromQuery] ReviewFilterOptions filterOptions,
         [FromQuery] PageRequest pageRequest)
     {
-        var reviews = await reviewService.GetReviewsByUserIdAsync(userId, filterOptions, pageRequest);
+        var reviews = await service.GetReviewsByUserIdAsync(userId, filterOptions, pageRequest);
         return Ok(reviews);
     }
 
     [HttpGet("{reviewId}")]
     public async Task<IActionResult> GetReviewById(int reviewId)
     {
-        var review = await reviewService.GetReviewById(reviewId);
+        var review = await service.GetReviewById(reviewId);
         if (review == null)
         {
             return NotFound();
@@ -45,14 +45,37 @@ public class ReviewController(IReviewService reviewService) : ControllerBase
     public async Task<IActionResult> CreateReviewAsync(
         [FromBody] PropertyReviewCreationDto propertyReviewCreationDto)
     {
-        await reviewService.CreateAsync(propertyReviewCreationDto);
+        await service.CreateAsync(propertyReviewCreationDto);
         return Created();
+    }
+    
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateReviewAsync(
+        int id,
+        [FromBody] PropertyReviewUpdateDto propertyReviewUpdateDto)
+    {
+        if (id != propertyReviewUpdateDto.Id)
+        {
+            return BadRequest("Review ID mismatch.");
+        }
+        
+        await service.UpdateAsync(propertyReviewUpdateDto);
+        return NoContent();
+    }
+
+    [HttpPatch("{id}/comment")]
+    public async Task<IActionResult> UpdateReviewCommentAsync(
+        int id,
+        [FromBody] string comment)
+    {
+        await service.UpdateCommentAsync(id, comment);
+        return NoContent();
     }
     
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteReviewAsync(int id)
     {
-        await reviewService.DeleteAsync(id);
+        await service.DeleteAsync(id);
         return NoContent();
     }
 }

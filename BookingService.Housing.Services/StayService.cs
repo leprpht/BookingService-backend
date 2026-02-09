@@ -27,4 +27,7 @@ public class StayService(IStayRepository repository, IMapper mapper)
         var (stay, property, unit) =  await repository.GetStayById(stayId);
         return stay?.ToStayDto(property, unit, mapper);
     }
+    
+    public async Task UpdateStatusAsync(int stayId, StayStatus status) =>
+        await repository.UpdateStatusAsync(stayId, status);
 }

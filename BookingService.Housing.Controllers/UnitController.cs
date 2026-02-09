@@ -7,14 +7,14 @@ namespace BookingService.Housing.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class UnitController(IUnitService unitService) : ControllerBase
+public class UnitController(IUnitService service) : ControllerBase
 {
     [HttpGet("{unitId}")]
     public async Task<IActionResult> GetUnitDetailsAsync(
         int unitId,
         [FromBody] PeriodRequest periodRequest)
     {
-        var unit = await unitService.GetUnitDetailsAsync(unitId, periodRequest);
+        var unit = await service.GetUnitDetailsAsync(unitId, periodRequest);
         if (unit == null)
         {
             return NotFound();
@@ -26,7 +26,7 @@ public class UnitController(IUnitService unitService) : ControllerBase
     public async Task<IActionResult> CreateUnitAsync(
         [FromBody] UnitCreationDto createUnitDto)
     {
-        await unitService.CreateAsync(createUnitDto);
+        await service.CreateAsync(createUnitDto);
         return Created();
     }
 
@@ -40,14 +40,23 @@ public class UnitController(IUnitService unitService) : ControllerBase
             return BadRequest("Unit ID mismatch.");
         }
 
-        await unitService.UpdateAsync(unitUpdateDto);
+        await service.UpdateAsync(unitUpdateDto);
+        return Ok();
+    }
+    
+    [HttpPatch("{id}/name")]
+    public async Task<IActionResult> UpdateUnitNameAsync(
+        int id,
+        [FromBody] string newName)
+    {
+        await service.UpdateNameAsync(id, newName);
         return Ok();
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteUnitAsync(int id)
     {
-        await unitService.DeleteAsync(id);
+        await service.DeleteAsync(id);
         return NoContent();
     }
 }

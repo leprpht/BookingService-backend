@@ -6,6 +6,6 @@ public class UnitPicture
     public string Url { get; init; } = null!;
     public bool IsCover { get; init; }
 
-    public int UnitId { get; init; }
+    public int UnitId { get; set; }
     public Unit Unit { get; init; } = null!;
 }

@@ -1,0 +1,15 @@
+using AutoMapper;
+using BookingService.Housing.DTOs.Unit;
+using BookingService.Housing.Models;
+using BookingService.Shared.Extensions;
+using BookingService.Shared.Service;
+using BookingServices.Housing.Data.Subrepositories;
+
+namespace BookingService.Housing.Services.Subservices;
+
+public class UnitPictureService(IUnitPictureRepository repository, IMapper mapper)
+    : BaseSubservice<UnitPicture, UnitPictureCreationDto, UnitPictureUpdateDto>(repository), IUnitPictureService
+{
+    protected override UnitPicture MapCreate(int id, UnitPictureCreationDto dto) => dto.ToUnitPicture(id, mapper);
+    protected override UnitPicture MapUpdate(int id, UnitPictureUpdateDto dto) => dto.ToUnitPicture(id, mapper);
+}

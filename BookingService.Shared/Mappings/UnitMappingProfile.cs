@@ -64,5 +64,11 @@ public class UnitMappingProfile : AutoMapper.Profile
                            .ToList()
                    })
                    .ToList());
+        
+        CreateMap<UnitPictureCreationDto, UnitPicture>()
+            .ForMember(d => d.UnitId, o => o.Ignore());
+        
+        CreateMap<UnitPictureUpdateDto, UnitPicture>()
+            .ForMember(d => d.UnitId, o => o.Ignore());
     }
 }

@@ -52,6 +52,20 @@ public static class UnitExtensions
             })
             .ToList();
     }
+    
+    public static UnitPicture ToUnitPicture(this UnitPictureCreationDto dto, int unitId, IMapper mapper)
+    {
+        var picture = mapper.Map<UnitPicture>(dto);
+        picture.UnitId = unitId;
+        return picture;
+    }
+
+    public static UnitPicture ToUnitPicture(this UnitPictureUpdateDto dto, int unitId, IMapper mapper)
+    {
+        var picture = mapper.Map<UnitPicture>(dto);
+        picture.Id = unitId;
+        return picture;
+    }
 
     private static string UnitCustomizationToString(this CustomizationType customization)
     {

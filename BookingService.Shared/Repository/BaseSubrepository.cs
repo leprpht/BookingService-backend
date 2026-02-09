@@ -19,7 +19,7 @@ public abstract class BaseSubrepository<TModel>(BookingServiceDbContext context)
             .ToListAsync();
     }
 
-    public virtual async Task AddRangeAsync(IEnumerable<TModel> entities)
+    public virtual async Task AddRangeAsync(List<TModel> entities)
     {
         var list = entities.ToList();
         if (list.Count == 0)
@@ -29,13 +29,12 @@ public abstract class BaseSubrepository<TModel>(BookingServiceDbContext context)
         await Context.SaveChangesAsync();
     }
 
-    public virtual async Task UpdateRangeAsync(IEnumerable<TModel> entities)
+    public virtual async Task UpdateRangeAsync(List<TModel> entities)
     {
-        var list = entities.ToList();
-        if (list.Count == 0)
+        if (entities.Count == 0)
             return;
         
-        var updateIds = list
+        var updateIds = entities
             .Select(e => e
                 .GetType()
                 .GetProperty("Id")!
@@ -43,16 +42,16 @@ public abstract class BaseSubrepository<TModel>(BookingServiceDbContext context)
             .ToHashSet();
         
         var toDelete = await DbSet
-            .Where(ByParentId((int) list
+            .Where(ByParentId((int) entities
                 .First()
                 .GetType()
                 .GetProperty(ParentIdPropertyName)!
-                .GetValue(list.First())!))
+                .GetValue(entities.First())!))
             .Where(e => !updateIds.Contains(e.GetType().GetProperty("Id")!.GetValue(e)))
             .ToListAsync();
         
         DbSet.RemoveRange(toDelete);
-        DbSet.UpdateRange(list);
+        DbSet.UpdateRange(entities);
         await Context.SaveChangesAsync();
     }
     

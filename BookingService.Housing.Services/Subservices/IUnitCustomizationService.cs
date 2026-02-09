@@ -1,11 +1,9 @@
 using BookingService.Housing.DTOs.Unit;
+using BookingService.Shared.Service;
 
 namespace BookingService.Housing.Services.Subservices;
 
-public interface IUnitCustomizationService
+public interface IUnitCustomizationService : IBaseSubservice<UnitCustomizationCreationDto, UnitCustomizationUpdateDto>
 {
     Task<List<UnitCustomizationDto>> GetUnitCustomizationsAsync(int id);
-    Task AddUnitCustomizationsAsync(int id, List<UnitCustomizationCreationDto> creationList);
-    Task UpdateUnitCustomizationsAsync(int id, List<UnitCustomizationUpdateDto> updateList);
-    Task DeleteUnitCustomizationsAsync(int id);
 }

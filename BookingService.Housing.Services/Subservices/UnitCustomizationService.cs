@@ -1,38 +1,21 @@
 using AutoMapper;
 using BookingService.Housing.DTOs.Unit;
+using BookingService.Housing.Models;
 using BookingService.Shared.Extensions;
+using BookingService.Shared.Service;
 using BookingServices.Housing.Data.Subrepositories;
 
 namespace BookingService.Housing.Services.Subservices;
 
-public class UnitCustomizationService(IUnitCustomizationRepository repository, IMapper mapper) : IUnitCustomizationService
+public class UnitCustomizationService(IUnitCustomizationRepository repository, IMapper mapper)
+    : BaseSubservice<UnitCustomization, UnitCustomizationCreationDto, UnitCustomizationUpdateDto>(repository), IUnitCustomizationService
 {
+    protected override UnitCustomization MapCreate(int id, UnitCustomizationCreationDto dto) => dto.ToUnitCustomization(id, mapper);
+    protected override UnitCustomization MapUpdate(int id, UnitCustomizationUpdateDto dto) => dto.ToUnitCustomization(id, mapper);
+    
     public async Task<List<UnitCustomizationDto>> GetUnitCustomizationsAsync(int id)
     {
         var customizations = await repository.GetAllAsync(id);
         return customizations.ToUnitCustomizationDtoList();
-    }
-
-    public async Task AddUnitCustomizationsAsync(int id, List<UnitCustomizationCreationDto> creationList)
-    {
-        var customizations = creationList
-            .Select(c => c.ToUnitCustomization(id, mapper))
-            .ToList();
-        
-        await repository.AddRangeAsync(customizations);
-    }
-
-    public async Task UpdateUnitCustomizationsAsync(int id, List<UnitCustomizationUpdateDto> updateList)
-    {
-        var customizations = updateList
-            .Select(c => c.ToUnitCustomization(id, mapper))
-            .ToList();
-        
-        await repository.UpdateRangeAsync(customizations);
-    }
-
-    public async Task DeleteUnitCustomizationsAsync(int id)
-    {
-        await repository.DeleteRangeAsync(id);
     }
 }

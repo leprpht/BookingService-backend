@@ -3,7 +3,6 @@ using System.Text.Json.Serialization;
 using BookingService.Auth;
 using BookingService.Database;
 using BookingService.Housing;
-using BookingService.Profile;
 using BookingService.Shared;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;

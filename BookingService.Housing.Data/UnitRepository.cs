@@ -10,7 +10,11 @@ public class UnitRepository(BookingServiceDbContext context)
 {
     public async Task<Unit?> GetUnitAsync(int unitId)
     {
-        return await DbSet.FindAsync(unitId);
+        return await DbSet
+            .Where(u => u.IsActive)
+            .Include(u => u.Customizations)
+            .Include(u => u.Pictures)
+            .SingleOrDefaultAsync(u => u.Id == unitId);
     }
 
     public override async Task DeleteAsync(int id)

@@ -14,9 +14,9 @@ public class StayService(IStayRepository repository, IMapper mapper)
     protected override Stay MapCreate(StayCreationDto dto) => dto.ToStay(mapper);
     protected override Stay MapUpdate(StayUpdateDto dto) => dto.ToStay(mapper);
     
-    public async Task<List<StayDto>> GetStays(int guestId, PeriodRequest periodRequest, PageRequest pageRequest)
+    public async Task<List<StayDto>> GetStays(int userId, PeriodRequest periodRequest, PageRequest pageRequest)
     {
-        var stays = await repository.GetStays(guestId, periodRequest, pageRequest);
+        var stays = await repository.GetStays(userId, periodRequest, pageRequest);
         return stays
             .Select(s => s.Stay.ToStayDto(s.Property, s.Unit, mapper))
             .ToList();

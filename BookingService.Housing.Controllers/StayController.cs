@@ -12,11 +12,11 @@ public class StayController(IStayService service) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> GetStay(
-        int guestId,
+        int userId,
         [FromQuery] PeriodRequest periodRequest,
         [FromBody] PageRequest pageRequest)
     {
-        var stays = await service.GetStays(guestId, periodRequest, pageRequest);
+        var stays = await service.GetStays(userId, periodRequest, pageRequest);
         return Ok(stays);
     }
     

@@ -1,9 +1,13 @@
+using System.Text;
 using System.Text.Json.Serialization;
+using BookingService.Auth;
 using BookingService.Database;
 using BookingService.Housing;
 using BookingService.Profile;
 using BookingService.Shared;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +21,7 @@ builder.Services.AddDbContext<BookingServiceDbContext>(options =>
 builder.Services
     .RegisterSharedModule()
     .RegisterHousingModule()
-    .RegisterProfileModule();
+    .RegisterAuthModule();
 
 builder.Services
     .AddControllers()
@@ -28,6 +32,23 @@ builder.Services
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        var jwt = builder.Configuration.GetSection("Jwt");
+
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(jwt["Key"]!))
+        };
+    });
 
 var app = builder.Build();
 

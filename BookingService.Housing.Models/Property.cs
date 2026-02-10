@@ -10,6 +10,7 @@ public sealed class Property
     public string Country { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public int OwnerId { get; init; }
+    public bool IsActive { get; set; }
     
     public double AverageRating { get; private set; }
     public int ReviewCount { get; private set; }
@@ -18,6 +19,7 @@ public sealed class Property
     public ICollection<Unit> Units { get; init; } = new List<Unit>();
     public ICollection<PropertyPicture> Pictures { get; init; } = new List<PropertyPicture>();
     public ICollection<PropertyReview> Reviews { get; init; } = new List<PropertyReview>();
+    public ICollection<Tag> Tags { get; init; } = new List<Tag>();
     
     public void UpdateRating()
     {

@@ -5,24 +5,21 @@ namespace BookingService.Database;
 
 public static partial class ModelRegistration
 {
-    public static void RegisterGuestModels(this ModelBuilder modelBuilder)
+    public static void RegisterUserModels(this ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Guest>()
+        modelBuilder.Entity<User>()
             .HasMany(e => e.Stays)
             .WithOne()
-            .HasForeignKey(e => e.GuestId)
+            .HasForeignKey(e => e.UserId)
             .IsRequired();
         
-        modelBuilder.Entity<Guest>()
+        modelBuilder.Entity<User>()
             .HasMany(e => e.Reviews)
             .WithOne()
-            .HasForeignKey(e => e.GuestId)
+            .HasForeignKey(e => e.UserId)
             .IsRequired();
-    }
-     
-    public static void RegisterOwnerModels(this ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Owner>()
+        
+        modelBuilder.Entity<User>()
             .HasMany(e => e.Properties)
             .WithOne()
             .HasForeignKey(e => e.OwnerId)

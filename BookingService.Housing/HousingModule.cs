@@ -37,7 +37,6 @@ public static class HousingModule
             .AddScoped<IPropertyPictureRepository, IPropertyPictureRepository>()
             .AddScoped<IUnitCustomizationRepository, UnitCustomizationRepository>()
             .AddScoped<IUnitPictureRepository, UnitPictureRepository>();
-            
         
         return services;
     }

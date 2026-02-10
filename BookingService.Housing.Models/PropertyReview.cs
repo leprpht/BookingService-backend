@@ -7,7 +7,7 @@ public sealed class PropertyReview
     public string? Comment { get; set; }
     public DateTime CreatedAt { get; init; }
     
-    public int GuestId { get; init; }
+    public int UserId { get; init; }
     
     public int PropertyId { get; init; }
     public Property Property { get; init; } = null!;

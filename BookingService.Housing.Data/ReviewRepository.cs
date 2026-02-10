@@ -11,7 +11,7 @@ namespace BookingServices.Housing.Data;
 public class ReviewRepository(BookingServiceDbContext context)
     : BaseRepository<PropertyReview>(context), IReviewRepository
 {
-    public async Task<List<(PropertyReview PropertyReview, Guest Guest)>> GetReviewsByPropertyIdAsync(
+    public async Task<List<(PropertyReview PropertyReview, User User)>> GetReviewsByPropertyIdAsync(
         int id,
         PageRequest pageRequest,
         ReviewFilterOptions filterOptions)
@@ -30,22 +30,22 @@ public class ReviewRepository(BookingServiceDbContext context)
         var pagedReviews = await reviews
             .Skip((pageRequest.PageNumber - 1) * pageRequest.PageSize)
             .Take(pageRequest.PageSize)
-            .Join(Context.Guests,
-                review => review.GuestId,
-                guest => guest.Id,
-                (review, guest) => new { review, guest })
+            .Join(Context.Users,
+                review => review.UserId,
+                user => user.Id,
+                (review, user) => new { review, user })
             .ToListAsync();
 
-        return pagedReviews.Select(x => (x.review, x.guest)).ToList();
+        return pagedReviews.Select(x => (x.review, x.user)).ToList();
     }
 
 
-    public async Task<List<(PropertyReview PropertyReview, Guest Guest)>> GetReviewsByUserIdAsync(
+    public async Task<List<(PropertyReview PropertyReview, User User)>> GetReviewsByUserIdAsync(
         int id,
         PageRequest pageRequest,
         ReviewFilterOptions filterOptions)
     {
-        var reviews = DbSet.Where(x => x.GuestId == id);
+        var reviews = DbSet.Where(x => x.UserId == id);
 
         reviews = filterOptions switch
         {
@@ -59,26 +59,26 @@ public class ReviewRepository(BookingServiceDbContext context)
         var pagedReviews = await reviews
             .Skip((pageRequest.PageNumber - 1) * pageRequest.PageSize)
             .Take(pageRequest.PageSize)
-            .Join(Context.Guests,
-                review => review.GuestId,
-                guest => guest.Id,
-                (review, guest) => new { review, guest })
+            .Join(Context.Users,
+                review => review.UserId,
+                user => user.Id,
+                (review, user) => new { review, user })
             .ToListAsync();
 
-        return pagedReviews.Select(x => (x.review, x.guest)).ToList();
+        return pagedReviews.Select(x => (x.review, x.user)).ToList();
     }
 
-    public async Task<(PropertyReview PropertyReview, Guest Guest)?> GetReviewByIdAsync(int reviewId)
+    public async Task<(PropertyReview PropertyReview, User User)?> GetReviewByIdAsync(int reviewId)
     {
         var result = await DbSet
             .Where(x => x.Id == reviewId)
-            .Join(Context.Guests,
-                review => review.GuestId,
-                guest => guest.Id,
-                (review, guest) => new { review, guest })
+            .Join(Context.Users,
+                review => review.UserId,
+                user => user.Id,
+                (review, user) => new { review, user })
             .SingleOrDefaultAsync();
 
-        return result == null ? null : (result.review, result.guest);
+        return result == null ? null : (result.review, result.user);
     }
 
     public override async Task AddAsync(PropertyReview review)

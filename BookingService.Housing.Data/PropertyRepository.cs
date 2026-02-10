@@ -16,6 +16,7 @@ public class PropertyRepository(BookingServiceDbContext context)
         PageRequest pageRequest)
     {
         return await DbSet
+            .Where(p => p.IsActive)
             .Include(p => p.Units)
             .Include(p => p.Pictures)
             .Include(p => p.Reviews)
@@ -45,6 +46,45 @@ public class PropertyRepository(BookingServiceDbContext context)
     {
         property.UpdateRating();
         await base.UpdateAsync(property);
+    }
+
+    public async Task UpdateNameAsync(int propertyId, string name)
+    {
+        var property = await DbSet.SingleOrDefaultAsync(p => p.Id == propertyId);
+        if (property != null)
+        {
+            property.Name = name;
+            await Context.SaveChangesAsync();
+        }
+    }
+
+    public async Task UpdateDescriptionAsync(int propertyId, string description)
+    {
+        var property = await DbSet.SingleOrDefaultAsync(p => p.Id == propertyId);
+        if (property != null)
+        {
+            property.Description = description;
+            await Context.SaveChangesAsync();
+        }
+    }
+
+    public async Task UpdateTagsAsync(int id, List<int> tagIds)
+    {
+        var property = await DbSet
+            .Include(p => p.Tags)
+            .SingleOrDefaultAsync(p => p.Id == id);
+        
+        if (property == null)
+            return;
+        
+        var tags = await Context.Tags.Where(t => tagIds.Contains(t.Id)).ToListAsync();
+        property.Tags.Clear();
+        
+        foreach (var tag in tags)
+        {
+            property.Tags.Add(tag);
+        }
+        await Context.SaveChangesAsync();
     }
 
     public override async Task DeleteAsync(int id)
@@ -78,25 +118,4 @@ public class PropertyRepository(BookingServiceDbContext context)
             (!filter.MinPrice.HasValue || property.Units.Max(u => u.Price) >= filter.MinPrice.Value) &&
             (!filter.MaxPrice.HasValue || property.Units.Min(u => u.Price) <= filter.MaxPrice.Value);
     }
-    
-    public async Task UpdateNameAsync(int propertyId, string name)
-    {
-        var property = await DbSet.SingleOrDefaultAsync(p => p.Id == propertyId);
-        if (property != null)
-        {
-            property.Name = name;
-            await Context.SaveChangesAsync();
-        }
-    }
-    
-    public async Task UpdateDescriptionAsync(int propertyId, string description)
-    {
-        var property = await DbSet.SingleOrDefaultAsync(p => p.Id == propertyId);
-        if (property != null)
-        {
-            property.Description = description;
-            await Context.SaveChangesAsync();
-        }
-    }
 }
-

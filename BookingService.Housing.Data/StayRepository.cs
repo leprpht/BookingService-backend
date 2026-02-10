@@ -15,7 +15,7 @@ public class StayRepository(BookingServiceDbContext context)
         PageRequest pageRequest)
     {
         return (await DbSet
-                .Where(s => s.GuestId == guestId &&
+                .Where(s => s.UserId == guestId &&
                             s.From >= periodRequest.From &&
                             s.To <= periodRequest.To)
                 .Select(s => new

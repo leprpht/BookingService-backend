@@ -14,15 +14,14 @@ public class BookingServiceDbContext(DbContextOptions<BookingServiceDbContext> o
     public DbSet<UnitCustomization> UnitCustomizations { get; set; } = null!;
     public DbSet<UnitPicture> UnitPictures { get; set; } = null!;
     public DbSet<Stay> Stays { get; set; } = null!;
-    public DbSet<Guest> Guests { get; set; } = null!;
-    public DbSet<Owner> Owners { get; set; } = null!;
+    public DbSet<User> Users { get; set; } = null!;
+    public DbSet<Tag> Tags { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.RegisterAll(ModelRegistration.RegisterPropertyModels,
             ModelRegistration.RegisterPropertyReviewModels,
             ModelRegistration.RegisterUnitModels,
-            ModelRegistration.RegisterGuestModels,
-            ModelRegistration.RegisterOwnerModels);
+            ModelRegistration.RegisterUserModels);
     }
 }

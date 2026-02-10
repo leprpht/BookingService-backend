@@ -9,11 +9,11 @@ namespace BookingServices.Housing.Data;
 public class ResponseRepository(BookingServiceDbContext context)
     : BaseRepository<PropertyReviewResponse>(context), IResponseRepository
 {
-    public async Task<(PropertyReviewResponse Response, Guest User)?> GetPropertyReviewByIdAsync(int id)
+    public async Task<(PropertyReviewResponse Response, User User)?> GetPropertyReviewByIdAsync(int id)
     {
         var response = await DbSet
             .Where(r => r.Id == id)
-            .Join(Context.Guests,
+            .Join(Context.Users,
                 response => response.UserId,
                 user => user.Id,
                 (response, user) => new { response, user })

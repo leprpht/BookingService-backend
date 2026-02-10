@@ -8,7 +8,7 @@ public static partial class HousingModule
     private static IServiceCollection RegisterSubrepositories(this IServiceCollection services)
     {
         services
-            .AddScoped<IPropertyPictureRepository, IPropertyPictureRepository>()
+            .AddScoped<IPropertyPictureRepository, PropertyPictureRepository>()
             .AddScoped<IUnitCustomizationRepository, UnitCustomizationRepository>()
             .AddScoped<IUnitPictureRepository, UnitPictureRepository>();
         

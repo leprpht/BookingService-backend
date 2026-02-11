@@ -47,6 +47,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingService.Auth", "Book
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingService.Auth.Data", "BookingService.Auth.Data\BookingService.Auth.Data.csproj", "{4AD15DA4-73BE-458D-B68D-37E9DF1D10C2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingService.Auth.Policies", "BookingService.Auth.Policies\BookingService.Auth.Policies.csproj", "{67C4FABE-6CB8-4E4A-82C1-76522E0416FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -113,6 +115,10 @@ Global
 		{4AD15DA4-73BE-458D-B68D-37E9DF1D10C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4AD15DA4-73BE-458D-B68D-37E9DF1D10C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4AD15DA4-73BE-458D-B68D-37E9DF1D10C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67C4FABE-6CB8-4E4A-82C1-76522E0416FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67C4FABE-6CB8-4E4A-82C1-76522E0416FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67C4FABE-6CB8-4E4A-82C1-76522E0416FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67C4FABE-6CB8-4E4A-82C1-76522E0416FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5B921BF1-5087-476E-B7B5-0DA6F056DB8C} = {533F245A-5931-48EB-B860-EA0780FE70D6}
@@ -134,5 +140,6 @@ Global
 		{CA9A588C-EC9B-430C-BAD6-AB8E8514CB44} = {298ED2C6-860C-427C-9734-98C37FDDE5C7}
 		{0B2E2062-20A5-43E8-A664-8D0E35756FA4} = {298ED2C6-860C-427C-9734-98C37FDDE5C7}
 		{4AD15DA4-73BE-458D-B68D-37E9DF1D10C2} = {298ED2C6-860C-427C-9734-98C37FDDE5C7}
+		{67C4FABE-6CB8-4E4A-82C1-76522E0416FF} = {298ED2C6-860C-427C-9734-98C37FDDE5C7}
 	EndGlobalSection
 EndGlobal

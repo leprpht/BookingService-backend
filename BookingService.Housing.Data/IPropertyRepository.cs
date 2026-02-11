@@ -11,4 +11,5 @@ public interface IPropertyRepository : IBaseRepository<Property>
     Task<Property?> GetPropertyAsync(int propertyId);
     Task UpdateNameAsync(int id, string name);
     Task UpdateDescriptionAsync(int id, string description);
+    Task UpdateTagsAsync(int id, List<int> tags);
 }

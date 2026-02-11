@@ -11,4 +11,5 @@ public interface IPropertyService : IBaseService<PropertyCreationDto, PropertyUp
     Task<PropertyListingDto?> GetPropertyDetailsAsync(int propertyId, PeriodRequest periodRequest);
     Task UpdateNameAsync(int id, string name);
     Task UpdateDescriptionAsync(int id, string description);
+    Task UpdateTagsAsync(int id, List<int> tags);
 }

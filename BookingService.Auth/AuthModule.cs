@@ -1,17 +1,16 @@
-﻿using BookingService.Auth.Data;
-using BookingService.Auth.Services;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BookingService.Auth;
 
-public static class AuthModule
+public static partial class AuthModule
 {
-    public static IServiceCollection RegisterAuthModule(this IServiceCollection services)
+    public static IServiceCollection RegisterAuthModule(this IServiceCollection services, IConfiguration configuration)
     {
         services
-            .AddScoped<IAuthRepository, AuthRepository>()
-            .AddScoped<IJwtTokenGenerator, JwtTokenGenerator>()
-            .AddScoped<IAuthService, AuthService>();
+            .RegisterServices()
+            .AddAuthenticationConfig(configuration)
+            .AddAuthorizationConfig();
         
         return services;
     }

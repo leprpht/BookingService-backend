@@ -2,6 +2,7 @@ using BookingService.Housing.DTOs.PropertyReview;
 using BookingService.Housing.Services;
 using BookingService.Shared.Filters;
 using BookingService.Shared.Requests;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookingService.Housing.Controllers;
@@ -41,6 +42,7 @@ public class ReviewController(IReviewService service) : ControllerBase
         return Ok(review);
     }
 
+    [Authorize]
     [HttpPost]
     public async Task<IActionResult> CreateReviewAsync(
         [FromBody] PropertyReviewCreationDto propertyReviewCreationDto)
@@ -49,6 +51,7 @@ public class ReviewController(IReviewService service) : ControllerBase
         return Created();
     }
     
+    [Authorize]
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateReviewAsync(
         int id,
@@ -63,6 +66,7 @@ public class ReviewController(IReviewService service) : ControllerBase
         return NoContent();
     }
 
+    [Authorize]
     [HttpPatch("{id}/comment")]
     public async Task<IActionResult> UpdateReviewCommentAsync(
         int id,
@@ -71,7 +75,8 @@ public class ReviewController(IReviewService service) : ControllerBase
         await service.UpdateCommentAsync(id, comment);
         return NoContent();
     }
-    
+
+    [Authorize]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteReviewAsync(int id)
     {

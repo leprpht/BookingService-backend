@@ -2,14 +2,16 @@ using BookingService.Housing.DTOs.Stay;
 using BookingService.Housing.Models;
 using BookingService.Housing.Services;
 using BookingService.Shared.Requests;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookingService.Housing.Controllers;
 
 [ApiController]
-[Route("api/stays")]
+[Route("api/[controller]")]
 public class StayController(IStayService service) : ControllerBase
 {
+    [Authorize]
     [HttpGet]
     public async Task<IActionResult> GetStay(
         int userId,
@@ -20,6 +22,7 @@ public class StayController(IStayService service) : ControllerBase
         return Ok(stays);
     }
     
+    [Authorize]
     [HttpGet("{stayId}")]
     public async Task<IActionResult> GetStayDetailsAsync(int stayId)
     {
@@ -31,6 +34,7 @@ public class StayController(IStayService service) : ControllerBase
         return Ok(stay);
     }
 
+    [Authorize]
     [HttpPost]
     public async Task<IActionResult> CreateStayAsync(
         [FromBody] StayCreationDto stayCreationDto)
@@ -39,6 +43,7 @@ public class StayController(IStayService service) : ControllerBase
         return Created();
     }
 
+    [Authorize]
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateStayAsync(
         int id,
@@ -53,6 +58,7 @@ public class StayController(IStayService service) : ControllerBase
         return Ok();
     }
     
+    [Authorize]
     [HttpPatch("{id}/status")]
     public async Task<IActionResult> UpdateStatusAsync(
         int id,
@@ -62,6 +68,7 @@ public class StayController(IStayService service) : ControllerBase
         return Ok();
     }
 
+    [Authorize]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteStayAsync(int id)
     {

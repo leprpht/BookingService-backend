@@ -2,6 +2,7 @@ using BookingService.Housing.DTOs.Unit;
 using BookingService.Housing.Services;
 using BookingService.Housing.Services.Subservices;
 using BookingService.Shared.Requests;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookingService.Housing.Controllers;
@@ -38,6 +39,7 @@ public class UnitController(
         return Ok(customizations);
     }
 
+    [Authorize]
     [HttpPost]
     public async Task<IActionResult> CreateUnitAsync(
         [FromBody] UnitCreationDto createUnitDto)
@@ -46,6 +48,7 @@ public class UnitController(
         return Created();
     }
 
+    [Authorize]
     [HttpPost("{id}/customizations")]
     public async Task<IActionResult> AddUnitCustomizationsAsync(
         int id,
@@ -55,6 +58,7 @@ public class UnitController(
         return Created();
     }
 
+    [Authorize]
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateUnitAsync(
         int id,
@@ -68,7 +72,8 @@ public class UnitController(
         await service.UpdateAsync(unitUpdateDto);
         return Ok();
     }
-    
+
+    [Authorize]
     [HttpPut("{id}/customizations")]
     public async Task<IActionResult> UpdateUnitCustomizationsAsync(
         int id,
@@ -78,6 +83,7 @@ public class UnitController(
         return Ok();
     }
 
+    [Authorize]
     [HttpPut("{id}/pictures")]
     public async Task<IActionResult> UpdateUnitPicturesAsync(
         int id,
@@ -87,6 +93,7 @@ public class UnitController(
         return Ok();
     }
     
+    [Authorize]
     [HttpPatch("{id}/name")]
     public async Task<IActionResult> UpdateUnitNameAsync(
         int id,
@@ -96,20 +103,23 @@ public class UnitController(
         return Ok();
     }
 
+    [Authorize]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteUnitAsync(int id)
     {
         await service.DeleteAsync(id);
         return NoContent();
     }
-
+    
+    [Authorize]
     [HttpDelete("{id}/customizations")]
     public async Task<IActionResult> DeleteUnitCustomizationsAsync(int id)
     {
         await customizationService.DeleteRangeAsync(id);
         return NoContent();
     }
-    
+
+    [Authorize]
     [HttpDelete("{id}/pictures")]
     public async Task<IActionResult> DeleteUnitPicturesAsync(int id)
     {

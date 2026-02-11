@@ -42,7 +42,6 @@ public class PropertyController(
         return Ok(property);
     }
 
-    
     [HttpPost]
     public async Task<IActionResult> CreatePropertyAsync(
         [FromBody] PropertyCreationDto createPropertyDto)
@@ -53,8 +52,7 @@ public class PropertyController(
         await service.CreateAsync(createPropertyDto);
         return Created();
     }
-    
-    
+
     [HttpPost("{propertyId}/pictures")]
     public async Task<IActionResult> AddPropertyPictureAsync(
         int propertyId,
@@ -68,7 +66,6 @@ public class PropertyController(
         return Created();
     }
 
-    
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdatePropertyAsync(
         [FromQuery] int id,
@@ -84,7 +81,6 @@ public class PropertyController(
         return Ok();
     }
 
-    
     [HttpPut("{id}/pictures")]
     public async Task<IActionResult> UpdatePropertyPicturesAsync(
         int id,
@@ -97,8 +93,7 @@ public class PropertyController(
         await pictureService.UpdateRangeAsync(id, pictureUpdateDtos);
         return Ok();
     }
-    
-    
+
     [HttpPut("{id}/tags")]
     public async Task<IActionResult> UpdatePropertyTagsAsync(
         int id,
@@ -111,8 +106,7 @@ public class PropertyController(
         await service.UpdateTagsAsync(id, tagIds);
         return Ok();
     }
-    
-    
+
     [HttpPatch("{id}/name")]
     public async Task<IActionResult> UpdatePropertyNameAsync(
         int id,
@@ -125,8 +119,7 @@ public class PropertyController(
         await service.UpdateNameAsync(id, name);
         return Ok();
     }
-    
-    
+
     [HttpPatch("{id}/description")]
     public async Task<IActionResult> UpdatePropertyDescriptionAsync(
         int id,
@@ -140,7 +133,6 @@ public class PropertyController(
         return Ok();
     }
 
-    
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeletePropertyAsync(
         int id,
@@ -152,8 +144,7 @@ public class PropertyController(
         await service.DeleteAsync(id);
         return NoContent();
     }
-    
-    
+
     [HttpDelete("{propertyId}/pictures")]
     public async Task<IActionResult> DeletePropertyPicturesAsync(
         int propertyId,

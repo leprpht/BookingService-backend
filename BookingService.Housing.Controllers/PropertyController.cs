@@ -1,5 +1,3 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using BookingService.Housing.DTOs.Property;
 using BookingService.Housing.Services;
 using BookingService.Housing.Services.Subservices;
@@ -157,9 +155,9 @@ public class PropertyController(
         return NoContent();
     }
     
-    private async Task<bool> IsAuthorizedForOwnerAsync(int ownerId)
+    private async Task<bool> IsAuthorizedForOwnerAsync(int id)
     {
-        var authResult = await authorizationService.AuthorizeAsync(User, ownerId, "IdMatch");
+        var authResult = await authorizationService.AuthorizeAsync(User, id, "IdMatch");
         return authResult.Succeeded;
     }
 }

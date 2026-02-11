@@ -5,11 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookingService.Housing.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class ResponseController(IResponseService service) : ControllerBase
 {
     [HttpGet("{id}")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetResponseById(int responseId)
     {
         var response = await service.GetPropertyReviewByIdAsync(responseId);
@@ -20,7 +22,6 @@ public class ResponseController(IResponseService service) : ControllerBase
         return Ok(response);
     }
 
-    [Authorize]
     [HttpPost]
     public async Task<IActionResult> CreateResponseAsync(
         [FromBody] PropertyReviewResponseCreationDto responseCreationDto)
@@ -29,7 +30,6 @@ public class ResponseController(IResponseService service) : ControllerBase
         return Created();
     }
     
-    [Authorize]
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateResponseAsync(
         int id,
@@ -44,7 +44,6 @@ public class ResponseController(IResponseService service) : ControllerBase
         return NoContent();
     }
 
-    [Authorize]
     [HttpPatch("{id}/comment")]
     public async Task<IActionResult> UpdateResponseCommentAsync(
         int id,
@@ -54,7 +53,6 @@ public class ResponseController(IResponseService service) : ControllerBase
         return NoContent();
     }
     
-    [Authorize]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteResponseAsync(int id)
     {

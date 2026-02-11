@@ -7,11 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookingService.Housing.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class ReviewController(IReviewService service) : ControllerBase
 {
     [HttpGet("property/{propertyId}")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetReviewsByPropertyIdAsync(
         int propertyId,
         [FromQuery] ReviewFilterOptions filterOptions,
@@ -22,6 +24,7 @@ public class ReviewController(IReviewService service) : ControllerBase
     }
 
     [HttpGet("user/{userId}")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetReviewsByUserIdAsync(
         int userId,
         [FromQuery] ReviewFilterOptions filterOptions,
@@ -32,6 +35,7 @@ public class ReviewController(IReviewService service) : ControllerBase
     }
 
     [HttpGet("{reviewId}")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetReviewById(int reviewId)
     {
         var review = await service.GetReviewById(reviewId);
@@ -42,7 +46,6 @@ public class ReviewController(IReviewService service) : ControllerBase
         return Ok(review);
     }
 
-    [Authorize]
     [HttpPost]
     public async Task<IActionResult> CreateReviewAsync(
         [FromBody] PropertyReviewCreationDto propertyReviewCreationDto)
@@ -50,8 +53,7 @@ public class ReviewController(IReviewService service) : ControllerBase
         await service.CreateAsync(propertyReviewCreationDto);
         return Created();
     }
-    
-    [Authorize]
+
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateReviewAsync(
         int id,
@@ -66,7 +68,6 @@ public class ReviewController(IReviewService service) : ControllerBase
         return NoContent();
     }
 
-    [Authorize]
     [HttpPatch("{id}/comment")]
     public async Task<IActionResult> UpdateReviewCommentAsync(
         int id,
@@ -76,7 +77,6 @@ public class ReviewController(IReviewService service) : ControllerBase
         return NoContent();
     }
 
-    [Authorize]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteReviewAsync(int id)
     {

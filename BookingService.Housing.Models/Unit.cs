@@ -12,6 +12,7 @@ public sealed class Unit
     public ICollection<Stay> Stays { get; init; } = new List<Stay>();
     public ICollection<UnitCustomization> Customizations { get; init; } = new List<UnitCustomization>();
     public ICollection<UnitPicture> Pictures { get; init; } = new List<UnitPicture>();
+    public ICollection<UnitAdditionalServices> AdditionalServices { get; init; } = new List<UnitAdditionalServices>();
     
     public int PropertyId { get; init; }
     public Property Property { get; init; } = null!;

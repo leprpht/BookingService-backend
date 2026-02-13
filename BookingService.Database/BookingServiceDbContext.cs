@@ -13,6 +13,7 @@ public class BookingServiceDbContext(DbContextOptions<BookingServiceDbContext> o
     public DbSet<Unit> Units { get; set; } = null!;
     public DbSet<UnitCustomization> UnitCustomizations { get; set; } = null!;
     public DbSet<UnitPicture> UnitPictures { get; set; } = null!;
+    public DbSet<UnitAdditionalServices> AdditionalServices { get; set; } = null!;
     public DbSet<Stay> Stays { get; set; } = null!;
     public DbSet<User> Users { get; set; } = null!;
     public DbSet<Tag> Tags { get; set; } = null!;

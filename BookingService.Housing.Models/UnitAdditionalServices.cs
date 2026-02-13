@@ -6,4 +6,5 @@ public class UnitAdditionalServices
     public string? Name { get; set; }
     public double? Price { get; set; }
     public int UnitId { get; set; }
+    public Unit Unit { get; set; } = null!;
 }

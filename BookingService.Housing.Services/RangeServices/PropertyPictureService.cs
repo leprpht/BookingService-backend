@@ -3,9 +3,9 @@ using BookingService.Housing.DTOs.Property;
 using BookingService.Housing.Models;
 using BookingService.Shared.Extensions;
 using BookingService.Shared.Service;
-using BookingServices.Housing.Data.Subrepositories;
+using BookingServices.Housing.Data.RangeRepositories;
 
-namespace BookingService.Housing.Services.Subservices;
+namespace BookingService.Housing.Services.RangeServices;
 
 public class PropertyPictureService(IPropertyPictureRepository repository, IMapper mapper) : BaseSubservice<PropertyPicture, PropertyPictureCreationDto, PropertyPictureUpdateDto>(repository), IPropertyPictureService
 {

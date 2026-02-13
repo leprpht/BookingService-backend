@@ -1,11 +1,11 @@
-using BookingServices.Housing.Data.Subrepositories;
+using BookingServices.Housing.Data.RangeRepositories;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BookingService.Housing;
 
 public static partial class HousingModule
 {
-    private static IServiceCollection RegisterSubrepositories(this IServiceCollection services)
+    private static IServiceCollection RegisterRangeRepositories(this IServiceCollection services)
     {
         services
             .AddScoped<IPropertyPictureRepository, PropertyPictureRepository>()

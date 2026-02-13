@@ -4,7 +4,7 @@ using BookingService.Housing.Models;
 using BookingService.Shared.Repository;
 using Microsoft.EntityFrameworkCore;
 
-namespace BookingServices.Housing.Data.Subrepositories;
+namespace BookingServices.Housing.Data.RangeRepositories;
 
 public class UnitCustomizationRepository(BookingServiceDbContext context)
     : BaseSubrepository<UnitCustomization>(context), IUnitCustomizationRepository

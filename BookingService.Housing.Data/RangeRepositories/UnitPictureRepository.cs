@@ -3,7 +3,7 @@ using BookingService.Database;
 using BookingService.Housing.Models;
 using BookingService.Shared.Repository;
 
-namespace BookingServices.Housing.Data.Subrepositories;
+namespace BookingServices.Housing.Data.RangeRepositories;
 
 public class UnitPictureRepository(BookingServiceDbContext context)
     : BaseSubrepository<UnitPicture>(context), IUnitPictureRepository

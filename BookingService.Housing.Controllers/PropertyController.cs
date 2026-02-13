@@ -1,6 +1,6 @@
 using BookingService.Housing.DTOs.Property;
 using BookingService.Housing.Services;
-using BookingService.Housing.Services.Subservices;
+using BookingService.Housing.Services.RangeServices;
 using BookingService.Shared.Filters;
 using BookingService.Shared.Requests;
 using Microsoft.AspNetCore.Authorization;

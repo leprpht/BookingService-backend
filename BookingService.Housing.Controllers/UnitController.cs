@@ -1,6 +1,6 @@
 using BookingService.Housing.DTOs.Unit;
 using BookingService.Housing.Services;
-using BookingService.Housing.Services.Subservices;
+using BookingService.Housing.Services.RangeServices;
 using BookingService.Shared.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +13,8 @@ namespace BookingService.Housing.Controllers;
 public class UnitController(
     IUnitService service,
     IUnitCustomizationService customizationService,
-    IUnitPictureService pictureService)
+    IUnitPictureService pictureService,
+    IUnitAdditionalService additionalService)
     : ControllerBase
 {
     [HttpGet("{unitId}")]
@@ -42,6 +43,18 @@ public class UnitController(
         return Ok(customizations);
     }
 
+    [HttpGet("{unitId}/services")]
+    [AllowAnonymous]
+    public async Task<IActionResult> GetUnitAdditionalServicesAsync(int unitId)
+    {
+        var services = await additionalService.GetUnitAdditionalServicesAsync(unitId);
+        if (services.Count == 0)
+        {
+            return NotFound();
+        }
+        return Ok(services);
+    }
+
     [HttpPost]
     public async Task<IActionResult> CreateUnitAsync(
         [FromBody] UnitCreationDto createUnitDto)
@@ -56,6 +69,24 @@ public class UnitController(
         [FromBody] List<UnitCustomizationCreationDto> creationList)
     {
         await customizationService.AddRangeAsync(id, creationList);
+        return Created();
+    }
+    
+    [HttpPost("{id}/pictures")]
+    public async Task<IActionResult> AddUnitPicturesAsync(
+        int id,
+        [FromBody] List<UnitPictureCreationDto> creationList)
+    {
+        await pictureService.AddRangeAsync(id, creationList);
+        return Created();
+    }
+
+    [HttpPost("{id}/services")]
+    public async Task<IActionResult> AddUnitAdditionalServicesAsync(
+        int id,
+        [FromBody] UnitAdditionalServicesCreationDto creationDto)
+    {
+        await additionalService.CreateAsync(creationDto);
         return Created();
     }
 
@@ -97,6 +128,20 @@ public class UnitController(
         [FromBody] string newName)
     {
         await service.UpdateNameAsync(id, newName);
+        return Ok();
+    }
+    
+    [HttpPatch("{id}/services")]
+    public async Task<IActionResult> UpdateUnitAdditionalServiceAsync(
+        int id,
+        [FromBody] UnitAdditionalServicesUpdateDto updateDto)
+    {
+        if (id != updateDto.UnitId)
+        {
+            return BadRequest("Unit ID mismatch.");
+        }
+        
+        await additionalService.UpdateAsync(updateDto);
         return Ok();
     }
 

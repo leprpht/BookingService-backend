@@ -67,6 +67,22 @@ public static class UnitExtensions
         return picture;
     }
 
+    public static UnitAdditionalServices ToUnitAdditionalServices(this UnitAdditionalServicesCreationDto dto, IMapper mapper)
+    {
+        return mapper.Map<UnitAdditionalServices>(dto);
+    }
+    
+    public static UnitAdditionalServices ToUnitAdditionalServices(this UnitAdditionalServicesUpdateDto dto, IMapper mapper)
+    {
+        return mapper.Map<UnitAdditionalServices>(dto);
+    }
+
+    public static UnitAdditionalServicesDto ToUnitAdditionalServicesDto(this UnitAdditionalServices additionalServices,
+        IMapper mapper)
+    {
+        return mapper.Map<UnitAdditionalServicesDto>(additionalServices);
+    }
+
     private static string UnitCustomizationToString(this CustomizationType customization)
     {
         return customization switch

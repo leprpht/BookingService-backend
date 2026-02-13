@@ -1,7 +1,7 @@
 using BookingService.Housing.DTOs.Unit;
 using BookingService.Shared.Service;
 
-namespace BookingService.Housing.Services.Subservices;
+namespace BookingService.Housing.Services.RangeServices;
 
 public interface IUnitCustomizationService : IBaseSubservice<UnitCustomizationCreationDto, UnitCustomizationUpdateDto>
 {

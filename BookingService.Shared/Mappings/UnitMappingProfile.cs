@@ -70,5 +70,11 @@ public class UnitMappingProfile : AutoMapper.Profile
         
         CreateMap<UnitPictureUpdateDto, UnitPicture>()
             .ForMember(d => d.UnitId, o => o.Ignore());
+        
+        CreateMap<UnitAdditionalServices, UnitAdditionalServicesDto>();
+
+        CreateMap<UnitAdditionalServicesCreationDto, UnitAdditionalServices>();
+
+        CreateMap<UnitAdditionalServicesUpdateDto, UnitAdditionalServices>();
     }
 }

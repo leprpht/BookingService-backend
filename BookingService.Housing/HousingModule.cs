@@ -1,7 +1,4 @@
-﻿using BookingService.Housing.Services;
-using BookingService.Housing.Services.Subservices;
-using BookingServices.Housing.Data.Subrepositories;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace BookingService.Housing;
 
@@ -11,9 +8,9 @@ public static partial class HousingModule
     {
         services
             .RegisterRepositories()
-            .RegisterSubrepositories()
+            .RegisterRangeRepositories()
             .RegisterServices()
-            .RegisterSubservices();
+            .RegisterRangeServices();
         
         return services;
     }

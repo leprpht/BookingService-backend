@@ -3,4 +3,4 @@ using BookingService.Shared.Repository;
 
 namespace BookingServices.Housing.Data.RangeRepositories;
 
-public interface IUnitPictureRepository : IBaseSubrepository<UnitPicture>;
+public interface IUnitPictureRepository : IBaseRangeRepository<UnitPicture>;

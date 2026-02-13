@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace BookingServices.Housing.Data.RangeRepositories;
 
 public class UnitCustomizationRepository(BookingServiceDbContext context)
-    : BaseSubrepository<UnitCustomization>(context), IUnitCustomizationRepository
+    : BaseRangeRepository<UnitCustomization>(context), IUnitCustomizationRepository
 {
     protected override Expression<Func<UnitCustomization, bool>> ByParentId(int unitId) 
         => uc => uc.UnitId == unitId;

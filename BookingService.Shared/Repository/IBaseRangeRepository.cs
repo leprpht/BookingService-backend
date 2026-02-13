@@ -1,6 +1,6 @@
 namespace BookingService.Shared.Repository;
 
-public interface IBaseSubrepository<T> where T : class
+public interface IBaseRangeRepository<T> where T : class
 {
     Task<List<T>> GetAllAsync(int id);
     Task AddRangeAsync(List<T> entity);

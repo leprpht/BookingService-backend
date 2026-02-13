@@ -3,4 +3,4 @@ using BookingService.Shared.Service;
 
 namespace BookingService.Housing.Services.RangeServices;
 
-public interface IUnitPictureService : IBaseSubservice<UnitPictureCreationDto, UnitPictureUpdateDto>;
+public interface IUnitPictureService : IBaseRangeService<UnitPictureCreationDto, UnitPictureUpdateDto>;

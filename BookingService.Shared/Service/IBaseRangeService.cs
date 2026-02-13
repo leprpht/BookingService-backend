@@ -1,6 +1,6 @@
 namespace BookingService.Shared.Service;
 
-public interface IBaseSubservice<TCreateDto, TUpdateDto>
+public interface IBaseRangeService<TCreateDto, TUpdateDto>
 {
     Task AddRangeAsync(int id, List<TCreateDto> createDto);
     Task UpdateRangeAsync(int id, List<TUpdateDto> updateDto);

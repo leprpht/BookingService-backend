@@ -2,8 +2,8 @@ using BookingService.Shared.Repository;
 
 namespace BookingService.Shared.Service;
 
-public abstract class BaseSubservice<TModel, TCreateDto, TUpdateDto>(IBaseSubrepository<TModel> repository)
-     : IBaseSubservice<TCreateDto, TUpdateDto>
+public abstract class BaseRangeService<TModel, TCreateDto, TUpdateDto>(IBaseRangeRepository<TModel> repository)
+     : IBaseRangeService<TCreateDto, TUpdateDto>
     where TModel : class
     where TCreateDto : class
     where TUpdateDto : class

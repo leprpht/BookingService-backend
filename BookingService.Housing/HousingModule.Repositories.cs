@@ -12,6 +12,7 @@ public static partial class HousingModule
             .AddScoped<IResponseRepository, ResponseRepository>()
             .AddScoped<IReviewRepository, ReviewRepository>()
             .AddScoped<IStayRepository, StayRepository>()
+            .AddScoped<IUnitAdditionalServicesRepository, UnitAdditionalServicesRepository>()
             .AddScoped<IUnitRepository, UnitRepository>();
         
         return services;

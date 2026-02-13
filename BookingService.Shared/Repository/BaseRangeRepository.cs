@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace BookingService.Shared.Repository;
 
-public abstract class BaseSubrepository<TModel>(BookingServiceDbContext context) : IBaseSubrepository<TModel>
+public abstract class BaseRangeRepository<TModel>(BookingServiceDbContext context) : IBaseRangeRepository<TModel>
     where TModel : class
 {
     protected readonly BookingServiceDbContext Context = context;

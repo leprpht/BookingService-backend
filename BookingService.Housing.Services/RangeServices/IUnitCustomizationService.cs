@@ -3,7 +3,7 @@ using BookingService.Shared.Service;
 
 namespace BookingService.Housing.Services.RangeServices;
 
-public interface IUnitCustomizationService : IBaseSubservice<UnitCustomizationCreationDto, UnitCustomizationUpdateDto>
+public interface IUnitCustomizationService : IBaseRangeService<UnitCustomizationCreationDto, UnitCustomizationUpdateDto>
 {
     Task<List<UnitCustomizationDto>> GetUnitCustomizationsAsync(int id);
 }

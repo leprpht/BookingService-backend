@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 using BookingService.Auth;
 using BookingService.Database;
 using BookingService.Housing;
+using BookingService.Housing.GraphQL;
 using BookingService.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,7 +13,8 @@ builder.Services
     .RegisterDatabaseModule(connectionString!)
     .RegisterSharedModule()
     .RegisterHousingModule()
-    .RegisterAuthModule(builder.Configuration);
+    .RegisterAuthModule(builder.Configuration)
+    .RegisterGraphQlModule();
 
 builder.Services
     .AddControllers()
@@ -32,6 +34,7 @@ app
     .UseAuthorization();
 
 app.MapControllers();
+app.MapGraphQL();
 
 if (app.Environment.IsDevelopment())
 {

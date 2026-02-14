@@ -10,6 +10,8 @@
     <ItemGroup>
         <PackageReference Include="AutoMapper" Version="12.0.1" />
         <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+        <PackageReference Include="HotChocolate.AspNetCore" Version="15.1.12" />
+        <PackageReference Include="HotChocolate.Data" Version="15.1.12" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.12" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.12"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.12" />
@@ -32,6 +34,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\BookingService.Auth\BookingService.Auth.csproj" />
+      <ProjectReference Include="..\BookingService.Housing.GraphQL\BookingService.Housing.GraphQL.csproj" />
       <ProjectReference Include="..\BookingService.Housing\BookingService.Housing.csproj" />
     </ItemGroup>
 

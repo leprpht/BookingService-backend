@@ -10,7 +10,8 @@ public static partial class GraphQlModule
     {
         services
             .AddQueryType<PropertyQuery>()
-            .AddQueryType<UnitQuery>();
+            .AddQueryType<UnitQuery>()
+            .AddQueryType<UnitAdditionalServicesQuery>();
         
         return services;
     }

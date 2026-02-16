@@ -12,6 +12,7 @@ public static partial class GraphQlModule
         services
             .AddType<PropertyType>()
             .AddType<PropertyPageType>()
+            .AddType<UnitAdditionalServicesType>()
             .AddType<UnitCustomizationType>()
             .AddType<UnitListType>()
             .AddType<UnitType>();

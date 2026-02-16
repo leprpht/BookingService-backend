@@ -1,7 +1,5 @@
 using BookingService.Housing.DTOs.Property;
-using BookingService.Shared.Filters;
-using BookingService.Shared.Requests;
-using BookingService.Shared.Service;
+using BookingService.Shared.Infrastructure.Service;
 
 namespace BookingService.Housing.Services;
 

@@ -1,7 +1,6 @@
 using BookingService.Database;
 using BookingService.Housing.Models;
-using BookingService.Profile.Model;
-using BookingService.Shared.Repository;
+using BookingService.Shared.Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookingServices.Housing.Data;

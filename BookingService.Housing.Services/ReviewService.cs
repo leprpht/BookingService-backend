@@ -2,9 +2,7 @@ using AutoMapper;
 using BookingService.Housing.DTOs.PropertyReview;
 using BookingService.Housing.Models;
 using BookingService.Shared.Extensions;
-using BookingService.Shared.Filters;
-using BookingService.Shared.Requests;
-using BookingService.Shared.Service;
+using BookingService.Shared.Infrastructure.Service;
 using BookingServices.Housing.Data;
 
 namespace BookingService.Housing.Services;

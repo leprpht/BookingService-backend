@@ -1,6 +1,6 @@
 ﻿using BookingService.Database;
 using BookingService.Profile.Model;
-using BookingService.Shared.Repository;
+using BookingService.Shared.Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookingService.Auth.Data;

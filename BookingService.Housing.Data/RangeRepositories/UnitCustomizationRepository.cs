@@ -1,8 +1,7 @@
 using System.Linq.Expressions;
 using BookingService.Database;
 using BookingService.Housing.Models;
-using BookingService.Shared.Repository;
-using Microsoft.EntityFrameworkCore;
+using BookingService.Shared.Infrastructure.Repository;
 
 namespace BookingServices.Housing.Data.RangeRepositories;
 

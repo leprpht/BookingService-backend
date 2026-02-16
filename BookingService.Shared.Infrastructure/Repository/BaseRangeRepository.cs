@@ -2,7 +2,7 @@ using BookingService.Database;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace BookingService.Shared.Repository;
+namespace BookingService.Shared.Infrastructure.Repository;
 
 public abstract class BaseRangeRepository<TModel>(BookingServiceDbContext context) : IBaseRangeRepository<TModel>
     where TModel : class

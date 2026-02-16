@@ -1,9 +1,7 @@
 using AutoMapper;
 using BookingService.Housing.DTOs.Property;
 using BookingService.Shared.Extensions;
-using BookingService.Shared.Filters;
-using BookingService.Shared.Requests;
-using BookingService.Shared.Service;
+using BookingService.Shared.Infrastructure.Service;
 using BookingServices.Housing.Data;
 using BookingService.Housing.Models;
 

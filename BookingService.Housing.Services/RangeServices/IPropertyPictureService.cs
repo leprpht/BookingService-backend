@@ -1,5 +1,5 @@
 using BookingService.Housing.DTOs.Property;
-using BookingService.Shared.Service;
+using BookingService.Shared.Infrastructure.Service;
 
 namespace BookingService.Housing.Services.RangeServices;
 

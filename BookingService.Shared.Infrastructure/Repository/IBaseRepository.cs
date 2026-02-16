@@ -1,4 +1,4 @@
-namespace BookingService.Shared.Repository;
+namespace BookingService.Shared.Infrastructure.Repository;
 
 public interface IBaseRepository<in T> where T : class
 {

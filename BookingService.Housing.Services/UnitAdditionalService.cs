@@ -1,10 +1,8 @@
 using AutoMapper;
-using BookingService.Housing.DTOs.Stay;
 using BookingService.Housing.DTOs.Unit;
 using BookingService.Housing.Models;
 using BookingService.Shared.Extensions;
-using BookingService.Shared.Repository;
-using BookingService.Shared.Service;
+using BookingService.Shared.Infrastructure.Service;
 using BookingServices.Housing.Data;
 
 namespace BookingService.Housing.Services;

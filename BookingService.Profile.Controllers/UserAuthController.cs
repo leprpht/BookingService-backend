@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BookingService.Profile.Controllers;
 
 [ApiController]
-[Route("api/user/auth")]
+[Route("api/User/auth")]
 public class UserAuthController(
     IAuthService service): ControllerBase
 {

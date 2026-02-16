@@ -2,8 +2,7 @@ using System.Linq.Expressions;
 using BookingService.Database;
 using BookingService.Housing.Models;
 using BookingService.Shared.Filters;
-using BookingService.Shared.Repository;
-using BookingService.Shared.Requests;
+using BookingService.Shared.Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookingServices.Housing.Data;

@@ -1,4 +1,4 @@
-namespace BookingService.Shared.Service;
+namespace BookingService.Shared.Infrastructure.Service;
 
 public interface IBaseRangeService<TCreateDto, TUpdateDto>
 {

@@ -1,5 +1,5 @@
 using BookingService.Profile.Model;
-using BookingService.Shared.Repository;
+using BookingService.Shared.Infrastructure.Repository;
 
 namespace BookingService.Auth.Data;
 

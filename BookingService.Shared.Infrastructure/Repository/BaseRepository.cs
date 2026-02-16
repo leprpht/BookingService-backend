@@ -1,7 +1,7 @@
 using BookingService.Database;
 using Microsoft.EntityFrameworkCore;
 
-namespace BookingService.Shared.Repository;
+namespace BookingService.Shared.Infrastructure.Repository;
 
 public abstract class BaseRepository<T>(BookingServiceDbContext context) where T : class
 {

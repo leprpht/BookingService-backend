@@ -1,6 +1,5 @@
 using BookingService.Housing.Models;
-using BookingService.Shared.Repository;
-using BookingService.Shared.Requests;
+using BookingService.Shared.Infrastructure.Repository;
 
 namespace BookingServices.Housing.Data;
 

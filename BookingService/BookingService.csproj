@@ -36,6 +36,7 @@
       <ProjectReference Include="..\BookingService.Auth\BookingService.Auth.csproj" />
       <ProjectReference Include="..\BookingService.Housing.GraphQL\BookingService.Housing.GraphQL.csproj" />
       <ProjectReference Include="..\BookingService.Housing\BookingService.Housing.csproj" />
+      <ProjectReference Include="..\BookingService.Profile.Controllers\BookingService.Profile.Controllers.csproj" />
       <ProjectReference Include="..\BookingService.Profile\BookingService.Profile.csproj" />
       <ProjectReference Include="..\BookingService.Search.GraphQL\BookingService.Search.GraphQL.csproj" />
     </ItemGroup>

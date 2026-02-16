@@ -9,9 +9,9 @@ public static class SharedModule
     {
         services
             .AddAutoMapper(
-                typeof(PropertyMappingProfile).Assembly, 
-                typeof(UnitMappingProfile).Assembly, 
-                typeof(UserMappingProfile).Assembly, 
+                typeof(PropertyMappingProfile).Assembly,
+                typeof(UnitMappingProfile).Assembly,
+                typeof(UserMappingProfile).Assembly,
                 typeof(StayMappingProfile).Assembly);
         
         return services;

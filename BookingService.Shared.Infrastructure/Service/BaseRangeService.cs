@@ -1,6 +1,6 @@
-using BookingService.Shared.Repository;
+using BookingService.Shared.Infrastructure.Repository;
 
-namespace BookingService.Shared.Service;
+namespace BookingService.Shared.Infrastructure.Service;
 
 public abstract class BaseRangeService<TModel, TCreateDto, TUpdateDto>(IBaseRangeRepository<TModel> repository)
      : IBaseRangeService<TCreateDto, TUpdateDto>

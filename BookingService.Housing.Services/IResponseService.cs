@@ -1,6 +1,5 @@
 using BookingService.Housing.DTOs.PropertyReview;
-using BookingService.Housing.Models;
-using BookingService.Shared.Service;
+using BookingService.Shared.Infrastructure.Service;
 
 namespace BookingService.Housing.Services;
 

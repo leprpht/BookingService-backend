@@ -12,4 +12,7 @@ public class UserService(IUserRepository repository, IMapper mapper) : IUserServ
         var user = await repository.GetByIdAsync(id);
         return user?.ToUserDto(mapper);
     }
+
+    public Task UpdateUserNameAsync(int id, UserNameUpdate userNameUpdate) =>
+        repository.UpdateUserNameAsync(id, userNameUpdate.FirstName, userNameUpdate.MiddleName, userNameUpdate.LastName);
 }

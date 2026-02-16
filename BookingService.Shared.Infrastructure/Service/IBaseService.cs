@@ -1,4 +1,4 @@
-namespace BookingService.Shared.Service;
+namespace BookingService.Shared.Infrastructure.Service;
 
 public interface IBaseService<in TCreateDto, in TUpdateDto>
     where TCreateDto : class

@@ -2,6 +2,7 @@ using System.Linq.Expressions;
 using BookingService.Database;
 using BookingService.Housing.Models;
 using BookingService.Shared.Filters;
+using BookingService.Shared.Infrastructure.Exceptions;
 using BookingService.Shared.Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,21 +26,23 @@ public class PropertyRepository(BookingServiceDbContext context)
     public async Task UpdateNameAsync(int propertyId, string name)
     {
         var property = await DbSet.SingleOrDefaultAsync(p => p.Id == propertyId);
-        if (property != null)
-        {
-            property.Name = name;
-            await Context.SaveChangesAsync();
-        }
+
+        if (property == null)
+            throw new NotFoundException();
+        
+        property.Name = name;
+        await Context.SaveChangesAsync();
     }
 
     public async Task UpdateDescriptionAsync(int propertyId, string description)
     {
         var property = await DbSet.SingleOrDefaultAsync(p => p.Id == propertyId);
-        if (property != null)
-        {
-            property.Description = description;
-            await Context.SaveChangesAsync();
-        }
+        
+        if (property == null)
+            throw new NotFoundException();
+        
+        property.Description = description;
+        await Context.SaveChangesAsync();
     }
 
     public async Task UpdateTagsAsync(int id, List<int> tagIds)
@@ -49,7 +52,7 @@ public class PropertyRepository(BookingServiceDbContext context)
             .SingleOrDefaultAsync(p => p.Id == id);
         
         if (property == null)
-            return;
+            throw new NotFoundException();
         
         var tags = await Context.Tags.Where(t => tagIds.Contains(t.Id)).ToListAsync();
         property.Tags.Clear();
@@ -76,20 +79,5 @@ public class PropertyRepository(BookingServiceDbContext context)
             .ExecuteDeleteAsync();
 
         await base.DeleteAsync(id);
-    }
-
-    private static Expression<Func<Property, bool>> MatchesFilters(HousingFilterOptions filter)
-    {
-        return property =>
-            property.Units.Any(u =>
-                u.Stays.Any(s =>
-                    s.Status != StayStatus.Cancelled &&
-                    s.From < filter.Period.To &&
-                    s.To > filter.Period.From)) &&
-            (string.IsNullOrEmpty(filter.Name) || property.Name.Contains(filter.Name)) &&
-            (string.IsNullOrEmpty(filter.City) || property.City.Contains(filter.City)) &&
-            (string.IsNullOrEmpty(filter.Country) || property.Country.Contains(filter.Country)) &&
-            (!filter.MinPrice.HasValue || property.Units.Max(u => u.Price) >= filter.MinPrice.Value) &&
-            (!filter.MaxPrice.HasValue || property.Units.Min(u => u.Price) <= filter.MaxPrice.Value);
     }
 }

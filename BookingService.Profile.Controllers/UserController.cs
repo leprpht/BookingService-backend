@@ -15,8 +15,7 @@ public class UserController(IUserService service) : ControllerBase
     [HttpGet]
     [SwaggerOperation(
         Summary = "Get current user profile",
-        Description = "Returns information about the currently authenticated user."
-    )]
+        Description = "Returns information about the currently authenticated user.")]
     [SwaggerResponse(200)]
     [SwaggerResponse(400)]
     [SwaggerResponse(401)]
@@ -37,8 +36,7 @@ public class UserController(IUserService service) : ControllerBase
     [HttpPatch("name")]
     [SwaggerOperation(
         Summary = "Update user name",
-        Description = "Updates the name of the currently authenticated user."
-    )]
+        Description = "Updates the name of the currently authenticated user.")]
     [SwaggerResponse(204)]
     [SwaggerResponse(400)]
     [SwaggerResponse(401)]
@@ -57,8 +55,7 @@ public class UserController(IUserService service) : ControllerBase
     [HttpPatch("email")]
     [SwaggerOperation(
         Summary = "Update user email",
-        Description = "Updates the email of the currently authenticated user."
-    )]
+        Description = "Updates the email of the currently authenticated user.")]
     [SwaggerResponse(204)]
     [SwaggerResponse(400)]
     [SwaggerResponse(401)]

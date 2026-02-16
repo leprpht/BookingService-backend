@@ -1,4 +1,5 @@
 using BookingService.Database;
+using BookingService.Shared.Infrastructure.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookingService.Shared.Infrastructure.Repository;
@@ -23,10 +24,11 @@ public abstract class BaseRepository<T>(BookingServiceDbContext context) where T
     public virtual async Task DeleteAsync(int id)
     {
         var entity = await DbSet.FindAsync(id);
-        if (entity != null)
-        {
-            DbSet.Remove(entity);
-            await Context.SaveChangesAsync();
-        }
+
+        if (entity == null)
+            throw new NotFoundException("Entity not found");
+
+        DbSet.Remove(entity);
+        await Context.SaveChangesAsync();
     }
 }

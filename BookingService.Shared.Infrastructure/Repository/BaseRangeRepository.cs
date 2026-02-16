@@ -25,7 +25,7 @@ public abstract class BaseRangeRepository<TModel>(BookingServiceDbContext contex
     public virtual async Task UpdateRangeAsync(List<TModel> entities)
     {
         if (entities.Count == 0)
-            return;
+            throw new ArgumentException("No entities to update.");
         
         var updateIds = entities
             .Select(e => e
@@ -55,7 +55,7 @@ public abstract class BaseRangeRepository<TModel>(BookingServiceDbContext contex
             .ToListAsync();
 
         if (toDelete.Count == 0)
-            return;
+            throw new ArgumentException("No entities to delete.");
 
         DbSet.RemoveRange(toDelete);
         await Context.SaveChangesAsync();

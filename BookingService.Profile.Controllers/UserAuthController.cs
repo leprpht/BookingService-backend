@@ -13,8 +13,7 @@ public class UserAuthController(
     [HttpPost("register")]
     [SwaggerOperation(
         Summary = "Register a new user",
-        Description = "Registers a new user with the provided email and password."
-    )]
+        Description = "Registers a new user with the provided email and password.")]
     [SwaggerResponse(200)]
     [SwaggerResponse(400)]
     public async Task<IActionResult> Register([FromBody] RegisterRequest request)
@@ -29,6 +28,12 @@ public class UserAuthController(
     }
 
     [HttpPost("login")]
+    [SwaggerOperation(
+        Summary = "Login a user",
+        Description = "Logs in a user with the provided email and password.")]
+    [SwaggerResponse(200)]
+    [SwaggerResponse(400)]
+    
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
         var token = await service.LoginAsync(request.Email, request.Password);

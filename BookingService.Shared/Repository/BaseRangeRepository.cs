@@ -12,13 +12,6 @@ public abstract class BaseRangeRepository<TModel>(BookingServiceDbContext contex
     protected abstract Expression<Func<TModel, bool>> ByParentId(int parentId);
     protected abstract string ParentIdPropertyName { get; }
 
-    public virtual async Task<List<TModel>> GetAllAsync(int id)
-    {
-        return await DbSet
-            .Where(ByParentId(id))
-            .ToListAsync();
-    }
-
     public virtual async Task AddRangeAsync(List<TModel> entities)
     {
         var list = entities.ToList();

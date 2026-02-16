@@ -15,24 +15,6 @@ public class ReviewService(IReviewRepository repository, IMapper mapper)
     protected override PropertyReview MapCreate(PropertyReviewCreationDto dto) => dto.ToPropertyReview(mapper);
     protected override PropertyReview MapUpdate(PropertyReviewUpdateDto dto) => dto.ToPropertyReview(mapper);
     
-    public async Task<List<PropertyReviewDto>> GetReviewsByPropertyIdAsync(int id, ReviewFilterOptions filterOptions, PageRequest pageRequest)
-    {
-        var reviews = await repository.GetReviewsByPropertyIdAsync(id, pageRequest, filterOptions);
-        return reviews.Select(r => r.PropertyReview.ToPropertyReviewDto(r.User, mapper)).ToList();
-    }
-
-    public async Task<List<PropertyReviewDto>> GetReviewsByUserIdAsync(int id, ReviewFilterOptions filterOptions, PageRequest pageRequest)
-    {
-        var reviews = await repository.GetReviewsByUserIdAsync(id, pageRequest, filterOptions);
-        return reviews.Select(r => r.PropertyReview.ToPropertyReviewDto(r.User, mapper)).ToList();
-    }
-
-    public async Task<PropertyReviewDto?> GetReviewById(int reviewId)
-    {
-        var review = await repository.GetReviewByIdAsync(reviewId);
-        return review?.PropertyReview.ToPropertyReviewDto(review.Value.User, mapper);
-    }
-    
     public async Task UpdateCommentAsync(int id, string comment) =>
         await repository.UpdateCommentAsync(id, comment);
 }

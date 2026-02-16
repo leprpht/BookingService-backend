@@ -1,6 +1,6 @@
-using BookingService.Housing.GraphQL.Types.Unit;
+using BookingService.Search.GraphQL.Types.Unit;
 
-namespace BookingService.Housing.GraphQL.Types.Property;
+namespace BookingService.Search.GraphQL.Types.Property;
 
 public class PropertyType
 {

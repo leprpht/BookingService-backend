@@ -8,15 +8,6 @@ namespace BookingServices.Housing.Data;
 public class UnitRepository(BookingServiceDbContext context)
     : BaseRepository<Unit>(context), IUnitRepository
 {
-    public async Task<Unit?> GetUnitAsync(int unitId)
-    {
-        return await DbSet
-            .Where(u => u.IsActive)
-            .Include(u => u.Customizations)
-            .Include(u => u.Pictures)
-            .SingleOrDefaultAsync(u => u.Id == unitId);
-    }
-
     public override async Task DeleteAsync(int id)
     {
         Context.UnitCustomizations

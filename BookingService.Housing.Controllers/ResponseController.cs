@@ -10,18 +10,6 @@ namespace BookingService.Housing.Controllers;
 [Route("api/[controller]")]
 public class ResponseController(IResponseService service) : ControllerBase
 {
-    [HttpGet("{id}")]
-    [AllowAnonymous]
-    public async Task<IActionResult> GetResponseById(int responseId)
-    {
-        var response = await service.GetPropertyReviewByIdAsync(responseId);
-        if (response == null)
-        {
-            return NotFound();
-        }
-        return Ok(response);
-    }
-
     [HttpPost]
     public async Task<IActionResult> CreateResponseAsync(
         [FromBody] PropertyReviewResponseCreationDto responseCreationDto)

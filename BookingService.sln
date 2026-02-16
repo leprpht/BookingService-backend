@@ -49,9 +49,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingService.Auth.Data", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingService.Auth.Policies", "BookingService.Auth.Policies\BookingService.Auth.Policies.csproj", "{67C4FABE-6CB8-4E4A-82C1-76522E0416FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingService.Housing.GraphQL", "BookingService.Housing.GraphQL\BookingService.Housing.GraphQL.csproj", "{C602E99D-69F4-4A3D-9647-5A493B2197D1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingService.Search.GraphQL", "BookingService.Search.GraphQL\BookingService.Search.GraphQL.csproj", "{C602E99D-69F4-4A3D-9647-5A493B2197D1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GraphQL", "GraphQL", "{F9F26669-96EC-4C6C-93B2-A289587A9EE9}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Search", "Search", "{F9F26669-96EC-4C6C-93B2-A289587A9EE9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

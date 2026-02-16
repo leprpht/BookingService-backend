@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 using BookingService.Auth;
 using BookingService.Database;
 using BookingService.Housing;
-using BookingService.Housing.GraphQL;
+using BookingService.Search.GraphQL;
 using BookingService.Shared;
 
 var builder = WebApplication.CreateBuilder(args);

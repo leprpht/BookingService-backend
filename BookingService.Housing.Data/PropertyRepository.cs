@@ -11,31 +11,6 @@ namespace BookingServices.Housing.Data;
 public class PropertyRepository(BookingServiceDbContext context)
     : BaseRepository<Property>(context), IPropertyRepository
 {
-    public async Task<List<Property>> GetAvailablePropertiesAsync(
-        HousingFilterOptions housingFilterOptions,
-        PageRequest pageRequest)
-    {
-        return await DbSet
-            .Where(p => p.IsActive)
-            .Include(p => p.Units)
-            .Include(p => p.Pictures)
-            .Include(p => p.Reviews)
-            .Where(MatchesFilters(housingFilterOptions))
-            .OrderByDescending(p => p.RankingScore)
-            .Skip((pageRequest.PageNumber - 1) * pageRequest.PageSize)
-            .Take(pageRequest.PageSize)
-            .ToListAsync();
-    }
-
-    public async Task<Property?> GetPropertyAsync(int propertyId)
-    {
-        return await DbSet
-            .Include(p => p.Units)
-            .Include(p => p.Pictures)
-            .Include(p => p.Reviews)
-            .SingleOrDefaultAsync(p => p.Id == propertyId);
-    }
-
     public override async Task AddAsync(Property property)
     {
         property.UpdateRating();

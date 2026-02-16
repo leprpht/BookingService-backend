@@ -6,6 +6,5 @@ namespace BookingService.Housing.Services;
 
 public interface IResponseService : IBaseService<PropertyReviewResponseCreationDto, PropertyReviewResponseUpdateDto>
 {
-    Task<PropertyReviewResponseDto?> GetPropertyReviewByIdAsync(int id);
     Task UpdateCommentAsync(int id, string comment);
 }

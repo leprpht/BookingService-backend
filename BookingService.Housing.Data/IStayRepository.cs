@@ -6,7 +6,5 @@ namespace BookingServices.Housing.Data;
 
 public interface IStayRepository : IBaseRepository<Stay>
 {
-    Task<List<(Stay Stay, string Property, string Unit)>> GetStays(int userId, PeriodRequest periodRequest, PageRequest pageRequest);
-    Task<(Stay? Stay, string Property, string Unit)> GetStayById(int stayId);
     Task UpdateStatusAsync(int stayId, StayStatus status);
 }

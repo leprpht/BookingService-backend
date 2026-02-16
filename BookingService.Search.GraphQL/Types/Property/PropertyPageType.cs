@@ -1,4 +1,4 @@
-namespace BookingService.Housing.GraphQL.Types.Property;
+namespace BookingService.Search.GraphQL.Types.Property;
 
 public class PropertyPageType
 {

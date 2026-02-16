@@ -14,12 +14,4 @@ public class UnitAdditionalService(IUnitAdditionalServicesRepository repository,
 {
     protected override UnitAdditionalServices MapCreate(UnitAdditionalServicesCreationDto dto) => dto.ToUnitAdditionalServices(mapper);
     protected override UnitAdditionalServices MapUpdate(UnitAdditionalServicesUpdateDto dto) => dto.ToUnitAdditionalServices(mapper);
-
-    public async Task<List<UnitAdditionalServicesDto>> GetUnitAdditionalServicesAsync(int id)
-    {
-        var additionalServices = await repository.GetUnitAdditionalServicesAsync(id);
-        return additionalServices
-            .Select(s => s.ToUnitAdditionalServicesDto(mapper))
-            .ToList();
-    }
 }

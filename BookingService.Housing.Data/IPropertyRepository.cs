@@ -7,8 +7,6 @@ namespace BookingServices.Housing.Data;
 
 public interface IPropertyRepository : IBaseRepository<Property>
 {
-    Task<List<Property>> GetAvailablePropertiesAsync(HousingFilterOptions housingFilterOptions, PageRequest pageRequest);
-    Task<Property?> GetPropertyAsync(int propertyId);
     Task UpdateNameAsync(int id, string name);
     Task UpdateDescriptionAsync(int id, string description);
     Task UpdateTagsAsync(int id, List<int> tags);

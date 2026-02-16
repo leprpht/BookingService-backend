@@ -12,27 +12,6 @@ namespace BookingService.Housing.Controllers;
 [Route("api/[controller]")]
 public class StayController(IStayService service) : ControllerBase
 {
-    [HttpGet]
-    public async Task<IActionResult> GetStay(
-        int userId,
-        [FromQuery] PeriodRequest periodRequest,
-        [FromBody] PageRequest pageRequest)
-    {
-        var stays = await service.GetStays(userId, periodRequest, pageRequest);
-        return Ok(stays);
-    }
-
-    [HttpGet("{stayId}")]
-    public async Task<IActionResult> GetStayDetailsAsync(int stayId)
-    {
-        var stay = await service.GetStayByIdAsync(stayId);
-        if (stay == null)
-        {
-            return NotFound();
-        }
-        return Ok(stay);
-    }
-
     [HttpPost]
     public async Task<IActionResult> CreateStayAsync(
         [FromBody] StayCreationDto stayCreationDto)

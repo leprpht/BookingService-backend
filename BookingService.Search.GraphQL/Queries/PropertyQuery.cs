@@ -1,12 +1,12 @@
 using BookingService.Database;
-using BookingService.Housing.GraphQL.Types.Property;
-using BookingService.Housing.GraphQL.Types.Unit;
+using BookingService.Search.GraphQL.Types.Property;
+using BookingService.Search.GraphQL.Types.Unit;
 using BookingService.Housing.Models;
 using BookingService.Shared.Filters;
 using BookingService.Shared.Requests;
 using Microsoft.EntityFrameworkCore;
 
-namespace BookingService.Housing.GraphQL;
+namespace BookingService.Search.GraphQL.Queries;
 
 public class PropertyQuery
 {
@@ -55,48 +55,45 @@ public class PropertyQuery
     [UseProjection]
     [UseFiltering]
     [UseSorting]
-    public IQueryable<PropertyType?> GetPropertyDetails(
+    public async Task<PropertyType?> GetPropertyDetails(
         [Service] BookingServiceDbContext context,
         int propertyId,
         PeriodRequest period)
     {
-        var property = context.Properties
+        return await context.Properties
+            .Where(p => p.Id == propertyId)
             .Include(p => p.Units)
                 .ThenInclude(u => u.Stays)
             .Include(p => p.Pictures)
-            .FirstOrDefault(p => p.Id == propertyId);
-        
-        if (property == null)
-            return new PropertyType?[] { null }.AsQueryable();
-
-        var propertyType = new PropertyType
-        {
-            Id = property.Id,
-            Name = property.Name,
-            Address = property.Address,
-            City = property.City,
-            State = property.State,
-            Country = property.Country,
-            Description = property.Description,
-            AverageRating = property.AverageRating,
-            ReviewCount = property.ReviewCount,
-            Pictures = property.Pictures
-                .OrderByDescending(p => p.IsCover)
-                .Select(p => p.Url)
-                .ToList(),
-            Units = property.Units
-                .Select(u => new UnitListType
+            .Select(property => new PropertyType 
             {
-                Id = u.Id,
-                Name = u.Name,
-                Capacity = u.Capacity,
-                Price = (decimal)(u.Price * period.DaysCount),
-                Size = u.Size,
-                IsAvailable = !u.Stays
-                    .Any(s => s.Status != StayStatus.Cancelled && s.From < period.To && s.To > period.From)
-            }).ToList()
-        };
-        
-        return new[] { propertyType }.AsQueryable();
+                Id = property.Id,
+                Name = property.Name,
+                Address = property.Address,
+                City = property.City,
+                State = property.State,
+                Country = property.Country,
+                Description = property.Description,
+                AverageRating = property.AverageRating,
+                ReviewCount = property.ReviewCount,
+                Pictures = property.Pictures
+                    .OrderByDescending(p => p.IsCover)
+                    .Select(p => p.Url)
+                    .ToList(),
+                Units = property.Units
+                    .Select(u => new UnitListType
+                    {
+                        Id = u.Id,
+                        Name = u.Name,
+                        Capacity = u.Capacity,
+                        Price = (decimal)(u.Price * period.DaysCount),
+                        Size = u.Size,
+                        IsAvailable = !u.Stays
+                            .Any(s => s.Status != StayStatus.Cancelled && s.From < period.To && s.To > period.From)
+                    })
+                    .OrderBy(u => u.Price)
+                    .ToList()
+            })
+            .FirstOrDefaultAsync();
     }
 }

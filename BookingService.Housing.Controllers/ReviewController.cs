@@ -12,40 +12,6 @@ namespace BookingService.Housing.Controllers;
 [Route("api/[controller]")]
 public class ReviewController(IReviewService service) : ControllerBase
 {
-    [HttpGet("property/{propertyId}")]
-    [AllowAnonymous]
-    public async Task<IActionResult> GetReviewsByPropertyIdAsync(
-        int propertyId,
-        [FromQuery] ReviewFilterOptions filterOptions,
-        [FromQuery] PageRequest pageRequest)
-    {
-        var reviews = await service.GetReviewsByPropertyIdAsync(propertyId, filterOptions, pageRequest);
-        return Ok(reviews);
-    }
-
-    [HttpGet("user/{userId}")]
-    [AllowAnonymous]
-    public async Task<IActionResult> GetReviewsByUserIdAsync(
-        int userId,
-        [FromQuery] ReviewFilterOptions filterOptions,
-        [FromQuery] PageRequest pageRequest)
-    {
-        var reviews = await service.GetReviewsByUserIdAsync(userId, filterOptions, pageRequest);
-        return Ok(reviews);
-    }
-
-    [HttpGet("{reviewId}")]
-    [AllowAnonymous]
-    public async Task<IActionResult> GetReviewById(int reviewId)
-    {
-        var review = await service.GetReviewById(reviewId);
-        if (review == null)
-        {
-            return NotFound();
-        }
-        return Ok(review);
-    }
-
     [HttpPost]
     public async Task<IActionResult> CreateReviewAsync(
         [FromBody] PropertyReviewCreationDto propertyReviewCreationDto)

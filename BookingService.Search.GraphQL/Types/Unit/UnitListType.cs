@@ -1,4 +1,4 @@
-namespace BookingService.Housing.GraphQL.Types.Unit;
+namespace BookingService.Search.GraphQL.Types.Unit;
 
 public class UnitListType
 {

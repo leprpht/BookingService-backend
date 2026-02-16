@@ -12,12 +12,6 @@ public class ResponseService(IResponseRepository repository, IMapper mapper)
 {
     protected override PropertyReviewResponse MapCreate(PropertyReviewResponseCreationDto dto) => dto.ToPropertyReviewResponse(mapper);
     protected override PropertyReviewResponse MapUpdate(PropertyReviewResponseUpdateDto dto) => dto.ToPropertyReviewResponse(mapper);
-
-    public async Task<PropertyReviewResponseDto?> GetPropertyReviewByIdAsync(int id)
-    {
-        var response = await repository.GetPropertyReviewByIdAsync(id);
-        return response?.Response.ToPropertyReviewResponseDto(response.Value.User, mapper);
-    }
     
     public async Task UpdateCommentAsync(int id, string comment) =>
         await repository.UpdateCommentAsync(id, comment);

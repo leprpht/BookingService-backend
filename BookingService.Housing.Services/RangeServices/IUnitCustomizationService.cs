@@ -3,7 +3,4 @@ using BookingService.Shared.Service;
 
 namespace BookingService.Housing.Services.RangeServices;
 
-public interface IUnitCustomizationService : IBaseRangeService<UnitCustomizationCreationDto, UnitCustomizationUpdateDto>
-{
-    Task<List<UnitCustomizationDto>> GetUnitCustomizationsAsync(int id);
-}
+public interface IUnitCustomizationService : IBaseRangeService<UnitCustomizationCreationDto, UnitCustomizationUpdateDto>;

@@ -3,7 +3,4 @@ using BookingService.Shared.Service;
 
 namespace BookingService.Housing.Services;
 
-public interface IUnitAdditionalService : IBaseService<UnitAdditionalServicesCreationDto, UnitAdditionalServicesUpdateDto>
-{
-    Task<List<UnitAdditionalServicesDto>> GetUnitAdditionalServicesAsync(int id);
-}
+public interface IUnitAdditionalService : IBaseService<UnitAdditionalServicesCreationDto, UnitAdditionalServicesUpdateDto>;

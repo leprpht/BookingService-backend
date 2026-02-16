@@ -16,30 +16,6 @@ public class PropertyController(
     IPropertyPictureService pictureService,
     IAuthorizationService authorizationService) : ControllerBase
 {
-    [HttpGet]
-    [AllowAnonymous]
-    public async Task<IActionResult> GetPropertiesAsync(
-        [FromQuery] HousingFilterOptions housingFilterOptions,
-        [FromQuery] PageRequest pageRequest)
-    {
-        var properties = await service.GetAvailablePropertiesAsync(housingFilterOptions, pageRequest);
-        return Ok(properties);
-    }
-    
-    [HttpGet("{propertyId}")]
-    [AllowAnonymous]
-    public async Task<IActionResult> GetPropertyDetails(
-        int propertyId,
-        [FromQuery] PeriodRequest periodRequest)
-    {
-        var property = await service.GetPropertyDetailsAsync(propertyId, periodRequest);
-        if (property == null)
-        {
-            return NotFound();
-        }
-        return Ok(property);
-    }
-
     [HttpPost]
     public async Task<IActionResult> CreatePropertyAsync(
         [FromBody] PropertyCreationDto createPropertyDto)

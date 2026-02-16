@@ -13,6 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\BookingService.Auth.Services\BookingService.Auth.Services.csproj" />
       <ProjectReference Include="..\BookingService.Housing.Data\BookingService.Housing.Data.csproj" />
       <ProjectReference Include="..\BookingService.Housing.Models\BookingService.Housing.Models.csproj" />
       <ProjectReference Include="..\BookingService.Profile.Model\BookingService.Profile.Model.csproj" />

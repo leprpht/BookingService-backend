@@ -11,4 +11,8 @@
       <ProjectReference Include="..\BookingService.Profile.Services\BookingService.Profile.Services.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="9.0.6" />
+    </ItemGroup>
+
 </Project>

@@ -24,5 +24,9 @@ public static partial class ModelRegistration
             .WithOne()
             .HasForeignKey(e => e.OwnerId)
             .IsRequired();
+        
+        modelBuilder.Entity<User>()
+            .HasIndex(e => e.Email)
+            .IsUnique();
     }
 }

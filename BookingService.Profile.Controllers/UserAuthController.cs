@@ -1,6 +1,7 @@
 ﻿using BookingService.Auth.Services;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace BookingService.Profile.Controllers;
 
@@ -10,6 +11,12 @@ public class UserAuthController(
     IAuthService service): ControllerBase
 {
     [HttpPost("register")]
+    [SwaggerOperation(
+        Summary = "Register a new user",
+        Description = "Registers a new user with the provided email and password."
+    )]
+    [SwaggerResponse(200)]
+    [SwaggerResponse(400)]
     public async Task<IActionResult> Register([FromBody] RegisterRequest request)
     {
         var token = await service.RegisterAsync(request.Email, request.Password);

@@ -1,6 +1,7 @@
 ﻿using System.Security.Cryptography;
 using BookingService.Auth.Data;
 using BookingService.Profile.Model;
+using BookingService.Shared.Utils;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 namespace BookingService.Auth.Services;
@@ -9,6 +10,9 @@ public class AuthService(IAuthRepository repository, IJwtTokenGenerator tokenGen
 {
     public async Task<string?> RegisterAsync(string email, string password)
     {
+        if (!EmailValidator.IsValidEmail(email))
+            throw new FormatException("Invalid email format.");
+        
         var existingUser = await repository.GetByEmailAsync(email);
         if (existingUser != null)
             return null;
@@ -32,6 +36,9 @@ public class AuthService(IAuthRepository repository, IJwtTokenGenerator tokenGen
     
     public async Task<string?> LoginAsync(string email, string password)
     {
+        if (!EmailValidator.IsValidEmail(email))
+            throw new FormatException("Invalid email format.");
+        
         var existingUser = await repository.GetByEmailAsync(email);
         if (existingUser == null)
             return null;

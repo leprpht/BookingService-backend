@@ -5,6 +5,7 @@ using BookingService.Housing;
 using BookingService.Profile;
 using BookingService.Search.GraphQL;
 using BookingService.Shared;
+using BookingService.Shared.Infrastructure.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,11 +27,12 @@ builder.Services
     });
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c => c.EnableAnnotations());
 
 var app = builder.Build();
 
 app
+    .UseMiddleware<ControllerExceptionHandler>()
     .UseHttpsRedirection()
     .UseAuthentication()
     .UseAuthorization();

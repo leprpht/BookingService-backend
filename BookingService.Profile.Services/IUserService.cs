@@ -6,4 +6,5 @@ public interface IUserService
 {
     Task<UserDto?> GetByIdAsync(int id);
     Task UpdateUserNameAsync(int id, UserNameUpdate userNameUpdate);
+    Task UpdateUserEmailAsync(int id, string userEmailUpdate);
 }

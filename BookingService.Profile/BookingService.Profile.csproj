@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\BookingService.Auth.Services\BookingService.Auth.Services.csproj" />
+      <ProjectReference Include="..\BookingService.Profile.Data\BookingService.Profile.Data.csproj" />
       <ProjectReference Include="..\BookingService.Profile.Services\BookingService.Profile.Services.csproj" />
     </ItemGroup>
 

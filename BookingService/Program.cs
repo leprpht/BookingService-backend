@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 using BookingService.Auth;
 using BookingService.Database;
 using BookingService.Housing;
+using BookingService.Profile;
 using BookingService.Search.GraphQL;
 using BookingService.Shared;
 
@@ -13,6 +14,7 @@ builder.Services
     .RegisterDatabaseModule(connectionString!)
     .RegisterSharedModule()
     .RegisterHousingModule()
+    .RegisterProfileModule()
     .RegisterAuthModule(builder.Configuration)
     .RegisterGraphQlModule();
 

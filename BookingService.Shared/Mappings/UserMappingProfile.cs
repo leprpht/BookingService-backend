@@ -13,8 +13,6 @@ public class UserMappingProfile : AutoMapper.Profile
                 o => o.MapFrom(s =>
                     $"{s.FirstName.Trim()} {s.LastName.Trim()}"));
 
-        CreateMap<UserCreationDto, User>();
-
         CreateMap<User, UserDto>();
     }
 }

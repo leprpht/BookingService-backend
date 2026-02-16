@@ -15,15 +15,4 @@ public static class UserExtensions
     {
         return mapper.Map<UserDto>(user);
     }
-
-    public static User ToUser(this UserCreationDto dto, IMapper mapper)
-    {
-        return mapper.Map<User>(dto);
-    }
-
-    public static User ToUser(this UserUpdateDto dto, User existingUser, IMapper mapper)
-    {
-        var user = mapper.Map(dto, existingUser);
-        return user;
-    }
 }

@@ -11,6 +11,7 @@ public class PropertyPageType
     public double Price { get; set; }
     public string? PictureUrl { get; set; }
     public double Rating { get; set; }
+    public double RankingScore { get; set; }
     public int ReviewCount { get; set; }
     public int AvailableUnits { get; set; }
     public IEnumerable<string> Tags { get; set; } = new List<string>();

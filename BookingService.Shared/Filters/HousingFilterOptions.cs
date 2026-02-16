@@ -11,4 +11,5 @@ public sealed class HousingFilterOptions
     public double? MaxPrice { get; init; }
     public double? MinPrice { get; init; }
     public List<int>? Tags { get; set; }
+    public double? MinRating { get; init; }
 }

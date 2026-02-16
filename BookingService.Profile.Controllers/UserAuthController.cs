@@ -2,11 +2,11 @@
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BookService.Auth.Controllers;
+namespace BookingService.Profile.Controllers;
 
 [ApiController]
-[Route("api/auth")]
-public class AuthController(
+[Route("api/user/auth")]
+public class UserAuthController(
     IAuthService service): ControllerBase
 {
     [HttpPost("register")]

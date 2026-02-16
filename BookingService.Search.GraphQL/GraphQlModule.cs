@@ -1,5 +1,3 @@
-using BookingService.Search.GraphQL.Types.Property;
-using BookingService.Search.GraphQL.Types.Unit;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BookingService.Search.GraphQL;
@@ -11,9 +9,7 @@ public static partial class GraphQlModule
         services
             .AddGraphQLServer()
             .AddQueryTypes()
-            .AddType<PropertyType>()
-            .AddType<PropertyPageType>()
-            .AddType<UnitListType>()
+            .AddTypes()
             .AddProjections()
             .AddFiltering()
             .AddSorting();

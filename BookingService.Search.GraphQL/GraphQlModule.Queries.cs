@@ -9,7 +9,8 @@ public static partial class GraphQlModule
     private static IRequestExecutorBuilder AddQueryTypes(this IRequestExecutorBuilder services)
     {
         services
-            .AddQueryType<PropertyQuery>();
+            .AddQueryType<PropertyQuery>()
+            .AddQueryType<UnitQuery>();
         
         return services;
     }

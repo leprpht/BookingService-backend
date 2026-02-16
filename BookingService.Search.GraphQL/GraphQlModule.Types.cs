@@ -1,0 +1,21 @@
+using BookingService.Search.GraphQL.Types.Property;
+using BookingService.Search.GraphQL.Types.Unit;
+using HotChocolate.Execution.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace BookingService.Search.GraphQL;
+
+public static partial class GraphQlModule
+{
+    private static IRequestExecutorBuilder AddTypes(this IRequestExecutorBuilder services)
+    {
+        services
+            .AddType<PropertyType>()
+            .AddType<PropertyPageType>()
+            .AddType<UnitCustomizationType>()
+            .AddType<UnitListType>()
+            .AddType<UnitType>();
+        
+        return services;
+    }
+}

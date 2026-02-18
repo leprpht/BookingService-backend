@@ -17,8 +17,8 @@ public class UserController(IUserService service) : ControllerBase
         Summary = "Get current user profile",
         Description = "Returns information about the currently authenticated user.")]
     [SwaggerResponse(200)]
-    [SwaggerResponse(400)]
     [SwaggerResponse(401)]
+    [SwaggerResponse(404)]
     public async Task<IActionResult> GetUser()
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
@@ -40,6 +40,7 @@ public class UserController(IUserService service) : ControllerBase
     [SwaggerResponse(204)]
     [SwaggerResponse(400)]
     [SwaggerResponse(401)]
+    [SwaggerResponse(404)]
     public async Task<IActionResult> UpdateName([FromBody] UserNameUpdate name)
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
@@ -59,6 +60,7 @@ public class UserController(IUserService service) : ControllerBase
     [SwaggerResponse(204)]
     [SwaggerResponse(400)]
     [SwaggerResponse(401)]
+    [SwaggerResponse(404)]
     [SwaggerResponse(409)]
     public async Task<IActionResult> UpdateEmail([FromBody] string email)
     {

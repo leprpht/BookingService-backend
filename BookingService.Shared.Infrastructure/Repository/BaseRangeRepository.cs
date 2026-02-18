@@ -1,4 +1,5 @@
 using BookingService.Database;
+using BookingService.Shared.Infrastructure.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -55,7 +56,7 @@ public abstract class BaseRangeRepository<TModel>(BookingServiceDbContext contex
             .ToListAsync();
 
         if (toDelete.Count == 0)
-            throw new ArgumentException("No entities to delete.");
+            throw new NotFoundException("No entities found to delete.");
 
         DbSet.RemoveRange(toDelete);
         await Context.SaveChangesAsync();

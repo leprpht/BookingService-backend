@@ -1,5 +1,6 @@
 using BookingService.Database;
 using BookingService.Housing.Models;
+using BookingService.Shared.Infrastructure.Exceptions;
 using BookingService.Shared.Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,13 +24,14 @@ public class UnitRepository(BookingServiceDbContext context)
         await base.DeleteAsync(id);
     }
     
-    public async Task UpdateNameAsync(int propertyId, string name)
+    public async Task UpdateNameAsync(int unitId, string name)
     {
-        var property = await DbSet.SingleOrDefaultAsync(p => p.Id == propertyId);
-        if (property != null)
-        {
-            property.Name = name;
-            await Context.SaveChangesAsync();
-        }
+        var unit = await DbSet.FirstOrDefaultAsync(u => u.Id == unitId);
+        
+        if (unit == null)
+            throw new NotFoundException("Unit not found.");
+        
+        unit.Name = name;
+        await Context.SaveChangesAsync();
     }
 }

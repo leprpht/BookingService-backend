@@ -1,8 +1,6 @@
 using BookingService.Housing.DTOs.Property;
 using BookingService.Housing.Services;
 using BookingService.Housing.Services.RangeServices;
-using BookingService.Shared.Filters;
-using BookingService.Shared.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -23,6 +21,8 @@ public class PropertyController(
         Description = "Creates a new property with the provided data."
         )]
     [SwaggerResponse(201)]
+    [SwaggerResponse(400)]
+    [SwaggerResponse(401)]
     [SwaggerResponse(403)]
     public async Task<IActionResult> CreatePropertyAsync(
         [FromBody] PropertyCreationDto createPropertyDto)
@@ -39,6 +39,8 @@ public class PropertyController(
         Summary = "Add pictures to a property",
         Description = "Adds one or more pictures to the specified property.")]
     [SwaggerResponse(201)]
+    [SwaggerResponse(400)]
+    [SwaggerResponse(401)]
     [SwaggerResponse(403)]
     public async Task<IActionResult> AddPropertyPictureAsync(
         int propertyId,
@@ -58,6 +60,7 @@ public class PropertyController(
         Description = "Updates the details of an existing property.")]
     [SwaggerResponse(200)]
     [SwaggerResponse(400)]
+    [SwaggerResponse(401)]
     [SwaggerResponse(403)]
     [SwaggerResponse(404)]
     public async Task<IActionResult> UpdatePropertyAsync(
@@ -80,6 +83,7 @@ public class PropertyController(
         Description = "Updates the pictures of an existing property.")]
     [SwaggerResponse(200)]
     [SwaggerResponse(400)]
+    [SwaggerResponse(401)]
     [SwaggerResponse(403)]
     public async Task<IActionResult> UpdatePropertyPicturesAsync(
         int id,
@@ -99,6 +103,7 @@ public class PropertyController(
         Description = "Updates the tags associated with an existing property.")]
     [SwaggerResponse(200)]
     [SwaggerResponse(400)]
+    [SwaggerResponse(401)]
     [SwaggerResponse(403)]
     [SwaggerResponse(404)]
     public async Task<IActionResult> UpdatePropertyTagsAsync(
@@ -119,6 +124,7 @@ public class PropertyController(
         Description = "Updates the name of an existing property.")]
     [SwaggerResponse(200)]
     [SwaggerResponse(400)]
+    [SwaggerResponse(401)]
     [SwaggerResponse(403)]
     [SwaggerResponse(404)]
     public async Task<IActionResult> UpdatePropertyNameAsync(
@@ -139,6 +145,7 @@ public class PropertyController(
         Description = "Updates the description of an existing property.")]
     [SwaggerResponse(200)]
     [SwaggerResponse(400)]
+    [SwaggerResponse(401)]
     [SwaggerResponse(403)]
     [SwaggerResponse(404)]
     public async Task<IActionResult> UpdatePropertyDescriptionAsync(
@@ -158,7 +165,9 @@ public class PropertyController(
         Summary = "Delete a property",
         Description = "Deletes an existing property and all its related data.")]
     [SwaggerResponse(204)]
+    [SwaggerResponse(401)]
     [SwaggerResponse(403)]
+    [SwaggerResponse(404)]
     public async Task<IActionResult> DeletePropertyAsync(
         int id,
         [FromQuery] int ownerId)
@@ -175,8 +184,9 @@ public class PropertyController(
         Summary = "Delete property pictures",
         Description = "Deletes all pictures associated with a property.")]
     [SwaggerResponse(204)]
+    [SwaggerResponse(400)]
+    [SwaggerResponse(401)]
     [SwaggerResponse(403)]
-    [SwaggerResponse(404)]
     public async Task<IActionResult> DeletePropertyPicturesAsync(
         int propertyId,
         [FromQuery] int ownerId)

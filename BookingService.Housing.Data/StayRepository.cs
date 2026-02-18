@@ -1,5 +1,6 @@
 using BookingService.Database;
 using BookingService.Housing.Models;
+using BookingService.Shared.Infrastructure.Exceptions;
 using BookingService.Shared.Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,11 +11,12 @@ public class StayRepository(BookingServiceDbContext context)
 {
     public async Task UpdateStatusAsync(int stayId, StayStatus status)
     {
-        var stay = await DbSet.SingleOrDefaultAsync(s => s.Id == stayId);
-        if (stay != null)
-        {
-            stay.Status = status;
-            await Context.SaveChangesAsync();
-        }
+        var stay = await DbSet.FirstOrDefaultAsync(s => s.Id == stayId);
+        
+        if (stay == null)
+            throw new NotFoundException("Stay not found.");
+        
+        stay.Status = status;
+        await Context.SaveChangesAsync();
     }
 }

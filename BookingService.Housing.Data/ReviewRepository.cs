@@ -1,5 +1,6 @@
 using BookingService.Database;
 using BookingService.Housing.Models;
+using BookingService.Shared.Infrastructure.Exceptions;
 using BookingService.Shared.Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,7 +11,7 @@ public class ReviewRepository(BookingServiceDbContext context)
 {
     public override async Task AddAsync(PropertyReview review)
     {
-        var property = await Context.Properties.SingleOrDefaultAsync(x => x.Id == review.PropertyId);
+        var property = await Context.Properties.FirstOrDefaultAsync(x => x.Id == review.PropertyId);
         property?.UpdateRating();
         
         await base.AddAsync(review);
@@ -18,17 +19,18 @@ public class ReviewRepository(BookingServiceDbContext context)
     
     public async Task UpdateCommentAsync(int id, string comment)
     {
-        var review = await DbSet.SingleOrDefaultAsync(r => r.Id == id);
-        if (review != null)
-        {
-            review.Comment = comment;
-            await Context.SaveChangesAsync();
-        }
+        var review = await DbSet.FirstOrDefaultAsync(r => r.Id == id);
+        
+        if (review == null)
+            throw new NotFoundException("Review not found.");
+        
+        review.Comment = comment;
+        await Context.SaveChangesAsync();
     }
     
     public override async Task DeleteAsync(int reviewId)
     {
-        var property = await Context.Properties.SingleOrDefaultAsync(x => x.Id == reviewId);
+        var property = await Context.Properties.FirstOrDefaultAsync(x => x.Id == reviewId);
         property?.UpdateRating();
         
         await base.DeleteAsync(reviewId);

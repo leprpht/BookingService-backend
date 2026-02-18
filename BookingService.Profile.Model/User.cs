@@ -12,7 +12,7 @@ public class User
     public required string Password { get; init; }
     public string? PfpUrl { get; init; }
     public required string Salt { get; init; }
-    public string Role { get; set; } = "User";
+    public required string Role { get; set; } = "User";
     
     public ICollection<Stay> Stays { get; init; } = new List<Stay>();
     public ICollection<PropertyReview> Reviews { get; init; } = new List<PropertyReview>();

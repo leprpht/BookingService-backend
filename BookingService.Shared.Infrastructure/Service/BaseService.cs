@@ -11,19 +11,19 @@ public abstract class BaseService<TModel, TCreateDto, TUpdateDto>(IBaseRepositor
     protected abstract TModel MapCreate(TCreateDto dto);
     protected abstract TModel MapUpdate(TUpdateDto dto);
     
-    public async Task CreateAsync(TCreateDto createDto)
+    public virtual async Task CreateAsync(TCreateDto createDto)
     {
         var model = MapCreate(createDto);
         await repository.AddAsync(model);
     }
 
-    public async Task UpdateAsync(TUpdateDto updateDto)
+    public virtual async Task UpdateAsync(TUpdateDto updateDto)
     {
         var model = MapUpdate(updateDto);
         await repository.UpdateAsync(model);
     }
 
-    public async Task DeleteAsync(int id)
+    public virtual async Task DeleteAsync(int id)
     { 
         await repository.DeleteAsync(id);
     }

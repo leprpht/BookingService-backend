@@ -1,4 +1,3 @@
-using AutoMapper;
 using BookingService.Housing.DTOs.Stay;
 using BookingService.Housing.Models;
 

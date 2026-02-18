@@ -7,6 +7,7 @@ public sealed class Stay
     public DateOnly To { get; init; }
     public double TotalPrice { get; init; }
     public StayStatus Status { get; set; }
+    public double Price { get; set; }
     
     public int UnitId { get; init; }
     public Unit Unit { get; init; } = null!;

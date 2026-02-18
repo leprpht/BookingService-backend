@@ -2,6 +2,7 @@ using AutoMapper;
 using BookingService.Housing.DTOs.Stay;
 using BookingService.Housing.Models;
 using BookingService.Shared.Extensions;
+using BookingService.Shared.Infrastructure.Exceptions;
 using BookingService.Shared.Infrastructure.Service;
 using BookingServices.Housing.Data;
 
@@ -12,7 +13,25 @@ public class StayService(IStayRepository repository, IMapper mapper)
 {
     protected override Stay MapCreate(StayCreationDto dto) => dto.ToStay(mapper);
     protected override Stay MapUpdate(StayUpdateDto dto) => dto.ToStay(mapper);
-    
-    public async Task UpdateStatusAsync(int stayId, StayStatus status) =>
+
+    public override async Task CreateAsync(StayCreationDto createDto)
+    {
+        var stay = MapCreate(createDto);
+        stay.Price = stay.To.DayNumber - stay.From.DayNumber * stay.Unit.Price;
+        
+        await repository.AddAsync(stay);
+    }
+
+    public async Task UpdateStatusAsync(int stayId, int userId, StayStatus status)
+    {
+        var existingStay = await repository.GetByUserIdAsync(userId);
+        
+        if (existingStay == null)
+            throw new NotFoundException("Stay not found.");
+        
+        if (existingStay.Id != stayId)
+            throw new ArgumentException("Stay ID does not match the user's stay.");
+        
         await repository.UpdateStatusAsync(stayId, status);
+    }
 }

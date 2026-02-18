@@ -1,4 +1,3 @@
-using AutoMapper;
 using BookingService.Profile.Dtos;
 using BookingService.Profile.Model;
 
@@ -11,7 +10,9 @@ public class UserMappingProfile : AutoMapper.Profile
         CreateMap<User, UserInfoDto>()
             .ForMember(d => d.FullName,
                 o => o.MapFrom(s =>
-                    $"{s.FirstName.Trim()} {s.LastName.Trim()}"));
+                    $"{(string.IsNullOrEmpty(s.MiddleName)
+                        ? $"{s.FirstName } {s.LastName}" 
+                        : $"{s.FirstName } {s.MiddleName} {s.LastName}")}"));
 
         CreateMap<User, UserDto>();
     }

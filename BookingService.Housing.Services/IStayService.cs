@@ -6,5 +6,5 @@ namespace BookingService.Housing.Services;
 
 public interface IStayService : IBaseService<StayCreationDto, StayUpdateDto>
 {
-    Task UpdateStatusAsync(int stayId, StayStatus status);
+    Task UpdateStatusAsync(int stayId, int userId, StayStatus status);
 }

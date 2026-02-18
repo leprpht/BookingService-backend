@@ -26,7 +26,8 @@ public class AuthService(IAuthRepository repository, IJwtTokenGenerator tokenGen
         {
             Email = email,
             Password = passwordHash,
-            Salt = salt
+            Salt = salt,
+            Role = "User"
         };
 
         var id = await repository.AddAsync(user);

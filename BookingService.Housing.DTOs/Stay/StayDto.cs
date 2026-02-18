@@ -7,5 +7,6 @@ public sealed class StayDto
     public required string UnitName { get; set; }
     public DateOnly From { get; init; }
     public DateOnly To { get; init; }
+    public double Price { get; init; }
     public required string Status { get; set; }
 }

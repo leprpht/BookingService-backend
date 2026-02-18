@@ -10,7 +10,9 @@ public static class ProfileModule
     {
         services
             .AddScoped<IUserRepository, UserRepository>()
-            .AddScoped<IUserService, UserService>();
+            .AddScoped<IUserStayRepository, UserStayRepository>()
+            .AddScoped<IUserService, UserService>()
+            .AddScoped<IUserStayService, UserStayService>();
 
         return services;
     }

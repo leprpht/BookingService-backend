@@ -15,6 +15,15 @@ public static class StayExtensions
     {
         return mapper.Map<Stay>(dto);
     }
+    
+    public static StayDto ToStayDto(this Stay stay, IMapper mapper)
+    {
+        var dto = mapper.Map<StayDto>(stay);
+        dto.PropertyName = stay.Unit.Property.Name;
+        dto.UnitName = stay.Unit.Name;
+        dto.Status = stay.Status.StayStatusToString();
+        return dto;
+    }
 
     public static StayDto ToStayDto(this Stay stay, string property, string unit, IMapper mapper)
     {

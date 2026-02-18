@@ -1,10 +1,12 @@
 namespace BookingService.Shared.Infrastructure.Service;
 
-public interface IBaseService<in TCreateDto, in TUpdateDto>
+public interface IBaseService<TModel, in TCreateDto, in TUpdateDto>
+    where TModel : class
     where TCreateDto : class
     where TUpdateDto : class
 {
-    Task CreateAsync(TCreateDto createDto);
-    Task UpdateAsync(TUpdateDto updateDto);
-    Task DeleteAsync(int id);
+    Task<TModel?> GetByIdAsync(int id);
+    Task CreateAsync(int userId, TCreateDto createDto);
+    Task UpdateAsync(int userId, TUpdateDto updateDto);
+    Task DeleteAsync(int id, int userId);
 }

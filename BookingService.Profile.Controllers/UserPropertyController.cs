@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using BookingService.Housing.DTOs.Property;
 using BookingService.Housing.Services;
 using BookingService.Housing.Services.RangeServices;
@@ -5,21 +6,20 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace BookingService.Housing.Controllers;
+namespace BookingService.Profile.Controllers;
 
 [ApiController]
 [Authorize(Roles = "Admin,Owner")]
-[Route("api/[controller]")]
-public class PropertyController(
+[Route("api/User/properties")]
+public class UserPropertyController(
     IPropertyService service,
-    IPropertyPictureService pictureService,
-    IAuthorizationService authorizationService) : ControllerBase
+    IPropertyPictureService pictureService) : ControllerBase
 {
     [HttpPost]
     [SwaggerOperation(
         Summary = "Create a new property",
         Description = "Creates a new property with the provided data."
-        )]
+    )]
     [SwaggerResponse(201)]
     [SwaggerResponse(400)]
     [SwaggerResponse(401)]
@@ -27,10 +27,13 @@ public class PropertyController(
     public async Task<IActionResult> CreatePropertyAsync(
         [FromBody] PropertyCreationDto createPropertyDto)
     {
-        if (!await IsAuthorizedForOwnerAsync(createPropertyDto.OwnerId))
-            return Forbid();
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userIdClaim == null)
+            return Unauthorized();
         
-        await service.CreateAsync(createPropertyDto);
+        var userId = int.Parse(userIdClaim.Value);
+        
+        await service.CreateAsync(userId, createPropertyDto);
         return Created();
     }
     
@@ -44,16 +47,18 @@ public class PropertyController(
     [SwaggerResponse(403)]
     public async Task<IActionResult> AddPropertyPictureAsync(
         int propertyId,
-        [FromQuery] int ownerId,
         [FromBody] List<PropertyPictureCreationDto> pictureCreationDto)
     {
-        if (!await IsAuthorizedForOwnerAsync(ownerId))
-            return Forbid();
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userIdClaim == null)
+            return Unauthorized();
         
-        await pictureService.AddRangeAsync(propertyId, pictureCreationDto);
+        var userId = int.Parse(userIdClaim.Value);
+        
+        await pictureService.AddRangeAsync(propertyId, userId, pictureCreationDto);
         return Created();
     }
-
+    
     [HttpPut("{id}")]
     [SwaggerOperation(
         Summary = "Update a property",
@@ -64,19 +69,18 @@ public class PropertyController(
     [SwaggerResponse(403)]
     [SwaggerResponse(404)]
     public async Task<IActionResult> UpdatePropertyAsync(
-        [FromQuery] int id,
         [FromBody] PropertyUpdateDto propertyUpdateDto)
     {
-        if (!await IsAuthorizedForOwnerAsync(propertyUpdateDto.OwnerId))
-            return Forbid();
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userIdClaim == null)
+            return Unauthorized();
         
-        if (id != propertyUpdateDto.Id)
-            return BadRequest("Property ID mismatch.");
+        var userId = int.Parse(userIdClaim.Value);
 
-        await service.UpdateAsync(propertyUpdateDto);
+        await service.UpdateAsync(userId, propertyUpdateDto);
         return Ok();
     }
-
+    
     [HttpPut("{id}/pictures")]
     [SwaggerOperation(
         Summary = "Update property pictures",
@@ -87,16 +91,18 @@ public class PropertyController(
     [SwaggerResponse(403)]
     public async Task<IActionResult> UpdatePropertyPicturesAsync(
         int id,
-        [FromQuery] int ownerId,
         [FromBody] List<PropertyPictureUpdateDto> pictureUpdateDtos)
     {
-        if (!await IsAuthorizedForOwnerAsync(ownerId))
-            return Forbid();
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userIdClaim == null)
+            return Unauthorized();
         
-        await pictureService.UpdateRangeAsync(id, pictureUpdateDtos);
+        var userId = int.Parse(userIdClaim.Value);
+        
+        await pictureService.UpdateRangeAsync(id, userId, pictureUpdateDtos);
         return Ok();
     }
-
+    
     [HttpPut("{id}/tags")]
     [SwaggerOperation(
         Summary = "Update property tags",
@@ -108,16 +114,18 @@ public class PropertyController(
     [SwaggerResponse(404)]
     public async Task<IActionResult> UpdatePropertyTagsAsync(
         int id,
-        [FromQuery] int ownerId,
         [FromBody] List<int> tagIds)
     {
-        if (!await IsAuthorizedForOwnerAsync(ownerId))
-            return Forbid();
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userIdClaim == null)
+            return Unauthorized();
         
-        await service.UpdateTagsAsync(id, tagIds);
+        var userId = int.Parse(userIdClaim.Value);
+        
+        await service.UpdateTagsAsync(id, userId, tagIds);
         return Ok();
     }
-
+    
     [HttpPatch("{id}/name")]
     [SwaggerOperation(
         Summary = "Update property name",
@@ -129,16 +137,18 @@ public class PropertyController(
     [SwaggerResponse(404)]
     public async Task<IActionResult> UpdatePropertyNameAsync(
         int id,
-        [FromQuery] int ownerId,
         [FromBody] string name)
     {
-        if (!await IsAuthorizedForOwnerAsync(ownerId))
-            return Forbid();
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userIdClaim == null)
+            return Unauthorized();
         
-        await service.UpdateNameAsync(id, name);
+        var userId = int.Parse(userIdClaim.Value);
+        
+        await service.UpdateNameAsync(id, userId, name);
         return Ok();
     }
-
+    
     [HttpPatch("{id}/description")]
     [SwaggerOperation(
         Summary = "Update property description",
@@ -150,16 +160,18 @@ public class PropertyController(
     [SwaggerResponse(404)]
     public async Task<IActionResult> UpdatePropertyDescriptionAsync(
         int id,
-        [FromQuery] int ownerId,
         [FromBody] string description)
     {
-        if (!await IsAuthorizedForOwnerAsync(ownerId))
-            return Forbid();
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userIdClaim == null)
+            return Unauthorized();
         
-        await service.UpdateDescriptionAsync(id, description);
+        var userId = int.Parse(userIdClaim.Value);
+        
+        await service.UpdateDescriptionAsync(id, userId, description);
         return Ok();
     }
-
+    
     [HttpDelete("{id}")]
     [SwaggerOperation(
         Summary = "Delete a property",
@@ -169,16 +181,18 @@ public class PropertyController(
     [SwaggerResponse(403)]
     [SwaggerResponse(404)]
     public async Task<IActionResult> DeletePropertyAsync(
-        int id,
-        [FromQuery] int ownerId)
+        int id)
     {
-        if (!await IsAuthorizedForOwnerAsync(ownerId))
-            return Forbid();
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userIdClaim == null)
+            return Unauthorized();
         
-        await service.DeleteAsync(id);
+        var userId = int.Parse(userIdClaim.Value);
+        
+        await service.DeleteAsync(id, userId);
         return NoContent();
     }
-
+    
     [HttpDelete("{propertyId}/pictures")]
     [SwaggerOperation(
         Summary = "Delete property pictures",
@@ -188,19 +202,15 @@ public class PropertyController(
     [SwaggerResponse(401)]
     [SwaggerResponse(403)]
     public async Task<IActionResult> DeletePropertyPicturesAsync(
-        int propertyId,
-        [FromQuery] int ownerId)
+        int propertyId)
     {
-        if (!await IsAuthorizedForOwnerAsync(ownerId))
-            return Forbid();
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userIdClaim == null)
+            return Unauthorized();
         
-        await pictureService.DeleteRangeAsync(propertyId);
+        var userId = int.Parse(userIdClaim.Value);
+        
+        await pictureService.DeleteRangeAsync(propertyId, userId);
         return NoContent();
-    }
-    
-    private async Task<bool> IsAuthorizedForOwnerAsync(int id)
-    {
-        var authResult = await authorizationService.AuthorizeAsync(User, id, "IdMatch");
-        return authResult.Succeeded;
     }
 }

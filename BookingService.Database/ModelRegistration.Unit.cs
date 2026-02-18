@@ -30,5 +30,11 @@ public static partial class ModelRegistration
             .WithOne(e => e.Unit)
             .HasForeignKey(e => e.UnitId)
             .IsRequired();
+        
+        modelBuilder.Entity<Unit>()
+            .HasOne(e => e.Property)
+            .WithMany(e => e.Units)
+            .HasForeignKey(e => e.PropertyId)
+            .IsRequired();
     }
 }

@@ -17,4 +17,5 @@ public class User
     public ICollection<Stay> Stays { get; init; } = new List<Stay>();
     public ICollection<PropertyReview> Reviews { get; init; } = new List<PropertyReview>();
     public ICollection<Property> Properties { get; init; } = new List<Property>();
+    public ICollection<Unit> Units { get; init; } = new List<Unit>();
 }

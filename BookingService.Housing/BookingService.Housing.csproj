@@ -11,7 +11,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\BookingService.Housing.Controllers\BookingService.Housing.Controllers.csproj" />
       <ProjectReference Include="..\BookingService.Housing.Data\BookingService.Housing.Data.csproj" />
       <ProjectReference Include="..\BookingService.Housing.Services\BookingService.Housing.Services.csproj" />
     </ItemGroup>

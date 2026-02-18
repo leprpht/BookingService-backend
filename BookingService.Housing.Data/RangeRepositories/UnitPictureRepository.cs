@@ -6,7 +6,7 @@ using BookingService.Shared.Infrastructure.Repository;
 namespace BookingServices.Housing.Data.RangeRepositories;
 
 public class UnitPictureRepository(BookingServiceDbContext context)
-    : BaseRangeRepository<UnitPicture>(context), IUnitPictureRepository
+    : BaseRangeRepository<UnitPicture, Unit>(context), IUnitPictureRepository
 {
     protected override Expression<Func<UnitPicture, bool>> ByParentId(int unitId) 
         => up => up.UnitId == unitId;

@@ -6,12 +6,14 @@ namespace BookingService.Shared.Extensions;
 
 public static class StayExtensions
 {
-    public static Stay ToStay(this StayCreationDto dto, IMapper mapper)
+    public static Stay ToStay(this StayCreationDto dto, int userId, IMapper mapper)
     {
-        return mapper.Map<Stay>(dto);
+        var stay = mapper.Map<Stay>(dto);
+        stay.UserId = userId;
+        return stay;
     }
 
-    public static Stay ToStay(this StayUpdateDto dto, IMapper mapper)
+    public static Stay ToStay(this StayUpdateDto dto, int userId, IMapper mapper)
     {
         return mapper.Map<Stay>(dto);
     }

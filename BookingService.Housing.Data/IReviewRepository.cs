@@ -5,5 +5,5 @@ namespace BookingServices.Housing.Data;
 
 public interface IReviewRepository : IBaseRepository<PropertyReview>
 {
-    Task UpdateCommentAsync(int id, string comment);
+    Task UpdateCommentAsync(int id, int userId, string comment);
 }

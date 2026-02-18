@@ -4,7 +4,7 @@ using BookingService.Shared.Infrastructure.Service;
 
 namespace BookingService.Housing.Services;
 
-public interface IStayService : IBaseService<StayCreationDto, StayUpdateDto>
+public interface IStayService : IBaseService<Stay, StayCreationDto, StayUpdateDto>
 {
     Task UpdateStatusAsync(int stayId, int userId, StayStatus status);
 }

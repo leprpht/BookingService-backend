@@ -6,7 +6,7 @@ using BookingService.Shared.Infrastructure.Repository;
 namespace BookingServices.Housing.Data.RangeRepositories;
 
 public class UnitCustomizationRepository(BookingServiceDbContext context)
-    : BaseRangeRepository<UnitCustomization>(context), IUnitCustomizationRepository
+    : BaseRangeRepository<UnitCustomization, Unit>(context), IUnitCustomizationRepository
 {
     protected override Expression<Func<UnitCustomization, bool>> ByParentId(int unitId) 
         => uc => uc.UnitId == unitId;

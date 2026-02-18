@@ -10,9 +10,9 @@ namespace BookingService.Housing.Services;
 public class ResponseService(IResponseRepository repository, IMapper mapper)
     : BaseService<PropertyReviewResponse, PropertyReviewResponseCreationDto, PropertyReviewResponseUpdateDto>(repository), IResponseService
 {
-    protected override PropertyReviewResponse MapCreate(PropertyReviewResponseCreationDto dto) => dto.ToPropertyReviewResponse(mapper);
-    protected override PropertyReviewResponse MapUpdate(PropertyReviewResponseUpdateDto dto) => dto.ToPropertyReviewResponse(mapper);
+    protected override PropertyReviewResponse MapCreate(int userId, PropertyReviewResponseCreationDto dto) => dto.ToPropertyReviewResponse(userId, mapper);
+    protected override PropertyReviewResponse MapUpdate(int userId, PropertyReviewResponseUpdateDto dto) => dto.ToPropertyReviewResponse(userId, mapper);
     
-    public async Task UpdateCommentAsync(int id, string comment) =>
-        await repository.UpdateCommentAsync(id, comment);
+    public async Task UpdateCommentAsync(int id, int userId, string comment) =>
+        await repository.UpdateCommentAsync(id, userId, comment);
 }

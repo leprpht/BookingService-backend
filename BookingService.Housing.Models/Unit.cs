@@ -16,4 +16,6 @@ public sealed class Unit
     
     public int PropertyId { get; init; }
     public Property Property { get; init; } = null!;
+    
+    public int OwnerId { get; init; }
 }

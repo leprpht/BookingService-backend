@@ -29,16 +29,17 @@ public class BookingController(IStayService service) : ControllerBase
         if (userIdClaim == null)
             return Unauthorized();
         
+        var userId = int.Parse(userIdClaim.Value);
+        
         var stayCreationDto = new StayCreationDto
         {
             UnitId = unitId,
-            UserId = int.Parse(userIdClaim.Value),
             From = period.From,
             To = period.To,
             Status = "Pending"
         };
 
-        service.CreateAsync(stayCreationDto);
+        service.CreateAsync(userId, stayCreationDto);
         return Created();
     }
     

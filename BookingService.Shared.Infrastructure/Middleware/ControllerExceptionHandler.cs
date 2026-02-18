@@ -36,6 +36,12 @@ public class ControllerExceptionHandler(RequestDelegate next, ILogger<Controller
             context.Response.StatusCode = StatusCodes.Status409Conflict;
             await context.Response.WriteAsJsonAsync(new { error = ex.Message });
         }
+        catch (ForbidException ex)
+        {
+            logger.LogError(ex, "The user is not authorized to perform the requested operation.");
+            context.Response.StatusCode = StatusCodes.Status403Forbidden;
+            await context.Response.WriteAsJsonAsync(new { error = ex.Message });
+        }
         catch (Exception ex)
         {
             logger.LogError(ex, "An unhandled exception occurred while processing the request.");

@@ -20,22 +20,28 @@ public static class PropertyExtensions
         return mapper.Map<PropertyPageDto>(property, opt => opt.Items["Period"] = period);
     }
 
-    public static Property ToProperty(this PropertyCreationDto dto, IMapper mapper)
+    public static Property ToProperty(this PropertyCreationDto dto, int userId, IMapper mapper)
     {
-        return mapper.Map<Property>(dto);
+        var property = mapper.Map<Property>(dto);
+        property.OwnerId = userId;
+        return property;
     }
 
-    public static Property ToProperty(this PropertyUpdateDto dto, IMapper mapper)
+    public static Property ToProperty(this PropertyUpdateDto dto, int userId, IMapper mapper)
     {
-        return mapper.Map<Property>(dto);
+        var property = mapper.Map<Property>(dto);
+        property.OwnerId = userId;
+        return property;
     }
 
-    public static PropertyReview ToPropertyReview(this PropertyReviewCreationDto dto, IMapper mapper)
+    public static PropertyReview ToPropertyReview(this PropertyReviewCreationDto dto, int userId, IMapper mapper)
     {
-        return mapper.Map<PropertyReview>(dto);
+        var review = mapper.Map<PropertyReview>(dto);
+        review.UserId = userId;
+        return review;
     }
 
-    public static PropertyReview ToPropertyReview(this PropertyReviewUpdateDto dto, IMapper mapper)
+    public static PropertyReview ToPropertyReview(this PropertyReviewUpdateDto dto, int userId, IMapper mapper)
     {
         return mapper.Map<PropertyReview>(dto);
     }
@@ -44,17 +50,25 @@ public static class PropertyExtensions
     {
         var dto = mapper.Map<PropertyReviewDto>(review);
         dto.User = mapper.Map<UserInfoDto>(user);
+        dto.Responses = review.PropertyReviewResponses
+            .Select(r => r.ToPropertyReviewResponseDto(user, mapper))
+            .OrderBy(r => r.CreatedAt)
+            .ToList();
         return dto;
     }
 
-    public static PropertyReviewResponse ToPropertyReviewResponse(this PropertyReviewResponseCreationDto dto, IMapper mapper)
+    public static PropertyReviewResponse ToPropertyReviewResponse(this PropertyReviewResponseCreationDto dto, int userId, IMapper mapper)
     {
-        return mapper.Map<PropertyReviewResponse>(dto);
+        var response = mapper.Map<PropertyReviewResponse>(dto);
+        response.UserId = userId;
+        return response;
     }
     
-    public static PropertyReviewResponse ToPropertyReviewResponse(this PropertyReviewResponseUpdateDto dto, IMapper mapper)
+    public static PropertyReviewResponse ToPropertyReviewResponse(this PropertyReviewResponseUpdateDto dto, int userId, IMapper mapper)
     {
-        return mapper.Map<PropertyReviewResponse>(dto);
+        var response = mapper.Map<PropertyReviewResponse>(dto);
+        response.UserId = userId;
+        return response;
     }
     
     public static PropertyReviewResponseDto ToPropertyReviewResponseDto(this PropertyReviewResponse response, User user, IMapper mapper)

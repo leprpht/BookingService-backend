@@ -23,29 +23,35 @@ public class PropertyRepository(BookingServiceDbContext context)
         await base.UpdateAsync(property);
     }
 
-    public async Task UpdateNameAsync(int propertyId, string name)
+    public async Task UpdateNameAsync(int propertyId, int ownerId, string name)
     {
         var property = await DbSet.SingleOrDefaultAsync(p => p.Id == propertyId);
 
         if (property == null)
             throw new NotFoundException();
+        
+        if (property.OwnerId != ownerId)
+            throw new ForbidException();
         
         property.Name = name;
         await Context.SaveChangesAsync();
     }
 
-    public async Task UpdateDescriptionAsync(int propertyId, string description)
+    public async Task UpdateDescriptionAsync(int propertyId, int ownerId, string description)
     {
         var property = await DbSet.SingleOrDefaultAsync(p => p.Id == propertyId);
         
         if (property == null)
             throw new NotFoundException();
         
+        if (property.OwnerId != ownerId)
+            throw new ForbidException();
+        
         property.Description = description;
         await Context.SaveChangesAsync();
     }
 
-    public async Task UpdateTagsAsync(int id, List<int> tagIds)
+    public async Task UpdateTagsAsync(int id, int ownerId, List<int> tagIds)
     {
         var property = await DbSet
             .Include(p => p.Tags)
@@ -53,6 +59,9 @@ public class PropertyRepository(BookingServiceDbContext context)
         
         if (property == null)
             throw new NotFoundException();
+        
+        if (property.OwnerId != ownerId)
+            throw new ForbidException();
         
         var tags = await Context.Tags.Where(t => tagIds.Contains(t.Id)).ToListAsync();
         property.Tags.Clear();
@@ -64,7 +73,7 @@ public class PropertyRepository(BookingServiceDbContext context)
         await Context.SaveChangesAsync();
     }
 
-    public override async Task DeleteAsync(int id)
+    public override async Task DeleteAsync(int id, int ownerId)
     {
         await Context.Units
             .Where(u => u.PropertyId == id)
@@ -78,6 +87,6 @@ public class PropertyRepository(BookingServiceDbContext context)
             .Where(p => p.PropertyId == id)
             .ExecuteDeleteAsync();
 
-        await base.DeleteAsync(id);
+        await base.DeleteAsync(id, ownerId);
     }
 }

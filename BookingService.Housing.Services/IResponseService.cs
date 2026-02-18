@@ -1,9 +1,10 @@
 using BookingService.Housing.DTOs.PropertyReview;
+using BookingService.Housing.Models;
 using BookingService.Shared.Infrastructure.Service;
 
 namespace BookingService.Housing.Services;
 
-public interface IResponseService : IBaseService<PropertyReviewResponseCreationDto, PropertyReviewResponseUpdateDto>
+public interface IResponseService : IBaseService<PropertyReviewResponse, PropertyReviewResponseCreationDto, PropertyReviewResponseUpdateDto>
 {
-    Task UpdateCommentAsync(int id, string comment);
+    Task UpdateCommentAsync(int id, int userId, string comment);
 }

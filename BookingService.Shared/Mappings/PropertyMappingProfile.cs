@@ -51,6 +51,7 @@ public class PropertyMappingProfile : AutoMapper.Profile
 
         CreateMap<PropertyReview, PropertyReviewDto>()
             .ForMember(d => d.User, o => o.Ignore())
+            .ForMember(d => d.Responses, o => o.Ignore())
             .ForMember(d => d.Property, o => o.MapFrom(s => s.Property));
         
         CreateMap<PropertyReviewResponseCreationDto, PropertyReviewResponse>()

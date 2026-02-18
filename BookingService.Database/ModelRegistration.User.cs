@@ -26,6 +26,12 @@ public static partial class ModelRegistration
             .IsRequired();
         
         modelBuilder.Entity<User>()
+            .HasMany(e => e.Units)
+            .WithOne()
+            .HasForeignKey(e => e.OwnerId)
+            .IsRequired();
+        
+        modelBuilder.Entity<User>()
             .HasIndex(e => e.Email)
             .IsUnique();
     }

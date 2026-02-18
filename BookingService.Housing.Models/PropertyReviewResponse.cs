@@ -9,7 +9,7 @@ public sealed class PropertyReviewResponse
     public int PropertyReviewId { get; init; }
     public PropertyReview PropertyReview { get; init; } = null!;
     
-    public int UserId { get; init; }
+    public int UserId { get; set; }
     
     public int PropertyId { get; init; }
     public Property Property { get; init; } = null!;

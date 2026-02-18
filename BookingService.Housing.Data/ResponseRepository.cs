@@ -9,12 +9,15 @@ namespace BookingServices.Housing.Data;
 public class ResponseRepository(BookingServiceDbContext context)
     : BaseRepository<PropertyReviewResponse>(context), IResponseRepository
 {
-    public async Task UpdateCommentAsync(int id, string comment)
+    public async Task UpdateCommentAsync(int id, int userId, string comment)
     {
         var response = await DbSet.FirstOrDefaultAsync(r => r.Id == id);
         
         if (response == null)
             throw new NotFoundException("Review response not found.");
+        
+        if (response.UserId != userId)
+            throw new ForbidException("User ID mismatch.");
         
         response.Comment = comment;
         await Context.SaveChangesAsync();

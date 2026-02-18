@@ -8,5 +8,4 @@ public sealed class PropertyUpdateDto
     public required string City { get; set; }
     public required string Country { get; set; }
     public required string Description { get; set; }
-    public int OwnerId { get; set; }
 }

@@ -12,5 +12,5 @@ public sealed class Stay
     public int UnitId { get; init; }
     public Unit Unit { get; init; } = null!;
     
-    public int UserId { get; init; }
+    public int UserId { get; set; }
 }

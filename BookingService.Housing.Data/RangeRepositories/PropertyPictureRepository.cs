@@ -6,7 +6,7 @@ using BookingService.Shared.Infrastructure.Repository;
 namespace BookingServices.Housing.Data.RangeRepositories;
 
 public class PropertyPictureRepository(BookingServiceDbContext context)
-    : BaseRangeRepository<PropertyPicture>(context), IPropertyPictureRepository
+    : BaseRangeRepository<PropertyPicture, Property>(context), IPropertyPictureRepository
 {
     protected override Expression<Func<PropertyPicture, bool>> ByParentId(int propertyId) 
         => pp => pp.PropertyId == propertyId;

@@ -1,8 +1,10 @@
 namespace BookingService.Shared.Infrastructure.Repository;
 
-public interface IBaseRangeRepository<T> where T : class
+public interface IBaseRangeRepository<TModel>
+    where TModel : class
 {
-    Task AddRangeAsync(List<T> entity);
-    Task UpdateRangeAsync(List<T> entity);
+    Task<TModel> GetByOwnerIdAsync(int id);
+    Task AddRangeAsync(List<TModel> entity);
+    Task UpdateRangeAsync(List<TModel> entity);
     Task DeleteRangeAsync(int id);
 }

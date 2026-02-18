@@ -9,7 +9,7 @@ public sealed class Property
     public string State { get; set; } = string.Empty;
     public string Country { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
-    public int OwnerId { get; init; }
+    public int OwnerId { get; set; }
     public bool IsActive { get; set; }
     
     public double AverageRating { get; private set; }

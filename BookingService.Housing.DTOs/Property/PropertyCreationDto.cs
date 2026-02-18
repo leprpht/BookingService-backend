@@ -8,5 +8,4 @@ public sealed class PropertyCreationDto
     public required string State { get; init; }
     public required string Country { get; init; }
     public string Description { get; init; } = string.Empty;
-    public int OwnerId { get; init; }
 }

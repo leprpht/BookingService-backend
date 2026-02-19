@@ -9,6 +9,6 @@ namespace BookingService.Housing.Services.RangeServices;
 
 public class PropertyPictureService(IPropertyPictureRepository repository, IMapper mapper) : BaseRangeService<PropertyPicture, PropertyPictureCreationDto, PropertyPictureUpdateDto>(repository), IPropertyPictureService
 {
-    protected override PropertyPicture MapCreate(int id, PropertyPictureCreationDto dto) => dto.ToPropertyPicture(id, mapper);
-    protected override PropertyPicture MapUpdate(int id, PropertyPictureUpdateDto dto) => dto.ToPropertyPicture(id, mapper);
+    protected override PropertyPicture MapCreate(Guid id, PropertyPictureCreationDto dto) => dto.ToPropertyPicture(id, mapper);
+    protected override PropertyPicture MapUpdate(Guid id, PropertyPictureUpdateDto dto) => dto.ToPropertyPicture(id, mapper);
 }

@@ -24,6 +24,7 @@ public class AuthService(IAuthRepository repository, IJwtTokenGenerator tokenGen
 
         var user = new User
         {
+            Id = Guid.NewGuid(),
             Email = email,
             Password = passwordHash,
             Salt = salt,
@@ -53,7 +54,6 @@ public class AuthService(IAuthRepository repository, IJwtTokenGenerator tokenGen
             Convert.FromBase64String(existingUser.Password))
             ? null
             : tokenGenerator.GenerateToken(existingUser.Id, existingUser.Email);
-
     }
 
     private static string HashPassword(string password, byte[] salt)

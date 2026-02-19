@@ -8,27 +8,27 @@ public abstract class BaseService<TModel, TCreateDto, TUpdateDto>(IBaseRepositor
     where TCreateDto : class
     where TUpdateDto : class
 {
-    protected abstract TModel MapCreate(int userId, TCreateDto dto);
-    protected abstract TModel MapUpdate(int userId, TUpdateDto dto);
+    protected abstract TModel MapCreate(Guid userId, TCreateDto dto);
+    protected abstract TModel MapUpdate(Guid userId, TUpdateDto dto);
 
-    public Task<TModel?> GetByIdAsync(int id) =>
-        repository.GetByIdAsync(id);
+    public Task<TModel?> GetByIdAsync(Guid id) =>
+        repository.GetByIdAsync(id)!;
 
-    public virtual async Task CreateAsync(int userId, TCreateDto createDto)
+    public virtual async Task CreateAsync(Guid userId, TCreateDto createDto)
     {
         var model = MapCreate(userId, createDto);
         await repository.AddAsync(model);
     }
 
-    public virtual async Task UpdateAsync(int userId, TUpdateDto updateDto)
+    public virtual async Task UpdateAsync(Guid userId, TUpdateDto updateDto)
     {
         var model = MapUpdate(userId, updateDto);
         await repository.UpdateAsync(model);
     }
 
-    public virtual async Task DeleteAsync(int id, int userId)
+    public virtual async Task DeleteAsync(Guid id, Guid userId)
     { 
-        var parent = await repository.GetByOwnerIdAsync(id);
+        await repository.GetByOwnerIdAsync(id);
         await repository.DeleteAsync(id, userId);
     }
-} 
+}

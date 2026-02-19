@@ -4,15 +4,15 @@ using BookingService.Shared.Infrastructure.Repository;
 namespace BookingService.Shared.Infrastructure.Service;
 
 public abstract class BaseRangeService<TModel, TCreateDto, TUpdateDto>(IBaseRangeRepository<TModel> repository)
-     : IBaseRangeService<TCreateDto, TUpdateDto>
+    : IBaseRangeService<TCreateDto, TUpdateDto>
     where TModel : class
     where TCreateDto : class
     where TUpdateDto : class
 {
-    protected abstract TModel MapCreate(int id, TCreateDto dto);
-    protected abstract TModel MapUpdate(int id, TUpdateDto dto);
+    protected abstract TModel MapCreate(Guid id, TCreateDto dto);
+    protected abstract TModel MapUpdate(Guid id, TUpdateDto dto);
     
-    public async Task AddRangeAsync(int id, int userId, List<TCreateDto> createDto)
+    public async Task AddRangeAsync(Guid id, Guid userId, List<TCreateDto> createDto)
     {
         var parent = await repository.GetByOwnerIdAsync(userId);
         if (parent.GetType().GetProperty("OwnerId")!.GetValue(parent)!.Equals(id))
@@ -25,7 +25,7 @@ public abstract class BaseRangeService<TModel, TCreateDto, TUpdateDto>(IBaseRang
         await repository.AddRangeAsync(modelList);
     }
 
-    public async Task UpdateRangeAsync(int id, int userId, List<TUpdateDto> updateDto)
+    public async Task UpdateRangeAsync(Guid id, Guid userId, List<TUpdateDto> updateDto)
     {
         var parent = await repository.GetByOwnerIdAsync(userId);
         if (parent.GetType().GetProperty("OwnerId")!.GetValue(parent)!.Equals(id))
@@ -38,7 +38,7 @@ public abstract class BaseRangeService<TModel, TCreateDto, TUpdateDto>(IBaseRang
         await repository.UpdateRangeAsync(modelList);
     }
     
-    public async Task DeleteRangeAsync(int id, int userId)
+    public async Task DeleteRangeAsync(Guid id, Guid userId)
     {
         var parent = await repository.GetByOwnerIdAsync(userId);
         if (parent.GetType().GetProperty("OwnerId")!.GetValue(parent)!.Equals(id))

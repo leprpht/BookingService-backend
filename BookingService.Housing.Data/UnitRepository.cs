@@ -9,7 +9,7 @@ namespace BookingServices.Housing.Data;
 public class UnitRepository(BookingServiceDbContext context)
     : BaseRepository<Unit>(context), IUnitRepository
 {
-    public override async Task DeleteAsync(int id, int ownerId)
+    public override async Task DeleteAsync(Guid id, Guid ownerId)
     {
         Context.UnitCustomizations
             .RemoveRange(Context.UnitCustomizations
@@ -24,7 +24,7 @@ public class UnitRepository(BookingServiceDbContext context)
         await base.DeleteAsync(id, ownerId);
     }
     
-    public async Task UpdateNameAsync(int unitId, int userId, string name)
+    public async Task UpdateNameAsync(Guid unitId, Guid userId, string name)
     {
         var unit = await DbSet.FirstOrDefaultAsync(u => u.Id == unitId);
         

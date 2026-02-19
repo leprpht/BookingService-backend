@@ -5,5 +5,5 @@ namespace BookingService.Profile.Data;
 
 public interface IUserStayRepository
 {
-    Task<List<Stay>> GetUserStays(int userId, int page, int pageSize, StaySearchFilter filter);
+    Task<List<Stay>> GetUserStays(Guid userId, int page, int pageSize, StaySearchFilter filter);
 }

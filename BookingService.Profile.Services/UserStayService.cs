@@ -9,13 +9,11 @@ namespace BookingService.Profile.Services;
 
 public class UserStayService(IUserStayRepository repository, IMapper mapper) : IUserStayService
 {
-    public async Task<List<StayDto>> GetUserStaysAsync(int userId, PageRequest pageRequest, StaySearchFilter filter)
+    public async Task<List<StayDto>> GetUserStaysAsync(Guid userId, PageRequest pageRequest, StaySearchFilter filter)
     {
         var stays = await repository.GetUserStays(userId, pageRequest.PageNumber, pageRequest.PageSize, filter);
-        var stayDto = stays
+        return stays
             .Select(s => s.ToStayDto(mapper))
             .ToList();
-        
-        return stayDto;
     }
 }

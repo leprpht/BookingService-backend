@@ -31,7 +31,7 @@ public class UserPropertyController(
         if (userIdClaim == null)
             return Unauthorized();
         
-        var userId = int.Parse(userIdClaim.Value);
+        var userId = Guid.Parse(userIdClaim.Value);
         
         await service.CreateAsync(userId, createPropertyDto);
         return Created();
@@ -46,14 +46,14 @@ public class UserPropertyController(
     [SwaggerResponse(401)]
     [SwaggerResponse(403)]
     public async Task<IActionResult> AddPropertyPictureAsync(
-        int propertyId,
+        Guid propertyId,
         [FromBody] List<PropertyPictureCreationDto> pictureCreationDto)
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
         
-        var userId = int.Parse(userIdClaim.Value);
+        var userId = Guid.Parse(userIdClaim.Value);
         
         await pictureService.AddRangeAsync(propertyId, userId, pictureCreationDto);
         return Created();
@@ -75,7 +75,7 @@ public class UserPropertyController(
         if (userIdClaim == null)
             return Unauthorized();
         
-        var userId = int.Parse(userIdClaim.Value);
+        var userId = Guid.Parse(userIdClaim.Value);
 
         await service.UpdateAsync(userId, propertyUpdateDto);
         return Ok();
@@ -90,14 +90,14 @@ public class UserPropertyController(
     [SwaggerResponse(401)]
     [SwaggerResponse(403)]
     public async Task<IActionResult> UpdatePropertyPicturesAsync(
-        int id,
+        Guid id,
         [FromBody] List<PropertyPictureUpdateDto> pictureUpdateDtos)
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
         
-        var userId = int.Parse(userIdClaim.Value);
+        var userId = Guid.Parse(userIdClaim.Value);
         
         await pictureService.UpdateRangeAsync(id, userId, pictureUpdateDtos);
         return Ok();
@@ -113,14 +113,14 @@ public class UserPropertyController(
     [SwaggerResponse(403)]
     [SwaggerResponse(404)]
     public async Task<IActionResult> UpdatePropertyTagsAsync(
-        int id,
-        [FromBody] List<int> tagIds)
+        Guid id,
+        [FromBody] List<Guid> tagIds)
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
         
-        var userId = int.Parse(userIdClaim.Value);
+        var userId = Guid.Parse(userIdClaim.Value);
         
         await service.UpdateTagsAsync(id, userId, tagIds);
         return Ok();
@@ -136,14 +136,14 @@ public class UserPropertyController(
     [SwaggerResponse(403)]
     [SwaggerResponse(404)]
     public async Task<IActionResult> UpdatePropertyNameAsync(
-        int id,
+        Guid id,
         [FromBody] string name)
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
         
-        var userId = int.Parse(userIdClaim.Value);
+        var userId = Guid.Parse(userIdClaim.Value);
         
         await service.UpdateNameAsync(id, userId, name);
         return Ok();
@@ -159,14 +159,14 @@ public class UserPropertyController(
     [SwaggerResponse(403)]
     [SwaggerResponse(404)]
     public async Task<IActionResult> UpdatePropertyDescriptionAsync(
-        int id,
+        Guid id,
         [FromBody] string description)
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
         
-        var userId = int.Parse(userIdClaim.Value);
+        var userId = Guid.Parse(userIdClaim.Value);
         
         await service.UpdateDescriptionAsync(id, userId, description);
         return Ok();
@@ -181,13 +181,13 @@ public class UserPropertyController(
     [SwaggerResponse(403)]
     [SwaggerResponse(404)]
     public async Task<IActionResult> DeletePropertyAsync(
-        int id)
+        Guid id)
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
         
-        var userId = int.Parse(userIdClaim.Value);
+        var userId = Guid.Parse(userIdClaim.Value);
         
         await service.DeleteAsync(id, userId);
         return NoContent();
@@ -202,13 +202,13 @@ public class UserPropertyController(
     [SwaggerResponse(401)]
     [SwaggerResponse(403)]
     public async Task<IActionResult> DeletePropertyPicturesAsync(
-        int propertyId)
+        Guid propertyId)
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
         
-        var userId = int.Parse(userIdClaim.Value);
+        var userId = Guid.Parse(userIdClaim.Value);
         
         await pictureService.DeleteRangeAsync(propertyId, userId);
         return NoContent();

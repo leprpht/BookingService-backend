@@ -9,11 +9,11 @@ public class UnitQuery
 {
     public async Task<UnitType?> GetUnitByIdAsync(
         [Service] BookingServiceDbContext context,
-        int unit,
+        Guid unitId,
         PeriodRequest period)
     {
         return await context.Units
-            .Where(u => u.Id == unit
+            .Where(u => u.Id == unitId
                         && u.Property.IsActive
                         && u.IsActive)
             .Select(u => new UnitType
@@ -32,9 +32,7 @@ public class UnitQuery
                     .Select(c => new UnitCustomizationType
                     {
                         Type = c.Key.ToString(),
-                        Text = c
-                            .Select(t => t.Text)
-                            .ToList()
+                        Text = c.Select(t => t.Text).ToList()
                     })
                     .ToList()
             })

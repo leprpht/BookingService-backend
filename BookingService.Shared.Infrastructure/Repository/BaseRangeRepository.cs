@@ -12,10 +12,10 @@ public abstract class BaseRangeRepository<TModel, TParent>(BookingServiceDbConte
     protected readonly BookingServiceDbContext Context = context;
     protected readonly DbSet<TModel> DbSet = context.Set<TModel>();
     protected readonly DbSet<TParent> ParentDbSet = context.Set<TParent>();
-    protected abstract Expression<Func<TModel, bool>> ByParentId(int parentId);
+    protected abstract Expression<Func<TModel, bool>> ByParentId(Guid parentId);
     protected abstract string ParentIdPropertyName { get; }
 
-    public virtual async Task<TModel> GetByOwnerIdAsync(int ownerId)
+    public virtual async Task<TModel> GetByOwnerIdAsync(Guid ownerId)
     {
         var parent = await ParentDbSet.FirstOrDefaultAsync(p => p
             .GetType()
@@ -55,7 +55,7 @@ public abstract class BaseRangeRepository<TModel, TParent>(BookingServiceDbConte
             .ToHashSet();
         
         var toDelete = await DbSet
-            .Where(ByParentId((int) entities
+            .Where(ByParentId((Guid) entities
                 .First()
                 .GetType()
                 .GetProperty(ParentIdPropertyName)!
@@ -68,7 +68,7 @@ public abstract class BaseRangeRepository<TModel, TParent>(BookingServiceDbConte
         await Context.SaveChangesAsync();
     }
     
-    public virtual async Task DeleteRangeAsync(int parentId)
+    public virtual async Task DeleteRangeAsync(Guid parentId)
     {
         var toDelete = await DbSet
             .Where(ByParentId(parentId))

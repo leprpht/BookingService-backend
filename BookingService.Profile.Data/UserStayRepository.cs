@@ -7,7 +7,7 @@ namespace BookingService.Profile.Data;
 
 public class UserStayRepository(BookingServiceDbContext context) : IUserStayRepository
 {
-    public async Task<List<Stay>> GetUserStays(int userId, int page, int pageSize, StaySearchFilter filter)
+    public async Task<List<Stay>> GetUserStays(Guid userId, int page, int pageSize, StaySearchFilter filter)
     {
         return await context.Stays
             .Where(s => s.UserId == userId)

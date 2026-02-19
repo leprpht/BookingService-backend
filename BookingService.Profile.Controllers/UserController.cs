@@ -25,7 +25,7 @@ public class UserController(IUserService service) : ControllerBase
         if (userIdClaim == null)
             return Unauthorized();
         
-        var userId = int.Parse(userIdClaim.Value);
+        var userId = Guid.Parse(userIdClaim.Value);
         var user = await service.GetByIdAsync(userId);
         
         return user == null
@@ -47,8 +47,7 @@ public class UserController(IUserService service) : ControllerBase
         if (userIdClaim == null)
             return Unauthorized();
         
-        var userId = int.Parse(userIdClaim.Value);
-        await service.UpdateUserAsync(userId, userUpdate);
+        
         
         return NoContent();
     }
@@ -67,7 +66,7 @@ public class UserController(IUserService service) : ControllerBase
         if (userIdClaim == null)
             return Unauthorized();
         
-        var userId = int.Parse(userIdClaim.Value);
+        var userId = Guid.Parse(userIdClaim.Value);
         await service.UpdateUserNameAsync(userId, name);
         
         return NoContent();
@@ -88,7 +87,7 @@ public class UserController(IUserService service) : ControllerBase
         if (userIdClaim == null)
             return Unauthorized();
         
-        var userId = int.Parse(userIdClaim.Value);
+        var userId = Guid.Parse(userIdClaim.Value);
         await service.UpdateUserEmailAsync(userId, email);
         
         return NoContent();
@@ -108,7 +107,7 @@ public class UserController(IUserService service) : ControllerBase
         if (userIdClaim == null)
             return Unauthorized();
         
-        var userId = int.Parse(userIdClaim.Value);
+        var userId = Guid.Parse(userIdClaim.Value);
         await service.UpdateProfilePictureAsync(userId, profilePictureUrl);
         
         return NoContent();

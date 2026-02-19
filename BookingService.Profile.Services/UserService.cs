@@ -8,13 +8,13 @@ namespace BookingService.Profile.Services;
 
 public class UserService(IUserRepository repository, IMapper mapper) : IUserService
 {
-    public async Task<UserDto?> GetByIdAsync(int id)
+    public async Task<UserDto?> GetByIdAsync(Guid id)
     {
         var user = await repository.GetByIdAsync(id);
         return user?.ToUserDto(mapper);
     }
 
-    public async Task UpdateUserAsync(int id, UserInfoUpdate userUpdate) =>
+    public async Task UpdateUserAsync(Guid id, UserInfoUpdate userUpdate) =>
         await repository.UpdateUserAsync(
             id,
             userUpdate.Name.FirstName,
@@ -23,10 +23,10 @@ public class UserService(IUserRepository repository, IMapper mapper) : IUserServ
             userUpdate.ProfilePictureUrl,
             userUpdate.DateOfBirth);
 
-    public async Task UpdateUserNameAsync(int id, UserNameDto userNameUpdate) =>
+    public async Task UpdateUserNameAsync(Guid id, UserNameDto userNameUpdate) =>
         await repository.UpdateUserNameAsync(id, userNameUpdate.FirstName, userNameUpdate.MiddleName, userNameUpdate.LastName);
 
-    public async Task UpdateUserEmailAsync(int id, string email)
+    public async Task UpdateUserEmailAsync(Guid id, string email)
     {
         if (!EmailValidator.IsValidEmail(email))
             throw new FormatException("Invalid email format.");
@@ -34,6 +34,6 @@ public class UserService(IUserRepository repository, IMapper mapper) : IUserServ
         await repository.UpdateUserEmailAsync(id, email);
     }
 
-    public Task UpdateProfilePictureAsync(int id, string pfpUrl) =>
+    public Task UpdateProfilePictureAsync(Guid id, string pfpUrl) =>
         repository.UpdateUserProfilePictureAsync(id, pfpUrl);
 }

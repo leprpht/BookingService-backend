@@ -5,7 +5,7 @@ namespace BookingServices.Housing.Data;
 
 public interface IPropertyRepository : IBaseRepository<Property>
 {
-    Task UpdateNameAsync(int id, int ownerId, string name);
-    Task UpdateDescriptionAsync(int id, int ownerId, string description);
-    Task UpdateTagsAsync(int id, int ownerId, List<int> tags);
+    Task UpdateNameAsync(Guid id, Guid ownerId, string name);
+    Task UpdateDescriptionAsync(Guid id, Guid ownerId, string description);
+    Task UpdateTagsAsync(Guid id, Guid ownerId, List<Guid> tags);
 }

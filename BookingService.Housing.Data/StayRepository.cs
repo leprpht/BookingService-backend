@@ -9,12 +9,12 @@ namespace BookingServices.Housing.Data;
 public class StayRepository(BookingServiceDbContext context)
     : BaseRepository<Stay>(context), IStayRepository
 {
-    public async Task<Stay?> GetByUserIdAsync(int userId)
+    public async Task<Stay?> GetByUserIdAsync(Guid userId)
     {
         return await DbSet.FirstOrDefaultAsync(s => s.UserId == userId);
     }
 
-    public async Task UpdateStatusAsync(int stayId, StayStatus status)
+    public async Task UpdateStatusAsync(Guid stayId, StayStatus status)
     {
         var stay = await DbSet.FirstOrDefaultAsync(s => s.Id == stayId);
         

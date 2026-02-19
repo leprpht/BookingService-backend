@@ -28,7 +28,7 @@ public class UserReviewController(
         if (userIdClaim == null)
             return Unauthorized();
         
-        var userId = int.Parse(userIdClaim.Value);
+        var userId = Guid.Parse(userIdClaim.Value);
         propertyReviewCreationDto.UserId = userId;
         
         await reviewService.CreateAsync(userId, propertyReviewCreationDto);
@@ -44,14 +44,14 @@ public class UserReviewController(
     [SwaggerResponse(401)]
     [SwaggerResponse(404)]
     public async Task<IActionResult> UpdateReviewAsync(
-        int id,
+        Guid id,
         [FromBody] PropertyReviewUpdateDto propertyReviewUpdateDto)
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
         
-        var userId = int.Parse(userIdClaim.Value);
+        var userId = Guid.Parse(userIdClaim.Value);
         
         if (id != propertyReviewUpdateDto.Id)
             return BadRequest("Review ID mismatch.");
@@ -69,14 +69,14 @@ public class UserReviewController(
     [SwaggerResponse(401)]
     [SwaggerResponse(404)]
     public async Task<IActionResult> UpdateReviewCommentAsync(
-        int id,
+        Guid id,
         [FromBody] string comment)
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
         
-        var userId = int.Parse(userIdClaim.Value);
+        var userId = Guid.Parse(userIdClaim.Value);
         
         await reviewService.UpdateCommentAsync(userId, id, comment);
         return NoContent();
@@ -89,13 +89,13 @@ public class UserReviewController(
     [SwaggerResponse(204)]
     [SwaggerResponse(401)]
     [SwaggerResponse(404)]
-    public async Task<IActionResult> DeleteReviewAsync(int id)
+    public async Task<IActionResult> DeleteReviewAsync(Guid id)
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
 
-        var userId = int.Parse(userIdClaim.Value);
+        var userId = Guid.Parse(userIdClaim.Value);
 
         await reviewService.DeleteAsync(userId, id);
         return NoContent();
@@ -115,7 +115,7 @@ public class UserReviewController(
         if (userIdClaim == null)
             return Unauthorized();
         
-        var userId = int.Parse(userIdClaim.Value);
+        var userId = Guid.Parse(userIdClaim.Value);
         responseCreationDto.UserId = userId;
         
         await responseService.CreateAsync(userId, responseCreationDto);
@@ -131,8 +131,8 @@ public class UserReviewController(
     [SwaggerResponse(401)]
     [SwaggerResponse(404)]
     public async Task<IActionResult> UpdateResponseAsync(
-        int reviewId,
-        int responseId,
+        Guid reviewId,
+        Guid responseId,
         [FromBody] PropertyReviewResponseUpdateDto responseUpdateDto)
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
@@ -143,7 +143,7 @@ public class UserReviewController(
             || responseId != responseUpdateDto.Id)
             return BadRequest("Response ID mismatch.");
         
-        var userId = int.Parse(userIdClaim.Value);
+        var userId = Guid.Parse(userIdClaim.Value);
         
         await responseService.UpdateAsync(userId, responseUpdateDto);
         return NoContent();
@@ -158,19 +158,19 @@ public class UserReviewController(
     [SwaggerResponse(401)]
     [SwaggerResponse(404)]
     public async Task<IActionResult> UpdateResponseCommentAsync(
-        int reviewId,
-        int responseId,
+        Guid reviewId,
+        Guid responseId,
         [FromBody] string comment)
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
         
-        var review = reviewService.GetByIdAsync(reviewId);
-        if (review.Id != reviewId)
+        var review = await reviewService.GetByIdAsync(reviewId);
+        if (review == null || review.Id != reviewId)
             return NotFound("Review not found.");
         
-        var userId = int.Parse(userIdClaim.Value);
+        var userId = Guid.Parse(userIdClaim.Value);
         
         await responseService.UpdateCommentAsync(responseId, userId, comment);
         return NoContent();
@@ -184,18 +184,18 @@ public class UserReviewController(
     [SwaggerResponse(401)]
     [SwaggerResponse(404)]
     public async Task<IActionResult> DeleteResponseAsync(
-        int reviewId,
-        int responseId)
+        Guid reviewId,
+        Guid responseId)
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
         
-        var review = reviewService.GetByIdAsync(reviewId);
-        if (review.Id != reviewId)
+        var review = await reviewService.GetByIdAsync(reviewId);
+        if (review == null || review.Id != reviewId)
             return NotFound("Review not found.");
 
-        var userId = int.Parse(userIdClaim.Value);
+        var userId = Guid.Parse(userIdClaim.Value);
 
         await responseService.DeleteAsync(responseId, userId);
         return NoContent();

@@ -7,12 +7,12 @@ namespace BookingService.Profile.Data;
 
 public class UserRepository(BookingServiceDbContext context) : IUserRepository
 {
-    public async Task<User?> GetByIdAsync(int id)
+    public async Task<User?> GetByIdAsync(Guid id)
     {
         return await context.Users.FindAsync(id);
     }
     
-    public async Task UpdateUserAsync(int id, string firstName, string? middleName, string lastName, string? pfpUrl, DateOnly dateOfBirth)
+    public async Task UpdateUserAsync(Guid id, string firstName, string? middleName, string lastName, string? pfpUrl, DateOnly dateOfBirth)
     {
         var user = await GetByIdAsync(id);
         if (user == null)
@@ -27,7 +27,7 @@ public class UserRepository(BookingServiceDbContext context) : IUserRepository
         await context.SaveChangesAsync();
     }
 
-    public async Task UpdateUserNameAsync(int id, string firstName, string? middleName, string lastName)
+    public async Task UpdateUserNameAsync(Guid id, string firstName, string? middleName, string lastName)
     {
         var user = await GetByIdAsync(id);
         if (user == null)
@@ -40,7 +40,7 @@ public class UserRepository(BookingServiceDbContext context) : IUserRepository
         await context.SaveChangesAsync();
     }
 
-    public async Task UpdateUserEmailAsync(int id, string email)
+    public async Task UpdateUserEmailAsync(Guid id, string email)
     {
         var user = await GetByIdAsync(id);
         if (user == null)
@@ -55,7 +55,7 @@ public class UserRepository(BookingServiceDbContext context) : IUserRepository
         await context.SaveChangesAsync();
     }
     
-    public async Task UpdateUserProfilePictureAsync(int id, string pfpUrl)
+    public async Task UpdateUserProfilePictureAsync(Guid id, string pfpUrl)
     {
         var user = await GetByIdAsync(id);
         if (user == null)

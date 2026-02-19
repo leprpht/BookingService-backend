@@ -4,9 +4,9 @@ namespace BookingService.Profile.Data;
 
 public interface IUserRepository
 {
-    Task<User?> GetByIdAsync(int id);
-    Task UpdateUserAsync(int id, string firstName, string? middleName, string lastName, string? pfpUrl, DateOnly dateOfBirth);
-    Task UpdateUserNameAsync(int id, string firstName, string? middleName, string lastName);
-    Task UpdateUserEmailAsync(int id, string email);
-    Task UpdateUserProfilePictureAsync(int id, string pfpUrl);
+    Task<User?> GetByIdAsync(Guid id);
+    Task UpdateUserAsync(Guid id, string firstName, string? middleName, string lastName, string? pfpUrl, DateOnly dateOfBirth);
+    Task UpdateUserNameAsync(Guid id, string firstName, string? middleName, string lastName);
+    Task UpdateUserEmailAsync(Guid id, string email);
+    Task UpdateUserProfilePictureAsync(Guid id, string pfpUrl);
 }

@@ -10,6 +10,6 @@ namespace BookingService.Housing.Services.RangeServices;
 public class UnitCustomizationService(IUnitCustomizationRepository repository, IMapper mapper)
     : BaseRangeService<UnitCustomization, UnitCustomizationCreationDto, UnitCustomizationUpdateDto>(repository), IUnitCustomizationService
 {
-    protected override UnitCustomization MapCreate(int id, UnitCustomizationCreationDto dto) => dto.ToUnitCustomization(id, mapper);
-    protected override UnitCustomization MapUpdate(int id, UnitCustomizationUpdateDto dto) => dto.ToUnitCustomization(id, mapper);
+    protected override UnitCustomization MapCreate(Guid id, UnitCustomizationCreationDto dto) => dto.ToUnitCustomization(id, mapper);
+    protected override UnitCustomization MapUpdate(Guid id, UnitCustomizationUpdateDto dto) => dto.ToUnitCustomization(id, mapper);
 }

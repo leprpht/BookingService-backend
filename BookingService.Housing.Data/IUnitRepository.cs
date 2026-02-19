@@ -5,5 +5,5 @@ namespace BookingServices.Housing.Data;
 
 public interface IUnitRepository : IBaseRepository<Unit>
 {
-    Task UpdateNameAsync(int id, int userId, string name);
+    Task UpdateNameAsync(Guid id, Guid userId, string name);
 }

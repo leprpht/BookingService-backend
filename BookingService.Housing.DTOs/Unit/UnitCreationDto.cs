@@ -6,5 +6,5 @@ public sealed class UnitCreationDto
     public int Capacity { get; init; }
     public decimal Price { get; init; }
     public int Size { get; init; }
-    public int PropertyId { get; init; }
+    public Guid PropertyId { get; init; }
 }

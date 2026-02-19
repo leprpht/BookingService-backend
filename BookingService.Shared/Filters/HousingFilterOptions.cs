@@ -10,6 +10,6 @@ public sealed class HousingFilterOptions
     public string? Country { get; init; }
     public double? MaxPrice { get; init; }
     public double? MinPrice { get; init; }
-    public List<int>? Tags { get; set; }
+    public List<Guid>? Tags { get; set; }
     public double? MinRating { get; init; }
 }

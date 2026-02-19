@@ -22,14 +22,14 @@ public static class UnitExtensions
         return mapper.Map<Unit>(dto);
     }
 
-    public static UnitCustomization ToUnitCustomization(this UnitCustomizationCreationDto dto, int unitId, IMapper mapper)
+    public static UnitCustomization ToUnitCustomization(this UnitCustomizationCreationDto dto, Guid unitId, IMapper mapper)
     {
         var customization = mapper.Map<UnitCustomization>(dto);
         customization.UnitId = unitId;
         return customization;
     }
 
-    public static UnitCustomization ToUnitCustomization(this UnitCustomizationUpdateDto dto, int unitId, IMapper mapper)
+    public static UnitCustomization ToUnitCustomization(this UnitCustomizationUpdateDto dto, Guid unitId, IMapper mapper)
     {
         var customization = mapper.Map<UnitCustomization>(dto);
         customization.UnitId = unitId;
@@ -53,14 +53,14 @@ public static class UnitExtensions
             .ToList();
     }
     
-    public static UnitPicture ToUnitPicture(this UnitPictureCreationDto dto, int unitId, IMapper mapper)
+    public static UnitPicture ToUnitPicture(this UnitPictureCreationDto dto, Guid unitId, IMapper mapper)
     {
         var picture = mapper.Map<UnitPicture>(dto);
         picture.UnitId = unitId;
         return picture;
     }
 
-    public static UnitPicture ToUnitPicture(this UnitPictureUpdateDto dto, int unitId, IMapper mapper)
+    public static UnitPicture ToUnitPicture(this UnitPictureUpdateDto dto, Guid unitId, IMapper mapper)
     {
         var picture = mapper.Map<UnitPicture>(dto);
         picture.Id = unitId;

@@ -2,7 +2,7 @@ namespace BookingService.Shared.Infrastructure.Service;
 
 public interface IBaseRangeService<TCreateDto, TUpdateDto>
 {
-    Task AddRangeAsync(int id, int userId, List<TCreateDto> createDto);
-    Task UpdateRangeAsync(int id, int userId, List<TUpdateDto> updateDto);
-    Task DeleteRangeAsync(int id, int userId);
+    Task AddRangeAsync(Guid id, Guid userId, List<TCreateDto> createDto);
+    Task UpdateRangeAsync(Guid id, Guid userId, List<TUpdateDto> updateDto);
+    Task DeleteRangeAsync(Guid id, Guid userId);
 }

@@ -15,21 +15,19 @@ namespace BookingService.Booking.Controllers;
 public class BookingController(IStayService service) : ControllerBase
 {
     [HttpPost]
-    [SwaggerOperation(
-        Summary = "Create a stay",
-        Description = "Creates a new stay booking for a unit.")]
+    [SwaggerOperation(Summary = "Create a stay", Description = "Creates a new stay booking for a unit.")]
     [SwaggerResponse(201)]
     [SwaggerResponse(400)]
     [SwaggerResponse(401)]
     public IActionResult CreateBooking(
-        [FromQuery] int unitId,
+        [FromQuery] Guid unitId,
         [FromBody] PeriodRequest period)
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
         
-        var userId = int.Parse(userIdClaim.Value);
+        var userId = Guid.Parse(userIdClaim.Value);
         
         var stayCreationDto = new StayCreationDto
         {
@@ -52,14 +50,14 @@ public class BookingController(IStayService service) : ControllerBase
     [SwaggerResponse(401)]
     [SwaggerResponse(404)]
     public async Task<IActionResult> UpdateStatusAsync(
-        int id,
+        Guid id,
         [FromBody] StayStatus status)
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
         
-        var userId = int.Parse(userIdClaim.Value);
+        var userId = Guid.Parse(userIdClaim.Value);
         
         await service.UpdateStatusAsync(id, userId, status);
         return Ok();

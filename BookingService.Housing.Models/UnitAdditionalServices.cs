@@ -2,9 +2,9 @@ namespace BookingService.Housing.Models;
 
 public class UnitAdditionalServices
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string? Name { get; set; }
     public double? Price { get; set; }
-    public int UnitId { get; set; }
+    public Guid UnitId { get; set; }
     public Unit Unit { get; set; } = null!;
 }

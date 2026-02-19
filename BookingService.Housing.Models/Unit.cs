@@ -2,7 +2,7 @@ namespace BookingService.Housing.Models;
 
 public sealed class Unit
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public required string Name { get; set; }
     public int Capacity { get; set; }
     public double Price { get; set; }
@@ -14,8 +14,8 @@ public sealed class Unit
     public ICollection<UnitPicture> Pictures { get; init; } = new List<UnitPicture>();
     public ICollection<UnitAdditionalServices> AdditionalServices { get; init; } = new List<UnitAdditionalServices>();
     
-    public int PropertyId { get; init; }
+    public Guid PropertyId { get; init; }
     public Property Property { get; init; } = null!;
     
-    public int OwnerId { get; init; }
+    public Guid OwnerId { get; init; }
 }

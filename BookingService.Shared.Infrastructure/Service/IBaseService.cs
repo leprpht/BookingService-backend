@@ -5,8 +5,8 @@ public interface IBaseService<TModel, in TCreateDto, in TUpdateDto>
     where TCreateDto : class
     where TUpdateDto : class
 {
-    Task<TModel?> GetByIdAsync(int id);
-    Task CreateAsync(int userId, TCreateDto createDto);
-    Task UpdateAsync(int userId, TUpdateDto updateDto);
-    Task DeleteAsync(int id, int userId);
+    Task<TModel?> GetByIdAsync(Guid id);
+    Task CreateAsync(Guid userId, TCreateDto createDto);
+    Task UpdateAsync(Guid userId, TUpdateDto updateDto);
+    Task DeleteAsync(Guid id, Guid userId);
 }

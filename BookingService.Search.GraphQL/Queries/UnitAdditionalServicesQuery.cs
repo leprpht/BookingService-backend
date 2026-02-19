@@ -8,11 +8,10 @@ public class UnitAdditionalServicesQuery
 {
     public async Task<List<UnitAdditionalServicesType>> GetUnitAdditionalServicesAsync(
         [Service] BookingServiceDbContext context,
-        int unitId)
+        Guid unitId)
     {
         return await context.AdditionalServices
-            .Where(s => s.UnitId == unitId
-                        && s.Unit.IsActive)
+            .Where(s => s.UnitId == unitId && s.Unit.IsActive)
             .Select(s => new UnitAdditionalServicesType
             {
                 Id = s.Id,

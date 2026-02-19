@@ -1,7 +1,6 @@
 using System.Linq.Expressions;
 using BookingService.Database;
 using BookingService.Housing.Models;
-using BookingService.Shared.Filters;
 using BookingService.Shared.Infrastructure.Exceptions;
 using BookingService.Shared.Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -23,7 +22,7 @@ public class PropertyRepository(BookingServiceDbContext context)
         await base.UpdateAsync(property);
     }
 
-    public async Task UpdateNameAsync(int propertyId, int ownerId, string name)
+    public async Task UpdateNameAsync(Guid propertyId, Guid ownerId, string name)
     {
         var property = await DbSet.SingleOrDefaultAsync(p => p.Id == propertyId);
 
@@ -37,7 +36,7 @@ public class PropertyRepository(BookingServiceDbContext context)
         await Context.SaveChangesAsync();
     }
 
-    public async Task UpdateDescriptionAsync(int propertyId, int ownerId, string description)
+    public async Task UpdateDescriptionAsync(Guid propertyId, Guid ownerId, string description)
     {
         var property = await DbSet.SingleOrDefaultAsync(p => p.Id == propertyId);
         
@@ -51,7 +50,7 @@ public class PropertyRepository(BookingServiceDbContext context)
         await Context.SaveChangesAsync();
     }
 
-    public async Task UpdateTagsAsync(int id, int ownerId, List<int> tagIds)
+    public async Task UpdateTagsAsync(Guid id, Guid ownerId, List<Guid> tagIds)
     {
         var property = await DbSet
             .Include(p => p.Tags)
@@ -73,7 +72,7 @@ public class PropertyRepository(BookingServiceDbContext context)
         await Context.SaveChangesAsync();
     }
 
-    public override async Task DeleteAsync(int id, int ownerId)
+    public override async Task DeleteAsync(Guid id, Guid ownerId)
     {
         await Context.Units
             .Where(u => u.PropertyId == id)

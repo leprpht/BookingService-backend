@@ -37,10 +37,8 @@ public class PropertyQuery
                 City = p.City,
                 State = p.State,
                 Country = p.Country,
-                Price = p.Units
-                    .Min(u => u.Price) * filter.Period.DaysCount,
-                PictureUrl = p.Pictures
-                    .FirstOrDefault(pic => pic.IsCover)!.Url,
+                Price = p.Units.Min(u => u.Price) * filter.Period.DaysCount,
+                PictureUrl = p.Pictures.FirstOrDefault(pic => pic.IsCover)!.Url,
                 Rating = p.AverageRating,
                 RankingScore = p.RankingScore,
                 ReviewCount = p.ReviewCount,
@@ -56,7 +54,7 @@ public class PropertyQuery
 
     public async Task<PropertyType?> GetPropertyDetails(
         [Service] BookingServiceDbContext context,
-        int propertyId,
+        Guid propertyId,
         PeriodRequest period)
     {
         return await context.Properties

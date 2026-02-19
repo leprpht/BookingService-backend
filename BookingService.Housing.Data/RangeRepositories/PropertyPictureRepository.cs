@@ -8,7 +8,7 @@ namespace BookingServices.Housing.Data.RangeRepositories;
 public class PropertyPictureRepository(BookingServiceDbContext context)
     : BaseRangeRepository<PropertyPicture, Property>(context), IPropertyPictureRepository
 {
-    protected override Expression<Func<PropertyPicture, bool>> ByParentId(int propertyId) 
+    protected override Expression<Func<PropertyPicture, bool>> ByParentId(Guid propertyId) 
         => pp => pp.PropertyId == propertyId;
     
     protected override string ParentIdPropertyName => "PropertyId";

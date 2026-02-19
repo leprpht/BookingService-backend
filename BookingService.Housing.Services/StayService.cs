@@ -11,10 +11,10 @@ namespace BookingService.Housing.Services;
 public class StayService(IStayRepository repository, IMapper mapper)
     : BaseService<Stay, StayCreationDto, StayUpdateDto>(repository), IStayService
 {
-    protected override Stay MapCreate(int userId, StayCreationDto dto) => dto.ToStay(userId, mapper);
-    protected override Stay MapUpdate(int userId, StayUpdateDto dto) => dto.ToStay(userId, mapper);
+    protected override Stay MapCreate(Guid userId, StayCreationDto dto) => dto.ToStay(userId, mapper);
+    protected override Stay MapUpdate(Guid userId, StayUpdateDto dto) => dto.ToStay(userId, mapper);
 
-    public override async Task CreateAsync(int userId, StayCreationDto createDto)
+    public override async Task CreateAsync(Guid userId, StayCreationDto createDto)
     {
         var stay = MapCreate(userId, createDto);
         stay.Price = stay.To.DayNumber - stay.From.DayNumber * stay.Unit.Price;
@@ -22,7 +22,7 @@ public class StayService(IStayRepository repository, IMapper mapper)
         await repository.AddAsync(stay);
     }
 
-    public async Task UpdateStatusAsync(int stayId, int userId, StayStatus status)
+    public async Task UpdateStatusAsync(Guid stayId, Guid userId, StayStatus status)
     {
         var existingStay = await repository.GetByUserIdAsync(userId);
         

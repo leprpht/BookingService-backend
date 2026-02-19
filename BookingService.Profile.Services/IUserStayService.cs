@@ -6,5 +6,5 @@ namespace BookingService.Profile.Services;
 
 public interface IUserStayService
 {
-    Task<List<StayDto>> GetUserStaysAsync(int userId, PageRequest pageRequest, StaySearchFilter filter);
+    Task<List<StayDto>> GetUserStaysAsync(Guid userId, PageRequest pageRequest, StaySearchFilter filter);
 }

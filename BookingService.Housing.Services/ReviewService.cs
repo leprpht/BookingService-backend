@@ -10,9 +10,9 @@ namespace BookingService.Housing.Services;
 public class ReviewService(IReviewRepository repository, IMapper mapper)
     : BaseService<PropertyReview, PropertyReviewCreationDto, PropertyReviewUpdateDto>(repository), IReviewService
 {
-    protected override PropertyReview MapCreate(int userId, PropertyReviewCreationDto dto) => dto.ToPropertyReview(userId, mapper);
-    protected override PropertyReview MapUpdate(int userId, PropertyReviewUpdateDto dto) => dto.ToPropertyReview(userId, mapper);
+    protected override PropertyReview MapCreate(Guid userId, PropertyReviewCreationDto dto) => dto.ToPropertyReview(userId, mapper);
+    protected override PropertyReview MapUpdate(Guid userId, PropertyReviewUpdateDto dto) => dto.ToPropertyReview(userId, mapper);
     
-    public async Task UpdateCommentAsync(int id, int userId, string comment) =>
+    public async Task UpdateCommentAsync(Guid id, Guid userId, string comment) =>
         await repository.UpdateCommentAsync(id, userId, comment);
 }

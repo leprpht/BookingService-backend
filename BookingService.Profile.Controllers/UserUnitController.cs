@@ -26,7 +26,7 @@ public class UserUnitController(
     [SwaggerResponse(400)]
     [SwaggerResponse(401)]
     public async Task<IActionResult> CreateUnitAsync(
-        int propertyId,
+        Guid propertyId,
         [FromBody] UnitCreationDto createUnitDto)
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
@@ -36,7 +36,7 @@ public class UserUnitController(
         if (createUnitDto.PropertyId != propertyId)
             return BadRequest("Property ID in URL does not match Property ID in body.");
         
-        var userId = int.Parse(userIdClaim.Value);
+        var userId = Guid.Parse(userIdClaim.Value);
         
         await service.CreateAsync(userId, createUnitDto);
         return Created();
@@ -50,8 +50,8 @@ public class UserUnitController(
     [SwaggerResponse(400)]
     [SwaggerResponse(401)]
     public async Task<IActionResult> AddUnitCustomizationsAsync(
-        int propertyId,
-        int unitId,
+        Guid propertyId,
+        Guid unitId,
         [FromBody] List<UnitCustomizationCreationDto> creationList)
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
@@ -62,7 +62,7 @@ public class UserUnitController(
         if (unit == null || unit.PropertyId != propertyId)
             return BadRequest("Unit does not exist or does not belong to the specified property.");
         
-        var userId = int.Parse(userIdClaim.Value);
+        var userId = Guid.Parse(userIdClaim.Value);
         
         await customizationService.AddRangeAsync(unitId, userId, creationList);
         return Created();
@@ -76,8 +76,8 @@ public class UserUnitController(
     [SwaggerResponse(400)]
     [SwaggerResponse(401)]
     public async Task<IActionResult> AddUnitPicturesAsync(
-        int propertyId,
-        int unitId,
+        Guid propertyId,
+        Guid unitId,
         [FromBody] List<UnitPictureCreationDto> creationList)
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
@@ -88,7 +88,7 @@ public class UserUnitController(
         if (unit == null || unit.PropertyId != propertyId)
             return BadRequest("Unit does not exist or does not belong to the specified property.");
         
-        var userId = int.Parse(userIdClaim.Value);
+        var userId = Guid.Parse(userIdClaim.Value);
         
         await pictureService.AddRangeAsync(unitId, userId, creationList);
         return Created();
@@ -102,8 +102,8 @@ public class UserUnitController(
     [SwaggerResponse(400)]
     [SwaggerResponse(401)]
     public async Task<IActionResult> AddUnitAdditionalServicesAsync(
-        int propertyId,
-        int unitId,
+        Guid propertyId,
+        Guid unitId,
         [FromBody] UnitAdditionalServicesCreationDto creationDto)
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
@@ -114,7 +114,7 @@ public class UserUnitController(
         if (unit == null || unit.PropertyId != propertyId)
             return BadRequest("Unit does not exist or does not belong to the specified property.");
         
-        var userId = int.Parse(userIdClaim.Value);
+        var userId = Guid.Parse(userIdClaim.Value);
         
         await additionalService.CreateAsync(userId, creationDto);
         return Created();
@@ -129,8 +129,8 @@ public class UserUnitController(
     [SwaggerResponse(401)]
     [SwaggerResponse(404)]
     public async Task<IActionResult> UpdateUnitAsync(
-        int propertyId,
-        int unitId,
+        Guid propertyId,
+        Guid unitId,
         [FromBody] UnitUpdateDto unitUpdateDto)
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
@@ -140,7 +140,7 @@ public class UserUnitController(
         if (unitUpdateDto.Id != unitId || unitUpdateDto.PropertyId != propertyId)
             return BadRequest("Unit ID or Property ID in URL does not match those in body.");
         
-        var userId = int.Parse(userIdClaim.Value);
+        var userId = Guid.Parse(userIdClaim.Value);
         
         await service.UpdateAsync(userId, unitUpdateDto);
         return Ok();
@@ -155,8 +155,8 @@ public class UserUnitController(
     [SwaggerResponse(401)]
     [SwaggerResponse(404)]
     public async Task<IActionResult> UpdateUnitCustomizationsAsync(
-        int propertyId,
-        int unitId,
+        Guid propertyId,
+        Guid unitId,
         [FromBody] List<UnitCustomizationUpdateDto> updateList)
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
@@ -167,7 +167,7 @@ public class UserUnitController(
         if (unit == null || unit.PropertyId != propertyId)
             return BadRequest("Unit does not exist or does not belong to the specified property.");
 
-        var userId = int.Parse(userIdClaim.Value);
+        var userId = Guid.Parse(userIdClaim.Value);
 
         await customizationService.UpdateRangeAsync(userId, unitId, updateList);
         return Ok();
@@ -182,8 +182,8 @@ public class UserUnitController(
     [SwaggerResponse(401)]
     [SwaggerResponse(404)]
     public async Task<IActionResult> UpdateUnitPicturesAsync(
-        int propertyId,
-        int unitId,
+        Guid propertyId,
+        Guid unitId,
         [FromBody] List<UnitPictureUpdateDto> updateList)
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
@@ -194,7 +194,7 @@ public class UserUnitController(
         if (unit == null || unit.PropertyId != propertyId)
             return BadRequest("Unit does not exist or does not belong to the specified property.");
         
-        var userId = int.Parse(userIdClaim.Value);
+        var userId = Guid.Parse(userIdClaim.Value);
         
         await pictureService.UpdateRangeAsync(userId, unitId, updateList);
         return Ok();
@@ -209,8 +209,8 @@ public class UserUnitController(
     [SwaggerResponse(401)]
     [SwaggerResponse(404)]
     public async Task<IActionResult> UpdateUnitNameAsync(
-        int propertyId,
-        int unitId,
+        Guid propertyId,
+        Guid unitId,
         [FromBody] string name)
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
@@ -221,7 +221,7 @@ public class UserUnitController(
         if (unit == null || unit.PropertyId != propertyId)
             return BadRequest("Unit does not exist or does not belong to the specified property.");
         
-        var userId = int.Parse(userIdClaim.Value);
+        var userId = Guid.Parse(userIdClaim.Value);
         
         await service.UpdateNameAsync(userId, unitId, name);
         return Ok();
@@ -236,8 +236,8 @@ public class UserUnitController(
     [SwaggerResponse(401)]
     [SwaggerResponse(404)]
     public async Task<IActionResult> UpdateUnitAdditionalServicesAsync(
-        int propertyId,
-        int unitId,
+        Guid propertyId,
+        Guid unitId,
         [FromBody] UnitAdditionalServicesUpdateDto updateDto)
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
@@ -248,7 +248,7 @@ public class UserUnitController(
         if (unit == null || unit.PropertyId != propertyId)
             return BadRequest("Unit does not exist or does not belong to the specified property.");
         
-        var userId = int.Parse(userIdClaim.Value);
+        var userId = Guid.Parse(userIdClaim.Value);
         
         await additionalService.UpdateAsync(userId, updateDto);
         return Ok();
@@ -263,8 +263,8 @@ public class UserUnitController(
     [SwaggerResponse(401)]
     [SwaggerResponse(404)]
     public async Task<IActionResult> DeleteUnitAsync(
-        int propertyId,
-        int unitId)
+        Guid propertyId,
+        Guid unitId)
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
@@ -274,7 +274,7 @@ public class UserUnitController(
         if (unit == null || unit.PropertyId != propertyId)
             return BadRequest("Unit does not exist or does not belong to the specified property.");
         
-        var userId = int.Parse(userIdClaim.Value);
+        var userId = Guid.Parse(userIdClaim.Value);
         
         await service.DeleteAsync(userId, unitId);
         return NoContent();
@@ -289,8 +289,8 @@ public class UserUnitController(
     [SwaggerResponse(401)]
     [SwaggerResponse(404)]
     public async Task<IActionResult> DeleteUnitCustomizationsAsync(
-        int propertyId,
-        int unitId)
+        Guid propertyId,
+        Guid unitId)
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
@@ -300,7 +300,7 @@ public class UserUnitController(
         if (unit == null || unit.PropertyId != propertyId)
             return BadRequest("Unit does not exist or does not belong to the specified property.");
         
-        var userId = int.Parse(userIdClaim.Value);
+        var userId = Guid.Parse(userIdClaim.Value);
         
         await customizationService.DeleteRangeAsync(userId, unitId);
         return NoContent();

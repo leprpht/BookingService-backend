@@ -5,7 +5,7 @@ namespace BookingService.Housing.DTOs.PropertyReview;
 
 public class PropertyReviewDto
 {
-    public required int Id { get; init; }
+    public required Guid Id { get; init; }
     public required int Rating { get; init; }
     public string? Comment { get; init; }
     public required DateTime CreatedAt { get; init; }

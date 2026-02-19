@@ -2,5 +2,5 @@ namespace BookingService.Auth.Services;
 
 public interface IJwtTokenGenerator
 {
-    string GenerateToken(int id, string email);
+    string GenerateToken(Guid id, string email);
 }

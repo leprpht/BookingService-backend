@@ -6,5 +6,5 @@ namespace BookingService.Auth.Data;
 public interface IAuthRepository : IBaseRepository<User>
 {
     Task<User?> GetByEmailAsync(string email);
-    new Task<int> AddAsync(User entity);
+    new Task<Guid> AddAsync(User entity);
 }

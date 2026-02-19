@@ -17,7 +17,7 @@ public class ReviewRepository(BookingServiceDbContext context)
         await base.AddAsync(review);
     }
     
-    public async Task UpdateCommentAsync(int id, int userId, string comment)
+    public async Task UpdateCommentAsync(Guid id, Guid userId, string comment)
     {
         var review = await DbSet.FirstOrDefaultAsync(r => r.Id == id);
         
@@ -31,7 +31,7 @@ public class ReviewRepository(BookingServiceDbContext context)
         await Context.SaveChangesAsync();
     }
     
-    public override async Task DeleteAsync(int reviewId, int ownerId)
+    public override async Task DeleteAsync(Guid reviewId, Guid ownerId)
     {
         var property = await Context.Properties.FirstOrDefaultAsync(x => x.Id == reviewId);
         property?.UpdateRating();

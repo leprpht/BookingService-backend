@@ -2,7 +2,7 @@ namespace BookingService.Housing.DTOs.Property;
 
 public sealed class PropertyUpdateDto
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public required string Name { get; set; }
     public required string Address { get; set; }
     public required string City { get; set; }

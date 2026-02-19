@@ -8,7 +8,7 @@ namespace BookingService.Auth.Services;
 
 public class JwtTokenGenerator(IConfiguration configuration) : IJwtTokenGenerator
 {
-    public string GenerateToken(int id, string email)
+    public string GenerateToken(Guid id, string email)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         

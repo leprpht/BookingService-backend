@@ -21,7 +21,7 @@ public class UserStayController(IUserStayService service) : ControllerBase
         if (userIdClaim == null)
             return Unauthorized();
         
-        var userId = int.Parse(userIdClaim.Value);
+        var userId = Guid.Parse(userIdClaim.Value);
         
         filter ??= new StaySearchFilter();
         

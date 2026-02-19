@@ -6,7 +6,7 @@ namespace BookingService.Housing.DTOs.Property;
 public sealed class PropertyListingDto
 {
     [JsonPropertyName("id")]
-    public int Id { get; init; }
+    public Guid Id { get; init; }
     
     [JsonPropertyName("name")]
     public required string Name { get; init; }

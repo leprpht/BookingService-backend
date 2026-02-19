@@ -6,5 +6,5 @@ namespace BookingService.Housing.Services;
 
 public interface IUnitService : IBaseService<Unit, UnitCreationDto, UnitUpdateDto>
 {
-    Task UpdateNameAsync(int id, int userId, string name);
+    Task UpdateNameAsync(Guid id, Guid userId, string name);
 }

@@ -9,7 +9,7 @@ namespace BookingServices.Housing.Data;
 public class ResponseRepository(BookingServiceDbContext context)
     : BaseRepository<PropertyReviewResponse>(context), IResponseRepository
 {
-    public async Task UpdateCommentAsync(int id, int userId, string comment)
+    public async Task UpdateCommentAsync(Guid id, Guid userId, string comment)
     {
         var response = await DbSet.FirstOrDefaultAsync(r => r.Id == id);
         

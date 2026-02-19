@@ -9,7 +9,7 @@ public abstract class BaseRepository<T>(BookingServiceDbContext context) : IBase
     protected readonly BookingServiceDbContext Context = context;
     protected readonly DbSet<T> DbSet = context.Set<T>();
 
-    public async Task<T> GetByIdAsync(int id)
+    public async Task<T> GetByIdAsync(Guid id)
     {
         var entity = await DbSet.FindAsync(id);
         
@@ -19,7 +19,7 @@ public abstract class BaseRepository<T>(BookingServiceDbContext context) : IBase
         return entity;
     }
 
-    public virtual async Task<T> GetByOwnerIdAsync(int ownerId)
+    public virtual async Task<T> GetByOwnerIdAsync(Guid ownerId)
     {
         var parent = await DbSet.FirstOrDefaultAsync(p => p
             .GetType()
@@ -44,7 +44,7 @@ public abstract class BaseRepository<T>(BookingServiceDbContext context) : IBase
         await Context.SaveChangesAsync();
     }
 
-    public virtual async Task DeleteAsync(int id, int ownerId)
+    public virtual async Task DeleteAsync(Guid id, Guid ownerId)
     {
         var entity = await GetByOwnerIdAsync(ownerId);
 

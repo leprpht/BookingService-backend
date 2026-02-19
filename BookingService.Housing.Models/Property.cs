@@ -2,14 +2,14 @@ namespace BookingService.Housing.Models;
 
 public sealed class Property
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public string Address { get; set; } = string.Empty;
     public string City { get; set; } = string.Empty;
     public string State { get; set; } = string.Empty;
     public string Country { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
-    public int OwnerId { get; set; }
+    public Guid OwnerId { get; set; }
     public bool IsActive { get; set; }
     
     public double AverageRating { get; private set; }

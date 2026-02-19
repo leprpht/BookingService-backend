@@ -6,12 +6,12 @@ namespace BookingService.Auth.Policies;
 
 public class IdMatchRequirement : IAuthorizationRequirement;
 
-public class IdMatchHandler : AuthorizationHandler<IdMatchRequirement, int>
+public class IdMatchHandler : AuthorizationHandler<IdMatchRequirement, Guid>
 {
     protected override Task HandleRequirementAsync(
         AuthorizationHandlerContext context,
         IdMatchRequirement requirement,
-        int resourceId)
+        Guid resourceId)
     {
         return context.User.FindFirst(ClaimTypes.Role)?.Value == "Admin"
             ? AdminOverride(context, requirement)
@@ -27,13 +27,13 @@ public class IdMatchHandler : AuthorizationHandler<IdMatchRequirement, int>
     private static Task UserIdMatch(
         AuthorizationHandlerContext context,
         IdMatchRequirement requirement,
-        int resourceId)
+        Guid resourceId)
     {
         var userIdClaim = context.User.FindFirst(JwtRegisteredClaimNames.Sub);
         if (userIdClaim == null)
             return Task.CompletedTask;
         
-        if (int.TryParse(userIdClaim.Value, out var userId) && userId == resourceId)
+        if (Guid.TryParse(userIdClaim.Value, out var userId) && userId == resourceId)
             context.Succeed(requirement);
 
         return Task.CompletedTask;

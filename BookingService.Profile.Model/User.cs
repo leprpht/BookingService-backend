@@ -10,8 +10,9 @@ public class User
     public string LastName { get; set; } = string.Empty;
     public required string Email { get; set; }
     public required string Password { get; init; }
-    public string? PfpUrl { get; init; }
+    public string? ProfilePictureUrl { get; set; }
     public required string Salt { get; init; }
+    public DateOnly DateOfBirth { get; set; }
     public required string Role { get; set; } = "User";
     
     public ICollection<Stay> Stays { get; init; } = new List<Stay>();

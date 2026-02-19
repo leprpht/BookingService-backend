@@ -63,6 +63,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Booking", "Booking", "{7F11
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingService.Booking.Controllers", "BookingService.Booking.Controllers\BookingService.Booking.Controllers.csproj", "{ABE4AE7C-B60D-478D-962C-5DC3A658ACF4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingService.Search", "BookingService.Search\BookingService.Search.csproj", "{EBD705D7-D650-43D9-A0BA-777172AEBF47}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -153,6 +155,10 @@ Global
 		{ABE4AE7C-B60D-478D-962C-5DC3A658ACF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABE4AE7C-B60D-478D-962C-5DC3A658ACF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABE4AE7C-B60D-478D-962C-5DC3A658ACF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBD705D7-D650-43D9-A0BA-777172AEBF47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBD705D7-D650-43D9-A0BA-777172AEBF47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBD705D7-D650-43D9-A0BA-777172AEBF47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBD705D7-D650-43D9-A0BA-777172AEBF47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5B921BF1-5087-476E-B7B5-0DA6F056DB8C} = {533F245A-5931-48EB-B860-EA0780FE70D6}
@@ -182,5 +188,6 @@ Global
 		{2F119B7B-7365-49CE-B919-79C544E9DC24} = {BA86CB22-AEA3-454E-8CD8-E6EE67854608}
 		{7F110633-906F-4410-BE8A-BD0D6299D472} = {533F245A-5931-48EB-B860-EA0780FE70D6}
 		{ABE4AE7C-B60D-478D-962C-5DC3A658ACF4} = {7F110633-906F-4410-BE8A-BD0D6299D472}
+		{EBD705D7-D650-43D9-A0BA-777172AEBF47} = {F9F26669-96EC-4C6C-93B2-A289587A9EE9}
 	EndGlobalSection
 EndGlobal

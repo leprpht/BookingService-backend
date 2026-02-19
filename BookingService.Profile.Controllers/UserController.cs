@@ -32,6 +32,26 @@ public class UserController(IUserService service) : ControllerBase
             ? NotFound()
             : Ok(user);
     }
+
+    [HttpPatch]
+    [SwaggerOperation(
+        Summary = "Update user profile",
+        Description = "Updates the profile information of the currently authenticated user.")]
+    [SwaggerResponse(204)]
+    [SwaggerResponse(400)]
+    [SwaggerResponse(401)]
+    [SwaggerResponse(404)]
+    public async Task<IActionResult> UpdateUser([FromBody] UserInfoUpdate userUpdate)
+    {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userIdClaim == null)
+            return Unauthorized();
+        
+        var userId = int.Parse(userIdClaim.Value);
+        await service.UpdateUserAsync(userId, userUpdate);
+        
+        return NoContent();
+    }
     
     [HttpPatch("name")]
     [SwaggerOperation(
@@ -41,7 +61,7 @@ public class UserController(IUserService service) : ControllerBase
     [SwaggerResponse(400)]
     [SwaggerResponse(401)]
     [SwaggerResponse(404)]
-    public async Task<IActionResult> UpdateName([FromBody] UserNameUpdate name)
+    public async Task<IActionResult> UpdateName([FromBody] UserNameDto name)
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
@@ -70,6 +90,26 @@ public class UserController(IUserService service) : ControllerBase
         
         var userId = int.Parse(userIdClaim.Value);
         await service.UpdateUserEmailAsync(userId, email);
+        
+        return NoContent();
+    }
+    
+    [HttpPatch("profile-picture")]
+    [SwaggerOperation(
+        Summary = "Update user profile picture",
+        Description = "Updates the profile picture of the currently authenticated user.")]
+    [SwaggerResponse(204)]
+    [SwaggerResponse(400)]
+    [SwaggerResponse(401)]
+    [SwaggerResponse(404)]
+    public async Task<IActionResult> UpdateProfilePicture([FromBody] string profilePictureUrl)
+    {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userIdClaim == null)
+            return Unauthorized();
+        
+        var userId = int.Parse(userIdClaim.Value);
+        await service.UpdateProfilePictureAsync(userId, profilePictureUrl);
         
         return NoContent();
     }

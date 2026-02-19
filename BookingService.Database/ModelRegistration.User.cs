@@ -11,26 +11,30 @@ public static partial class ModelRegistration
             .HasMany(e => e.Stays)
             .WithOne()
             .HasForeignKey(e => e.UserId)
-            .IsRequired();
-        
+            .IsRequired()
+            .OnDelete(DeleteBehavior.NoAction);
+
         modelBuilder.Entity<User>()
             .HasMany(e => e.Reviews)
             .WithOne()
             .HasForeignKey(e => e.UserId)
-            .IsRequired();
-        
+            .IsRequired()
+            .OnDelete(DeleteBehavior.NoAction);
+
         modelBuilder.Entity<User>()
             .HasMany(e => e.Properties)
             .WithOne()
             .HasForeignKey(e => e.OwnerId)
-            .IsRequired();
-        
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade);
+
         modelBuilder.Entity<User>()
             .HasMany(e => e.Units)
             .WithOne()
             .HasForeignKey(e => e.OwnerId)
-            .IsRequired();
-        
+            .IsRequired()
+            .OnDelete(DeleteBehavior.NoAction);
+
         modelBuilder.Entity<User>()
             .HasIndex(e => e.Email)
             .IsUnique();

@@ -11,12 +11,21 @@ public static partial class ModelRegistration
             .HasOne(p => p.Property)
             .WithMany(p => p.Reviews)
             .HasForeignKey(p => p.PropertyId)
-            .IsRequired();
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<PropertyReview>()
             .HasMany(p => p.PropertyReviewResponses)
             .WithOne(p => p.PropertyReview)
             .HasForeignKey(p => p.PropertyReviewId)
-            .IsRequired();
+            .IsRequired()
+            .OnDelete(DeleteBehavior.NoAction);
+
+        modelBuilder.Entity<PropertyReviewResponse>()
+            .HasOne(p => p.Property)
+            .WithMany()
+            .HasForeignKey(p => p.PropertyId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }

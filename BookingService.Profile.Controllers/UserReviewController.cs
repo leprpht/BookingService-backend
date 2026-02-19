@@ -166,6 +166,10 @@ public class UserReviewController(
         if (userIdClaim == null)
             return Unauthorized();
         
+        var review = reviewService.GetByIdAsync(reviewId);
+        if (review.Id != reviewId)
+            return NotFound("Review not found.");
+        
         var userId = int.Parse(userIdClaim.Value);
         
         await responseService.UpdateCommentAsync(responseId, userId, comment);
@@ -186,6 +190,10 @@ public class UserReviewController(
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
+        
+        var review = reviewService.GetByIdAsync(reviewId);
+        if (review.Id != reviewId)
+            return NotFound("Review not found.");
 
         var userId = int.Parse(userIdClaim.Value);
 

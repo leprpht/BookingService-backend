@@ -14,7 +14,16 @@ public class UserService(IUserRepository repository, IMapper mapper) : IUserServ
         return user?.ToUserDto(mapper);
     }
 
-    public async Task UpdateUserNameAsync(int id, UserNameUpdate userNameUpdate) =>
+    public async Task UpdateUserAsync(int id, UserInfoUpdate userUpdate) =>
+        await repository.UpdateUserAsync(
+            id,
+            userUpdate.Name.FirstName,
+            userUpdate.Name.MiddleName,
+            userUpdate.Name.LastName,
+            userUpdate.ProfilePictureUrl,
+            userUpdate.DateOfBirth);
+
+    public async Task UpdateUserNameAsync(int id, UserNameDto userNameUpdate) =>
         await repository.UpdateUserNameAsync(id, userNameUpdate.FirstName, userNameUpdate.MiddleName, userNameUpdate.LastName);
 
     public async Task UpdateUserEmailAsync(int id, string email)
@@ -24,4 +33,7 @@ public class UserService(IUserRepository repository, IMapper mapper) : IUserServ
         
         await repository.UpdateUserEmailAsync(id, email);
     }
+
+    public Task UpdateProfilePictureAsync(int id, string pfpUrl) =>
+        repository.UpdateUserProfilePictureAsync(id, pfpUrl);
 }

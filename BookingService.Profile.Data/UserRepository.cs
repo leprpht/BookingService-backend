@@ -11,6 +11,21 @@ public class UserRepository(BookingServiceDbContext context) : IUserRepository
     {
         return await context.Users.FindAsync(id);
     }
+    
+    public async Task UpdateUserAsync(int id, string firstName, string? middleName, string lastName, string? pfpUrl, DateOnly dateOfBirth)
+    {
+        var user = await GetByIdAsync(id);
+        if (user == null)
+            throw new NotFoundException();
+        
+        user.FirstName = firstName;
+        user.MiddleName = middleName;
+        user.LastName = lastName;
+        user.ProfilePictureUrl = pfpUrl;
+        user.DateOfBirth = dateOfBirth;
+        
+        await context.SaveChangesAsync();
+    }
 
     public async Task UpdateUserNameAsync(int id, string firstName, string? middleName, string lastName)
     {
@@ -36,6 +51,17 @@ public class UserRepository(BookingServiceDbContext context) : IUserRepository
             throw new DuplicateEntityException("Email is already in use by another user.");
         
         user.Email = email;
+        
+        await context.SaveChangesAsync();
+    }
+    
+    public async Task UpdateUserProfilePictureAsync(int id, string pfpUrl)
+    {
+        var user = await GetByIdAsync(id);
+        if (user == null)
+            throw new NotFoundException();
+        
+        user.ProfilePictureUrl = pfpUrl;
         
         await context.SaveChangesAsync();
     }

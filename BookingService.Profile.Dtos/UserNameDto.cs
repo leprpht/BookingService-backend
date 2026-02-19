@@ -1,6 +1,6 @@
 namespace BookingService.Profile.Dtos;
 
-public class UserNameUpdate
+public class UserNameDto
 {
     public required string FirstName { get; init; }
     public string? MiddleName { get; init; }

@@ -9,4 +9,5 @@ public interface IUserRepository
     Task UpdateUserNameAsync(Guid id, string firstName, string? middleName, string lastName);
     Task UpdateUserEmailAsync(Guid id, string email);
     Task UpdateUserProfilePictureAsync(Guid id, string pfpUrl);
+    Task UpgradeToHostAsync(Guid id);
 }

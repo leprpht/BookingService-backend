@@ -112,4 +112,25 @@ public class UserController(IUserService service) : ControllerBase
         
         return NoContent();
     }
+
+    [HttpPatch("upgrade-to-host")]
+    [SwaggerOperation(
+        Summary = "Upgrade user to host",
+        Description =
+            "Upgrades the currently authenticated user to a host, allowing them to list properties for rent.")]
+    [SwaggerResponse(204)]
+    [SwaggerResponse(400)]
+    [SwaggerResponse(401)]
+    [SwaggerResponse(404)]
+    public async Task<IActionResult> UpgradeToHost()
+    {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userIdClaim == null)
+            return Unauthorized();
+        
+        var userId = Guid.Parse(userIdClaim.Value);
+        await service.UpgradeToHostAsync(userId);
+        
+        return NoContent();
+    }
 }

@@ -9,4 +9,5 @@ public interface IUserService
     Task UpdateUserNameAsync(Guid id, UserNameDto userNameUpdate);
     Task UpdateUserEmailAsync(Guid id, string userEmailUpdate);
     Task UpdateProfilePictureAsync(Guid id, string pfpUrl);
+    Task UpgradeToHostAsync(Guid id);
 }

@@ -65,4 +65,18 @@ public class UserRepository(BookingServiceDbContext context) : IUserRepository
         
         await context.SaveChangesAsync();
     }
+
+    public async Task UpgradeToHostAsync(Guid id)
+    {
+        var user = await GetByIdAsync(id);
+        if (user == null)
+            throw new NotFoundException();
+        
+        if (user.Role is "Host" or "Admin")
+            throw new InvalidOperationException("User cannot be upgraded");
+        
+        user.Role = "Host";
+        
+        await context.SaveChangesAsync();
+    }
 }

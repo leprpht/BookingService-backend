@@ -34,6 +34,9 @@ public class UserService(IUserRepository repository, IMapper mapper) : IUserServ
         await repository.UpdateUserEmailAsync(id, email);
     }
 
-    public Task UpdateProfilePictureAsync(Guid id, string pfpUrl) =>
-        repository.UpdateUserProfilePictureAsync(id, pfpUrl);
+    public async Task UpdateProfilePictureAsync(Guid id, string pfpUrl) =>
+        await repository.UpdateUserProfilePictureAsync(id, pfpUrl);
+
+    public async Task UpgradeToHostAsync(Guid id) =>
+        await repository.UpgradeToHostAsync(id);
 }

@@ -9,7 +9,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace BookingService.Profile.Controllers;
 
 [ApiController]
-[Authorize]
+[Authorize (Roles = "Admin,Host")]
 [Route("api/User/properties")]
 public class UserUnitController(
     IUnitService service,

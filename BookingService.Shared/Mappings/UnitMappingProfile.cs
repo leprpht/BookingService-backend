@@ -1,4 +1,3 @@
-using AutoMapper;
 using BookingService.Housing.DTOs.Unit;
 using BookingService.Housing.Models;
 using BookingService.Shared.Requests;
@@ -20,10 +19,9 @@ public class UnitMappingProfile : AutoMapper.Profile
                 o => o.MapFrom((src, _, _, ctx) =>
                 {
                     var period = (PeriodRequest)ctx.Items["Period"];
-                    return !src.Stays.Any(s =>
-                        s.Status != StayStatus.Cancelled &&
-                        s.From < period.To &&
-                        s.To > period.From);
+                    return !src.Rooms.Any(ri =>
+                        ri.Stays
+                            .Any(s => s.Status != StayStatus.Cancelled && s.From < period.To && s.To > period.From));
                 }));
 
         CreateMap<Unit, UnitDto>()

@@ -13,38 +13,18 @@ public static class StayExtensions
         return stay;
     }
 
-    public static Stay ToStay(this StayUpdateDto dto, Guid userId, IMapper mapper)
-    {
-        return mapper.Map<Stay>(dto);
-    }
-    
-    public static StayDto ToStayDto(this Stay stay, IMapper mapper)
-    {
-        var dto = mapper.Map<StayDto>(stay);
-        dto.PropertyName = stay.Unit.Property.Name;
-        dto.UnitName = stay.Unit.Name;
-        dto.Status = stay.Status.StayStatusToString();
-        return dto;
-    }
+    public static Stay ToStay(this StayUpdateDto dto, Guid userId, IMapper mapper) =>
+        mapper.Map<Stay>(dto);
 
-    public static StayDto ToStayDto(this Stay stay, string property, string unit, IMapper mapper)
-    {
-        var dto = mapper.Map<StayDto>(stay);
-        dto.PropertyName = property;
-        dto.UnitName = unit;
-        dto.Status = stay.Status.StayStatusToString();
-        return dto;
-    }
+    public static StayDto ToStayDto(this Stay stay, IMapper mapper) =>
+        mapper.Map<StayDto>(stay);
 
-    private static string StayStatusToString(this StayStatus status)
+    private static string StayStatusToString(this StayStatus status) => status switch
     {
-        return status switch
-        {
-            StayStatus.Pending => "Pending",
-            StayStatus.Confirmed => "Confirmed",
-            StayStatus.Cancelled => "Cancelled",
-            StayStatus.Completed => "Completed",
-            _ => "Unknown"
-        };
-    }
+        StayStatus.Pending => "Pending",
+        StayStatus.Confirmed => "Confirmed",
+        StayStatus.Cancelled => "Cancelled",
+        StayStatus.Completed => "Completed",
+        _ => "Unknown"
+    };
 }

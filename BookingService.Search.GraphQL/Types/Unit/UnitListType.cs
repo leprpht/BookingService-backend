@@ -7,5 +7,5 @@ public class UnitListType
     public int Capacity { get; set; }
     public double Price { get; set; }
     public int Size { get; set; }
-    public bool IsAvailable { get; set; }
+    public int AvailableRooms { get; set; }
 }

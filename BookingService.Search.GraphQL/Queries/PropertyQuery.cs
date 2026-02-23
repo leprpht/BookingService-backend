@@ -20,9 +20,14 @@ public class PropertyQuery
     {
         return context.Properties
             .Where(p => p.IsActive)
-            .Where(p => p.Units
-                .Any(u => !u.Stays
-                    .Any(s => s.Status != StayStatus.Cancelled && s.From < filter.Period.To && s.To > filter.Period.From)))
+            .Where(p => p.Units.Any(u =>
+                u.IsActive &&
+                u.Rooms.Any(r =>
+                    r.Status == RoomStatus.Available &&
+                    !r.Stays.Any(s =>
+                        s.Status != StayStatus.Cancelled &&
+                        s.From < filter.Period.To &&
+                        s.To > filter.Period.From))))
             .Where(p => string.IsNullOrEmpty(filter.Name) || p.Name.Contains(filter.Name))
             .Where(p => string.IsNullOrEmpty(filter.City) || p.City.Contains(filter.City))
             .Where(p => string.IsNullOrEmpty(filter.Country) || p.Country.Contains(filter.Country))
@@ -30,7 +35,7 @@ public class PropertyQuery
             .Where(p => !filter.MaxPrice.HasValue || p.Units.Min(u => u.Price) <= filter.MaxPrice.Value)
             .Where(p => filter.Tags == null || filter.Tags.Count == 0 || p.Tags.Any(t => filter.Tags.Contains(t.Id)))
             .Where(p => !filter.MinRating.HasValue || p.AverageRating >= filter.MinRating.Value)
-            .Select(p => new PropertyPageType 
+            .Select(p => new PropertyPageType
             {
                 Id = p.Id,
                 Name = p.Name,
@@ -38,14 +43,23 @@ public class PropertyQuery
                 City = p.City,
                 State = p.State,
                 Country = p.Country,
-                Price = p.Units.Min(u => u.Price) * filter.Period.DaysCount,
+                Price = p.Units
+                    .Where(u => u.IsActive)
+                    .Min(u => u.Price) * filter.Period.DaysCount,
                 PictureUrl = p.Pictures.FirstOrDefault(pic => pic.IsCover)!.Url,
                 Rating = p.AverageRating,
                 RankingScore = p.RankingScore,
                 ReviewCount = p.ReviewCount,
+                // Count free rooms across all active units
                 AvailableUnits = p.Units
-                    .Count(u => !u.Stays
-                        .Any(s => s.Status != StayStatus.Cancelled && s.From < filter.Period.To && s.To > filter.Period.From)),
+                    .Where(u => u.IsActive)
+                    .SelectMany(u => u.Rooms)
+                    .Count(r =>
+                        r.Status == RoomStatus.Available &&
+                        !r.Stays.Any(s =>
+                            s.Status != StayStatus.Cancelled &&
+                            s.From < filter.Period.To &&
+                            s.To > filter.Period.From)),
                 Tags = p.Tags.Select(t => t.Text)
             })
             .Where(p => p.AvailableUnits > 0)
@@ -61,7 +75,7 @@ public class PropertyQuery
     {
         return await context.Properties
             .Where(p => p.Id == propertyId)
-            .Select(property => new PropertyType 
+            .Select(property => new PropertyType
             {
                 Id = property.Id,
                 Name = property.Name,
@@ -77,6 +91,7 @@ public class PropertyQuery
                     .Select(p => p.Url)
                     .ToList(),
                 Units = property.Units
+                    .Where(u => u.IsActive)
                     .Select(u => new UnitListType
                     {
                         Id = u.Id,
@@ -84,8 +99,12 @@ public class PropertyQuery
                         Capacity = u.Capacity,
                         Price = u.Price * period.DaysCount,
                         Size = u.Size,
-                        IsAvailable = !u.Stays
-                            .Any(s => s.Status != StayStatus.Cancelled && s.From < period.To && s.To > period.From)
+                        AvailableRooms = u.Rooms.Count(r =>
+                            r.Status == RoomStatus.Available &&
+                            !r.Stays.Any(s =>
+                                s.Status != StayStatus.Cancelled &&
+                                s.From < period.To &&
+                                s.To > period.From))
                     })
                     .OrderBy(u => u.Price)
                     .ToList()

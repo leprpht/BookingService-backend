@@ -15,11 +15,13 @@ namespace BookingService.Booking.Controllers;
 public class BookingController(IStayService service) : ControllerBase
 {
     [HttpPost]
-    [SwaggerOperation(Summary = "Create a stay", Description = "Creates a new stay booking for a unit.")]
+    [SwaggerOperation(
+        Summary = "Create a stay",
+        Description = "Creates a new stay booking for a unit.")]
     [SwaggerResponse(201)]
     [SwaggerResponse(400)]
     [SwaggerResponse(401)]
-    public IActionResult CreateBooking(
+    public async Task<IActionResult> CreateBooking(
         [FromQuery] Guid unitId,
         [FromBody] PeriodRequest period)
     {
@@ -37,7 +39,7 @@ public class BookingController(IStayService service) : ControllerBase
             Status = "Pending"
         };
 
-        service.CreateAsync(userId, stayCreationDto);
+        await service.CreateAsync(userId, stayCreationDto);
         return Created();
     }
     

@@ -11,6 +11,7 @@ public static partial class HousingModule
             .AddScoped<IPropertyService, PropertyService>()
             .AddScoped<IResponseService, ResponseService>()
             .AddScoped<IReviewService, ReviewService>()
+            .AddScoped<IRoomInstanceService, RoomInstanceService>()
             .AddScoped<IStayService, StayService>()
             .AddScoped<IUnitAdditionalService, UnitAdditionalService>()
             .AddScoped<IUnitService, UnitService>();

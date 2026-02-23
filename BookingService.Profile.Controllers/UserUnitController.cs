@@ -15,7 +15,8 @@ public class UserUnitController(
     IUnitService service,
     IUnitCustomizationService customizationService,
     IUnitPictureService pictureService,
-    IUnitAdditionalService additionalService)
+    IUnitAdditionalService additionalService,
+    IRoomInstanceService roomService)
     : ControllerBase
 {
     [HttpPost("{propertyId}/units")]
@@ -350,6 +351,104 @@ public class UserUnitController(
         var userId = Guid.Parse(userIdClaim.Value);
         
         await customizationService.DeleteRangeAsync(userId, unitId);
+        return NoContent();
+    }
+    
+    [HttpGet("{propertyId}/units/{unitId}/rooms")]
+    [SwaggerOperation(
+        Summary = "List rooms",
+        Description = "Lists all physical room instances for a unit type.")]
+    [SwaggerResponse(200)]
+    [SwaggerResponse(400)]
+    [SwaggerResponse(401)]
+    public async Task<IActionResult> GetRoomsAsync(Guid propertyId, Guid unitId)
+    {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userIdClaim == null)
+            return Unauthorized();
+        
+        var unit = await service.GetByIdAsync(unitId);
+        if (unit == null || unit.PropertyId != propertyId)
+            return BadRequest("Unit does not exist or does not belong to the specified property.");
+
+        var rooms = await roomService.GetByUnitIdAsync(unitId);
+        return Ok(rooms);
+    }
+
+    [HttpPost("{propertyId}/units/{unitId}/rooms")]
+    [SwaggerOperation(
+        Summary = "Add rooms", 
+        Description = "Adds one or more physical room instances to a unit type.")]
+    [SwaggerResponse(201)]
+    [SwaggerResponse(400)]
+    [SwaggerResponse(401)]
+    public async Task<IActionResult> AddRoomsAsync(
+        Guid propertyId,
+        Guid unitId,
+        [FromBody] List<RoomInstanceCreationDto> dtos)
+    {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userIdClaim == null)
+            return Unauthorized();
+
+        var unit = await service.GetByIdAsync(unitId);
+        if (unit == null || unit.PropertyId != propertyId)
+            return BadRequest("Unit does not exist or does not belong to the specified property.");
+
+        var userId = Guid.Parse(userIdClaim.Value);
+        await roomService.AddRoomsAsync(unitId, userId, dtos);
+        return Created();
+    }
+
+    [HttpPatch("{propertyId}/units/{unitId}/rooms/{roomId}/status")]
+    [SwaggerOperation(
+        Summary = "Update room status", 
+        Description = "Sets a room's status (Available / Maintenance / OutOfService).")]
+    [SwaggerResponse(200)]
+    [SwaggerResponse(400)]
+    [SwaggerResponse(401)]
+    [SwaggerResponse(404)]
+    public async Task<IActionResult> UpdateRoomStatusAsync(
+        Guid propertyId,
+        Guid unitId,
+        Guid roomId,
+        [FromBody] string status)
+    {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userIdClaim == null)
+            return Unauthorized();
+
+        var unit = await service.GetByIdAsync(unitId);
+        if (unit == null || unit.PropertyId != propertyId)
+            return BadRequest("Unit does not exist or does not belong to the specified property.");
+
+        var userId = Guid.Parse(userIdClaim.Value);
+        
+        await roomService.UpdateStatusAsync(roomId, userId, status);
+        return Ok();
+    }
+
+    [HttpDelete("{propertyId}/units/{unitId}/rooms/{roomId}")]
+    [SwaggerOperation(
+        Summary = "Delete a room", 
+        Description = "Removes a physical room instance (only if it has no active stays).")]
+    [SwaggerResponse(204)]
+    [SwaggerResponse(400)]
+    [SwaggerResponse(401)]
+    [SwaggerResponse(404)]
+    public async Task<IActionResult> DeleteRoomAsync(Guid propertyId, Guid unitId, Guid roomId)
+    {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userIdClaim == null)
+            return Unauthorized();
+
+        var unit = await service.GetByIdAsync(unitId);
+        if (unit == null || unit.PropertyId != propertyId)
+            return BadRequest("Unit does not exist or does not belong to the specified property.");
+
+        var userId = Guid.Parse(userIdClaim.Value);
+        
+        await roomService.DeleteAsync(roomId, userId);
         return NoContent();
     }
 }

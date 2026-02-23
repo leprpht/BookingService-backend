@@ -11,6 +11,7 @@ public class BookingServiceDbContext(DbContextOptions<BookingServiceDbContext> o
     public DbSet<PropertyReview> PropertyReviews { get; set; } = null!;
     public DbSet<PropertyReviewResponse> PropertyReviewResponses { get; set; } = null!;
     public DbSet<Unit> Units { get; set; } = null!;
+    public DbSet<RoomInstance> RoomInstances { get; set; } = null!;
     public DbSet<UnitCustomization> UnitCustomizations { get; set; } = null!;
     public DbSet<UnitPicture> UnitPictures { get; set; } = null!;
     public DbSet<UnitAdditionalServices> AdditionalServices { get; set; } = null!;

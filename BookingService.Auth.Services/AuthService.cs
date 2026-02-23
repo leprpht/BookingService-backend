@@ -33,7 +33,7 @@ public class AuthService(IAuthRepository repository, IJwtTokenGenerator tokenGen
 
         var id = await repository.AddAsync(user);
 
-        return tokenGenerator.GenerateToken(id, user.Email);
+        return tokenGenerator.GenerateToken(id, user.Email, user.Role);
     }
     
     public async Task<string?> LoginAsync(string email, string password)
@@ -53,7 +53,7 @@ public class AuthService(IAuthRepository repository, IJwtTokenGenerator tokenGen
             Convert.FromBase64String(passwordHash), 
             Convert.FromBase64String(existingUser.Password))
             ? null
-            : tokenGenerator.GenerateToken(existingUser.Id, existingUser.Email);
+            : tokenGenerator.GenerateToken(existingUser.Id, existingUser.Email, existingUser.Role);
     }
 
     private static string HashPassword(string password, byte[] salt)

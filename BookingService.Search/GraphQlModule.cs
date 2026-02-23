@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace BookingService.Search.GraphQL;
+namespace BookingService.Search;
 
 public static partial class GraphQlModule
 {

@@ -8,7 +8,7 @@ namespace BookingService.Auth.Services;
 
 public class JwtTokenGenerator(IConfiguration configuration) : IJwtTokenGenerator
 {
-    public string GenerateToken(Guid id, string email)
+    public string GenerateToken(Guid id, string email, string role)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         
@@ -22,7 +22,8 @@ public class JwtTokenGenerator(IConfiguration configuration) : IJwtTokenGenerato
             Subject = new ClaimsIdentity(
             [
                 new Claim(JwtRegisteredClaimNames.Sub, id.ToString()),
-                new Claim(JwtRegisteredClaimNames.Email, email)
+                new Claim(JwtRegisteredClaimNames.Email, email),
+                new Claim(ClaimTypes.Role, role)
             ]),
             Expires = DateTime.UtcNow.AddHours(1),
             SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256)

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookingService.Search.GraphQL.Queries;
 
+[ExtendObjectType("Query")]
 public class UnitQuery
 {
     public async Task<UnitType?> GetUnitByIdAsync(

@@ -12,14 +12,18 @@ public static class UnitExtensions
         return mapper.Map<UnitDto>(unit, opt => opt.Items["Period"] = period);
     }
 
-    public static Unit ToUnit(this UnitCreationDto dto, IMapper mapper)
+    public static Unit ToUnit(this UnitCreationDto dto, Guid userId, IMapper mapper)
     {
-        return mapper.Map<Unit>(dto);
+        var unit = mapper.Map<Unit>(dto);
+        unit.OwnerId = userId;
+        return unit;
     }
 
-    public static Unit ToUnit(this UnitUpdateDto dto, IMapper mapper)
+    public static Unit ToUnit(this UnitUpdateDto dto, Guid userId, IMapper mapper)
     {
-        return mapper.Map<Unit>(dto);
+        var unit = mapper.Map<Unit>(dto);
+        unit.OwnerId = userId;
+        return unit;
     }
 
     public static UnitCustomization ToUnitCustomization(this UnitCustomizationCreationDto dto, Guid unitId, IMapper mapper)

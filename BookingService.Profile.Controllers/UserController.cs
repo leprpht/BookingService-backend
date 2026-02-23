@@ -47,7 +47,8 @@ public class UserController(IUserService service) : ControllerBase
         if (userIdClaim == null)
             return Unauthorized();
         
-        
+        var userId = Guid.Parse(userIdClaim.Value);
+        await service.UpdateUserAsync(userId, userUpdate);
         
         return NoContent();
     }

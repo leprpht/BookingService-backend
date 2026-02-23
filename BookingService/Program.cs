@@ -3,7 +3,7 @@ using BookingService.Auth;
 using BookingService.Database;
 using BookingService.Housing;
 using BookingService.Profile;
-using BookingService.Search.GraphQL;
+using BookingService.Search;
 using BookingService.Shared;
 using BookingService.Shared.Infrastructure.Middleware;
 

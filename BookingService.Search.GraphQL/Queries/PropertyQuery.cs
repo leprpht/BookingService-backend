@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookingService.Search.GraphQL.Queries;
 
+[ExtendObjectType("Query")]
 public class PropertyQuery
 {
     [UseFiltering]
@@ -47,6 +48,7 @@ public class PropertyQuery
                         .Any(s => s.Status != StayStatus.Cancelled && s.From < filter.Period.To && s.To > filter.Period.From)),
                 Tags = p.Tags.Select(t => t.Text)
             })
+            .Where(p => p.AvailableUnits > 0)
             .OrderByDescending(p => p.RankingScore)
             .Skip((page.PageNumber - 1) * page.PageSize)
             .Take(page.PageSize);

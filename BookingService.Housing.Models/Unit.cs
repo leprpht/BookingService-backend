@@ -17,5 +17,5 @@ public sealed class Unit
     public Guid PropertyId { get; init; }
     public Property Property { get; init; } = null!;
     
-    public Guid OwnerId { get; init; }
+    public Guid OwnerId { get; set; }
 }

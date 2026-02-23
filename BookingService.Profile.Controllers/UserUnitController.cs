@@ -199,6 +199,53 @@ public class UserUnitController(
         await pictureService.UpdateRangeAsync(userId, unitId, updateList);
         return Ok();
     }
+    
+    [HttpPatch("{propertyId}/units/active")]
+    [SwaggerOperation(
+        Summary = "Activation toggle for all units in a property",
+        Description = "Toggles the active status of all units within a property.")]
+    [SwaggerResponse(200)]
+    [SwaggerResponse(400)]
+    [SwaggerResponse(401)]
+    [SwaggerResponse(404)]
+    public async Task<IActionResult> ToggleAllUnitsActiveStatusAsync(
+        Guid propertyId)
+    {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userIdClaim == null)
+            return Unauthorized();
+
+        var userId = Guid.Parse(userIdClaim.Value);
+        
+        await service.ToggleAllUnitsActiveStatusAsync(propertyId, userId);
+        return Ok();
+    }
+
+    [HttpPatch("{propertyId}/units/{unitId}/active")]
+    [SwaggerOperation(
+        Summary = "Activation toggle for a unit",
+        Description = "Toggles the active status of an existing unit.")]
+    [SwaggerResponse(200)]
+    [SwaggerResponse(400)]
+    [SwaggerResponse(401)]
+    [SwaggerResponse(404)]
+    public async Task<IActionResult> ToggleUnitActiveStatusAsync(
+        Guid propertyId,
+        Guid unitId)
+    {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userIdClaim == null)
+            return Unauthorized();
+
+        var unit = await service.GetByIdAsync(unitId);
+        if (unit == null || unit.PropertyId != propertyId)
+            return BadRequest("Unit does not exist or does not belong to the specified property.");
+
+        var userId = Guid.Parse(userIdClaim.Value);
+        
+        await service.ToggleActiveStatusAsync(unitId, userId);
+        return Ok();
+    }
 
     [HttpPatch("{propertyId}/units/{unitId}/name")]
     [SwaggerOperation(

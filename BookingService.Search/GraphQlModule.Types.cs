@@ -3,7 +3,7 @@ using BookingService.Search.GraphQL.Types.Unit;
 using HotChocolate.Execution.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace BookingService.Search.GraphQL;
+namespace BookingService.Search;
 
 public static partial class GraphQlModule
 {

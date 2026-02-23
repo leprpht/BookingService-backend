@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookingService.Search.GraphQL.Queries;
 
+[ExtendObjectType("Query")]
 public class UnitAdditionalServicesQuery
 {
     public async Task<List<UnitAdditionalServicesType>> GetUnitAdditionalServicesAsync(

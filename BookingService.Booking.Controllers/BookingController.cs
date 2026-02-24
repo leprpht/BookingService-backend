@@ -22,22 +22,13 @@ public class BookingController(IStayService service) : ControllerBase
     [SwaggerResponse(400)]
     [SwaggerResponse(401)]
     public async Task<IActionResult> CreateBooking(
-        [FromQuery] Guid unitId,
-        [FromBody] PeriodRequest period)
+        [FromBody] StayCreationDto stayCreationDto)
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
         
         var userId = Guid.Parse(userIdClaim.Value);
-        
-        var stayCreationDto = new StayCreationDto
-        {
-            UnitId = unitId,
-            From = period.From,
-            To = period.To,
-            Status = "Pending"
-        };
 
         await service.CreateAsync(userId, stayCreationDto);
         return Created();

@@ -18,6 +18,11 @@ public class PropertyQuery
         HousingFilterOptions filter,
         PageRequest page)
     {
+        filter.SearchQuery = filter.SearchQuery.Trim();
+        filter.Name = filter.Name?.Trim();
+        filter.City = filter.City?.Trim();
+        filter.Country = filter.Country?.Trim();
+        
         return context.Properties
             .Where(p => p.IsActive)
             .Where(p => p.Units.Any(u =>
@@ -28,6 +33,14 @@ public class PropertyQuery
                         s.Status != StayStatus.Cancelled &&
                         s.From < filter.Period.To &&
                         s.To > filter.Period.From))))
+            .Where(p => string.IsNullOrEmpty(filter.SearchQuery)
+                        || p.Name.Contains(filter.SearchQuery)
+                        || p.Address.Contains(filter.SearchQuery)
+                        || p.City.Contains(filter.SearchQuery)
+                        || p.State.Contains(filter.SearchQuery)
+                        || p.Country.Contains(filter.SearchQuery)
+                        || p.Description.Contains(filter.SearchQuery)
+                        || p.Tags.Any(t => t.Text.Contains(filter.SearchQuery)))
             .Where(p => string.IsNullOrEmpty(filter.Name) || p.Name.Contains(filter.Name))
             .Where(p => string.IsNullOrEmpty(filter.City) || p.City.Contains(filter.City))
             .Where(p => string.IsNullOrEmpty(filter.Country) || p.Country.Contains(filter.Country))
@@ -35,6 +48,7 @@ public class PropertyQuery
             .Where(p => !filter.MaxPrice.HasValue || p.Units.Min(u => u.Price) <= filter.MaxPrice.Value)
             .Where(p => filter.Tags == null || filter.Tags.Count == 0 || p.Tags.Any(t => filter.Tags.Contains(t.Id)))
             .Where(p => !filter.MinRating.HasValue || p.AverageRating >= filter.MinRating.Value)
+            .Where(p => filter.Capacities == null || filter.Capacities.Count == 0 || p.Units.Any(u => filter.Capacities.Contains(u.Capacity)))
             .Select(p => new PropertyPageType
             {
                 Id = p.Id,
@@ -50,7 +64,6 @@ public class PropertyQuery
                 Rating = p.AverageRating,
                 RankingScore = p.RankingScore,
                 ReviewCount = p.ReviewCount,
-                // Count free rooms across all active units
                 AvailableUnits = p.Units
                     .Where(u => u.IsActive)
                     .SelectMany(u => u.Rooms)

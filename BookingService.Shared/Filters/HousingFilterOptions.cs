@@ -5,11 +5,13 @@ namespace BookingService.Shared.Filters;
 public sealed class HousingFilterOptions
 {
     public required PeriodRequest Period { get; init; }
-    public string? Name { get; init; }
-    public string? City { get; init; }
-    public string? Country { get; init; }
-    public double? MaxPrice { get; init; }
-    public double? MinPrice { get; init; }
+    public required string SearchQuery { get; set; }
+    public string? Name { get; set; }
+    public string? City { get; set; }
+    public string? Country { get; set; }
+    public double? MaxPrice { get; set; }
+    public double? MinPrice { get; set; }
     public List<Guid>? Tags { get; set; }
-    public double? MinRating { get; init; }
+    public double? MinRating { get; set; }
+    public List<int>? Capacities { get; set; }
 }

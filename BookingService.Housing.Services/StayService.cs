@@ -27,6 +27,8 @@ public class StayService(
         stay.RoomInstanceId = room.Id;
         
         var additionalCosts = room.Unit.AdditionalServices
+            .Where(s => dto.AdditionalServiceIds != null
+                        && dto.AdditionalServiceIds.Contains(s.Id))
             .Select(s => s.Price)
             .Sum();
         

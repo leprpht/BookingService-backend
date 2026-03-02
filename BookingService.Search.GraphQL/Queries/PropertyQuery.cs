@@ -19,7 +19,6 @@ public class PropertyQuery
         PageRequest page)
     {
         filter.SearchQuery = filter.SearchQuery.Trim();
-        filter.Name = filter.Name?.Trim();
         filter.City = filter.City?.Trim();
         filter.Country = filter.Country?.Trim();
         
@@ -41,7 +40,6 @@ public class PropertyQuery
                         || p.Country.Contains(filter.SearchQuery)
                         || p.Description.Contains(filter.SearchQuery)
                         || p.Tags.Any(t => t.Text.Contains(filter.SearchQuery)))
-            .Where(p => string.IsNullOrEmpty(filter.Name) || p.Name.Contains(filter.Name))
             .Where(p => string.IsNullOrEmpty(filter.City) || p.City.Contains(filter.City))
             .Where(p => string.IsNullOrEmpty(filter.Country) || p.Country.Contains(filter.Country))
             .Where(p => !filter.MinPrice.HasValue || p.Units.Max(u => u.Price) >= filter.MinPrice.Value)
@@ -123,5 +121,43 @@ public class PropertyQuery
                     .ToList()
             })
             .FirstOrDefaultAsync();
+    }
+    
+    public async Task<List<PropertyPageType>> GetTopPropertiesByCity(
+        [Service] BookingServiceDbContext context,
+        string city,
+        int count = 6)
+    {
+        return await context.Properties
+            .Where(p => p.IsActive && p.City.Contains(city.Trim()))
+            .Where(p => p.Units
+                .Any(u =>
+                    u.IsActive && 
+                    u.Rooms.Any(r => r.Status == RoomStatus.Available)))
+            .OrderByDescending(p => p.RankingScore)
+            .Take(count)
+            .Select(p => new PropertyPageType
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Address = p.Address,
+                City = p.City,
+                State = p.State,
+                Country = p.Country,
+                Price = p.Units
+                    .Where(u => u.IsActive)
+                    .Min(u => u.Price),
+                PictureUrl = p.Pictures
+                    .FirstOrDefault(pic => pic.IsCover)!.Url,
+                Rating = p.AverageRating,
+                RankingScore = p.RankingScore,
+                ReviewCount = p.ReviewCount,
+                AvailableUnits = p.Units
+                    .Where(u => u.IsActive)
+                    .SelectMany(u => u.Rooms)
+                    .Count(r => r.Status == RoomStatus.Available),
+                Tags = p.Tags.Select(t => t.Text)
+            })
+            .ToListAsync();
     }
 }

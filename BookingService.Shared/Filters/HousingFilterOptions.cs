@@ -6,7 +6,6 @@ public sealed class HousingFilterOptions
 {
     public required PeriodRequest Period { get; init; }
     public required string SearchQuery { get; set; }
-    public string? Name { get; set; }
     public string? City { get; set; }
     public string? Country { get; set; }
     public double? MaxPrice { get; set; }

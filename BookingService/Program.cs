@@ -29,11 +29,24 @@ builder.Services
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c => c.EnableAnnotations());
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Angular", policy =>
+    {
+        policy
+            .WithOrigins("http://localhost:4200")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
+
 var app = builder.Build();
 
 app
     .UseMiddleware<ControllerExceptionHandler>()
     .UseHttpsRedirection()
+    .UseCors("Angular")
     .UseAuthentication()
     .UseAuthorization();
 

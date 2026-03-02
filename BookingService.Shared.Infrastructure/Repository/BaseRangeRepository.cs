@@ -11,34 +11,13 @@ public abstract class BaseRangeRepository<TModel, TParent>(BookingServiceDbConte
 {
     protected readonly BookingServiceDbContext Context = context;
     protected readonly DbSet<TModel> DbSet = context.Set<TModel>();
-    protected readonly DbSet<TParent> ParentDbSet = context.Set<TParent>();
     protected abstract Expression<Func<TModel, bool>> ByParentId(Guid parentId);
     protected abstract string ParentIdPropertyName { get; }
 
-    public virtual async Task<TModel> GetByOwnerIdAsync(Guid ownerId)
-    {
-        var parent = await ParentDbSet.FirstOrDefaultAsync(p => p
-            .GetType()
-            .GetProperty("OwnerId")!
-            .GetValue(p)!.Equals(ownerId));
-            
-        if (parent == null)
-            throw new NotFoundException("Parent entity not found.");
-
-        var entity = await DbSet.FirstOrDefaultAsync(ByParentId(ownerId));
-        if (entity == null)
-            throw new NotFoundException("Entity not found for the given owner ID.");
-
-        return entity;
-    }
-
     public virtual async Task AddRangeAsync(List<TModel> entities)
     {
-        var list = entities.ToList();
-        if (list.Count == 0)
-            return;
-
-        await DbSet.AddRangeAsync(list);
+        if (entities.Count == 0) return;
+        await DbSet.AddRangeAsync(entities);
         await Context.SaveChangesAsync();
     }
 
@@ -46,34 +25,25 @@ public abstract class BaseRangeRepository<TModel, TParent>(BookingServiceDbConte
     {
         if (entities.Count == 0)
             throw new ArgumentException("No entities to update.");
-        
+
         var updateIds = entities
-            .Select(e => e
-                .GetType()
-                .GetProperty("Id")!
-                .GetValue(e))
+            .Select(e => (Guid)e.GetType().GetProperty("Id")!.GetValue(e)!)
             .ToHashSet();
-        
-        var toDelete = await DbSet
-            .Where(ByParentId((Guid) entities
-                .First()
-                .GetType()
-                .GetProperty(ParentIdPropertyName)!
-                .GetValue(entities.First())!))
-            .Where(e => !updateIds.Contains(e.GetType().GetProperty("Id")!.GetValue(e)))
-            .ToListAsync();
-        
-        DbSet.RemoveRange(toDelete);
-        DbSet.UpdateRange(entities);
-        await Context.SaveChangesAsync();
-    }
-    
-    public virtual async Task DeleteRangeAsync(Guid parentId)
-    {
+
+        var parentId = (Guid)entities.First().GetType().GetProperty(ParentIdPropertyName)!.GetValue(entities.First())!;
+
         var toDelete = await DbSet
             .Where(ByParentId(parentId))
             .ToListAsync();
 
+        DbSet.RemoveRange(toDelete.Where(e => !updateIds.Contains((Guid)e.GetType().GetProperty("Id")!.GetValue(e)!)));
+        DbSet.UpdateRange(entities);
+        await Context.SaveChangesAsync();
+    }
+
+    public virtual async Task DeleteRangeAsync(Guid parentId)
+    {
+        var toDelete = await DbSet.Where(ByParentId(parentId)).ToListAsync();
         if (toDelete.Count == 0)
             throw new NotFoundException("No entities found to delete.");
 

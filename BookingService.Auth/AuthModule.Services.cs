@@ -10,7 +10,9 @@ public static partial class AuthModule
     {
         services
             .AddScoped<IAuthRepository, AuthRepository>()
+            .AddScoped<IRefreshTokenRepository, RefreshTokenRepository>()
             .AddScoped<IJwtTokenGenerator, JwtTokenGenerator>()
+            .AddScoped<IRefreshTokenService, RefreshTokenService>()
             .AddScoped<IAuthService, AuthService>();
         
         return services;

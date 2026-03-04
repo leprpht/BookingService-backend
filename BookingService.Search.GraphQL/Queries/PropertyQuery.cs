@@ -130,6 +130,7 @@ public class PropertyQuery
     {
         return await context.Properties
             .Where(p => p.IsActive && p.City.Contains(city.Trim()))
+            .Where(p => p.ReviewCount >= 9)
             .Where(p => p.Units
                 .Any(u =>
                     u.IsActive && 

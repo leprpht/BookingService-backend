@@ -19,4 +19,5 @@ public class User
     public ICollection<PropertyReview> Reviews { get; init; } = new List<PropertyReview>();
     public ICollection<Property> Properties { get; init; } = new List<Property>();
     public ICollection<Unit> Units { get; init; } = new List<Unit>();
+    public ICollection<RefreshToken> RefreshTokens { get; init; } = new List<RefreshToken>();
 }

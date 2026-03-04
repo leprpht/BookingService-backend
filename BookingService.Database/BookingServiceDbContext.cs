@@ -18,12 +18,14 @@ public class BookingServiceDbContext(DbContextOptions<BookingServiceDbContext> o
     public DbSet<Stay> Stays { get; set; } = null!;
     public DbSet<User> Users { get; set; } = null!;
     public DbSet<Tag> Tags { get; set; } = null!;
+    public DbSet<RefreshToken> RefreshTokens { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.RegisterAll(ModelRegistration.RegisterPropertyModels,
             ModelRegistration.RegisterPropertyReviewModels,
             ModelRegistration.RegisterUnitModels,
-            ModelRegistration.RegisterUserModels);
+            ModelRegistration.RegisterUserModels,
+            ModelRegistration.RegisterRefreshTokenModels);
     }
 }

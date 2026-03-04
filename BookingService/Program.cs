@@ -43,6 +43,14 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+await app.MigrateDatabaseAsync();
+
+var shouldSeedDatabase = builder.Configuration.GetValue("Database:SeedOnStartup", false);
+if (shouldSeedDatabase)
+{
+    await app.SeedDatabaseAsync();
+}
+
 app
     .UseMiddleware<ControllerExceptionHandler>()
     .UseHttpsRedirection()

@@ -1,4 +1,5 @@
 using BookingService.Database;
+using BookingService.Location;
 using BookingService.Search.GraphQL.Types.Property;
 using BookingService.Search.GraphQL.Types.Unit;
 using BookingService.Housing.Models;
@@ -13,8 +14,9 @@ public class PropertyQuery
 {
     [UseFiltering]
     [UseSorting]
-    public IQueryable<PropertyPageType> SearchProperties(
+    public async Task<IQueryable<PropertyPageType>> SearchProperties(
         [Service] BookingServiceDbContext context,
+        [Service] ILocationNormalizationService locationNormalization,
         HousingFilterOptions filter,
         PageRequest page)
     {
@@ -22,6 +24,17 @@ public class PropertyQuery
         filter.City = filter.City?.Trim();
         filter.Country = filter.Country?.Trim();
         
+        if (!string.IsNullOrWhiteSpace(filter.City))
+        {
+            var normalized =
+                await locationNormalization.NormalizeAsync(filter.City, null, filter.Country ?? string.Empty);
+            
+            filter.City = normalized.City;
+            filter.Country = string.IsNullOrWhiteSpace(filter.Country) 
+                ? filter.Country 
+                : normalized.Country;
+        }
+
         return context.Properties
             .Where(p => p.IsActive)
             .Where(p => p.Units.Any(u =>
@@ -125,11 +138,15 @@ public class PropertyQuery
     
     public async Task<List<PropertyPageType>> GetTopPropertiesByCity(
         [Service] BookingServiceDbContext context,
+        [Service] ILocationNormalizationService locationNormalization,
         string city,
         int count = 6)
     {
+        var normalized = await locationNormalization.NormalizeAsync(city.Trim(), null, string.Empty);
+        var canonicalCity = normalized.City;
+
         return await context.Properties
-            .Where(p => p.IsActive && p.City.Contains(city.Trim()))
+            .Where(p => p.IsActive && p.City.Contains(canonicalCity))
             .Where(p => p.Units
                 .Any(u =>
                     u.IsActive && 

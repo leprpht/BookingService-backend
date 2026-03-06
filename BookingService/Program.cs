@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 using BookingService.Auth;
 using BookingService.Database;
 using BookingService.Housing;
+using BookingService.Location;
 using BookingService.Profile;
 using BookingService.Search;
 using BookingService.Shared;
@@ -14,6 +15,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services
     .RegisterDatabaseModule(connectionString!)
     .RegisterSharedModule()
+    .RegisterLocationModule(builder.Configuration)
     .RegisterHousingModule()
     .RegisterProfileModule()
     .RegisterAuthModule(builder.Configuration)

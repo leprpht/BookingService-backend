@@ -1,4 +1,5 @@
 using System.Net.Http.Json;
+using System.Text.Json;
 using Microsoft.Extensions.Options;
 
 namespace BookingService.Location;
@@ -9,6 +10,11 @@ public sealed class GeoNamesService(
     ) : IGeoNamesService
 {
     private readonly GeoNamesOptions _options = options.Value;
+
+    private static readonly JsonSerializerOptions JsonOptions = new()
+    {
+        PropertyNameCaseInsensitive = true,
+    };
 
     // Feature codes that represent meaningful populated places.
     // PPLC = capital, PPLA* = admin-division capitals, PPL = populated place.
@@ -22,8 +28,8 @@ public sealed class GeoNamesService(
 
         try
         {
-            var url = BuildSearchUrl(city, countryHint);
-            var response = await httpClient.GetFromJsonAsync<GeoNamesSearchResponse>(url);
+            var url = BuildSearchUrl(city, countryHint, maxRows * 4);
+            var response = await httpClient.GetFromJsonAsync<GeoNamesSearchResponse>(url, JsonOptions);
             
             var best = response?.Geonames
                 .OrderBy(p => Array.IndexOf(PopulatedPlaceCodes, p.FeatureCode) is var idx && idx >= 0 ? idx : 99)
@@ -39,14 +45,14 @@ public sealed class GeoNamesService(
         }
     }
     
-    private string BuildSearchUrl(string city, string? countryHint)
+    private string BuildSearchUrl(string city, string? countryHint, int maxRows)
     {
         var url =
             $"{_options.BaseUrl}/searchJSON" +
-            $"?q={Uri.EscapeDataString(city)}" +
+            $"?name_startsWith={Uri.EscapeDataString(city)}" +
             "&featureClass=P" +
-            "&maxRows=5" +
-            "&style=SHORT" +
+            $"&maxRows={maxRows}" +
+            "&style=MEDIUM" +
             $"&username={Uri.EscapeDataString(_options.Username)}";
         
         if (!string.IsNullOrWhiteSpace(countryHint))

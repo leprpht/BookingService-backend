@@ -24,6 +24,6 @@ public class LocationController(ILocationNormalizationService service) : Control
             return BadRequest(new { message = "Max results must be between 1 and 20" });
         
         var results = await service.AutocompleteAsync(query, maxResults);
-        return Ok(results);
+        return Ok(new { suggestions = results });
     }
 }

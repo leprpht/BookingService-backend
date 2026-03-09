@@ -36,6 +36,7 @@
       <ProjectReference Include="..\BookingService.Auth\BookingService.Auth.csproj" />
       <ProjectReference Include="..\BookingService.Booking.Controllers\BookingService.Booking.Controllers.csproj" />
       <ProjectReference Include="..\BookingService.Housing\BookingService.Housing.csproj" />
+      <ProjectReference Include="..\BookingService.Location.Controllers\BookingService.Location.Controllers.csproj" />
       <ProjectReference Include="..\BookingService.Profile.Controllers\BookingService.Profile.Controllers.csproj" />
       <ProjectReference Include="..\BookingService.Profile\BookingService.Profile.csproj" />
       <ProjectReference Include="..\BookingService.Search\BookingService.Search.csproj" />

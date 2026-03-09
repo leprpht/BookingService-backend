@@ -4,7 +4,8 @@ public sealed class LocationNormalizationService(IGeoNamesService geoNames) : IL
 {
     public async Task<LocationNormalizationResult> NormalizeAsync(string city, string? state, string country)
     {
-        var place = await geoNames.FindCityAsync(city, country);
+        var places = await geoNames.FindCitiesAsync(city, country, maxRows: 1);
+        var place = places?.FirstOrDefault();
 
         if (place is null)
         {
@@ -26,6 +27,12 @@ public sealed class LocationNormalizationService(IGeoNamesService geoNames) : IL
             CountryCode = place.CountryCode,
             IsNormalized = true
         };
+    }
+
+    public async Task<List<string>> AutocompleteAsync(string city, int maxRows = 5)
+    {
+        var places = await geoNames.FindCitiesAsync(city, maxRows: maxRows);
+        return places?.Select(p => $"{p.Name}, {p.CountryName}").Distinct().ToList() ?? [];
     }
     
     private static LocationNormalizationResult Fallback(string city, string? state, string country)

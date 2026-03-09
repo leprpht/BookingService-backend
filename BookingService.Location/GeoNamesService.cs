@@ -15,7 +15,7 @@ public sealed class GeoNamesService(
     private static readonly string[] PopulatedPlaceCodes =
         ["PPLC", "PPLA", "PPLA2", "PPLA3", "PPL"];
 
-    public async Task<GeoNamesPlace?> FindCityAsync(string city, string? countryHint = null)
+    public async Task<IEnumerable<GeoNamesPlace>?> FindCitiesAsync(string city, string? countryHint = null, int maxRows = 5)
     {
         if (string.IsNullOrWhiteSpace(city))
             return null;
@@ -28,7 +28,7 @@ public sealed class GeoNamesService(
             var best = response?.Geonames
                 .OrderBy(p => Array.IndexOf(PopulatedPlaceCodes, p.FeatureCode) is var idx && idx >= 0 ? idx : 99)
                 .ThenByDescending(p => p.Population)
-                .FirstOrDefault();
+                .Take(maxRows);
             
             return best;
         }

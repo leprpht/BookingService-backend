@@ -3,6 +3,7 @@ using BookingService.Auth;
 using BookingService.Database;
 using BookingService.Housing;
 using BookingService.Location;
+using BookingService.Notifications;
 using BookingService.Profile;
 using BookingService.Search;
 using BookingService.Shared;
@@ -19,7 +20,8 @@ builder.Services
     .RegisterHousingModule()
     .RegisterProfileModule()
     .RegisterAuthModule(builder.Configuration)
-    .RegisterGraphQlModule();
+    .RegisterGraphQlModule()
+    .RegisterNotificationsModule();
 
 builder.Services
     .AddControllers()

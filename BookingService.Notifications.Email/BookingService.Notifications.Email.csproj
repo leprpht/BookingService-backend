@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\BookingService.Housing.DTOs\BookingService.Housing.DTOs.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Azure.Communication.Email" Version="1.1.0" />
+      <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.12" />
+      <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.12" />
+      <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.12" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="EmailTemplates\TripReminderEmailTemplate.html" />
+      <Content Include="EmailTemplates\TripReminderEmailTemplate.html">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+</Project>

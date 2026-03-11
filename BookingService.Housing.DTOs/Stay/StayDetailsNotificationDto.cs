@@ -1,6 +1,6 @@
 namespace BookingService.Notifications;
 
-public sealed class StayNotificationDto
+public sealed class StayDetailsNotificationDto
 {
     public required Guid Id { get; init; }
     public required string City { get; init; }

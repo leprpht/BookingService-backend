@@ -5,13 +5,13 @@ namespace BookingService.Notifications;
 
 [ApiController]
 [Route("internal/[controller]")]
-public class NotificationsController(IConfiguration configuration) : ControllerBase
+public class NotificationsController(INotificationService service) : ControllerBase
 {
     [HttpPost]
     public async Task<IActionResult> SendNotifications(
-        [FromHeader(Name = "Api-Key")] string apiKey)
+        /* [FromHeader(Name = "Api-Key")] string apiKey */)
     {
-        await Task.Delay(100);
-        return apiKey != configuration["ApiKey"] ? Unauthorized() : Ok();
+        await service.SendTripRemindersAsync();
+        return Ok();
     }
 }

@@ -1,19 +1,21 @@
 ﻿using BookingService.Database;
 using BookingService.Housing.Models;
+using BookingService.Notifications.Email;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace BookingService.Notifications;
 
-public class NotificationService(BookingServiceDbContext context) : INotificationService
+public class NotificationService(BookingServiceDbContext context, IEmailService emailService, IConfiguration configuration) : INotificationService
 {
-    private async Task<List<UserNotificationDto>> GetUsersToSendReminders()
+    private async Task<List<StayNotificationDto>> GetUsersToSendReminders()
     {
         return await context.Users
             .Where(u => u.Stays
                 .Any(s =>
                     s.Status == StayStatus.Confirmed &&
                     s.From == DateOnly.FromDateTime(DateTime.Today.AddDays(1))))
-            .Select(u => new UserNotificationDto
+            .Select(u => new StayNotificationDto
             {
                 Id = u.Id,
                 Email = u.Email,
@@ -23,7 +25,7 @@ public class NotificationService(BookingServiceDbContext context) : INotificatio
                 Stays = u.Stays.Where(s =>
                         s.Status == StayStatus.Confirmed &&
                         s.From == DateOnly.FromDateTime(DateTime.Today.AddDays(1)))
-                    .Select(s => new StayNotificationDto
+                    .Select(s => new StayDetailsNotificationDto
                     {
                         Id = s.Id,
                         City = s.RoomInstance.Unit.Property.City,
@@ -39,9 +41,34 @@ public class NotificationService(BookingServiceDbContext context) : INotificatio
 
     public async Task SendTripRemindersAsync()
     {
+        var notification = new StayNotificationDto
+        {
+            Id = Guid.NewGuid(),
+            Email = configuration.GetSection("Testing")["RecipientEmail"] ?? ",",
+            FirstName = "Test Firstname",
+            MiddleName = "",
+            LastName = "Test Lastname",
+            Stays =
+            [
+                new StayDetailsNotificationDto
+                {
+                    Id = Guid.NewGuid(),
+                    City = "Test City",
+                    State = "Test State",
+                    Country = "Test Country",
+                    From = DateOnly.FromDateTime(DateTime.Today.AddDays(1)),
+                    To = DateOnly.FromDateTime(DateTime.Today.AddDays(5)),
+                    PropertyId = Guid.NewGuid(),
+                    PropertyName = "Test Property"
+                }
+            ]
+        };
+        
+        await emailService.SendTripReminderEmailAsync(notification);
+        
+        /*
         var usersToNotify = await GetUsersToSendReminders();
 
-        /*
         foreach (var user in usersToNotify)
         {
             Console.WriteLine($"{user.FirstName} {user.LastName} - {user.Email}");

@@ -75,6 +75,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notifications", "Notificati
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingService.Notifications", "BookingService.Notifications\BookingService.Notifications.csproj", "{F913CF54-327E-4431-AB76-B71704BD7C28}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingService.Notifications.Email", "BookingService.Notifications.Email\BookingService.Notifications.Email.csproj", "{33A78916-72EE-45A8-9010-52F8DA787BFE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -181,6 +183,10 @@ Global
 		{F913CF54-327E-4431-AB76-B71704BD7C28}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F913CF54-327E-4431-AB76-B71704BD7C28}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F913CF54-327E-4431-AB76-B71704BD7C28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33A78916-72EE-45A8-9010-52F8DA787BFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33A78916-72EE-45A8-9010-52F8DA787BFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33A78916-72EE-45A8-9010-52F8DA787BFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33A78916-72EE-45A8-9010-52F8DA787BFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5B921BF1-5087-476E-B7B5-0DA6F056DB8C} = {533F245A-5931-48EB-B860-EA0780FE70D6}
@@ -216,5 +222,6 @@ Global
 		{5AB513C1-D822-40CD-BA30-F9AA387CF782} = {4738A03E-571B-43AB-96A6-B0F675E8EF57}
 		{172DC470-1567-4DCF-80EA-4026B9A309CB} = {533F245A-5931-48EB-B860-EA0780FE70D6}
 		{F913CF54-327E-4431-AB76-B71704BD7C28} = {172DC470-1567-4DCF-80EA-4026B9A309CB}
+		{33A78916-72EE-45A8-9010-52F8DA787BFE} = {172DC470-1567-4DCF-80EA-4026B9A309CB}
 	EndGlobalSection
 EndGlobal

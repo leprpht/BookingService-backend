@@ -1,3 +1,5 @@
+using BookingService.Housing.DTOs.Stay;
+
 namespace BookingService.Notifications.Email;
 
 public interface IEmailService

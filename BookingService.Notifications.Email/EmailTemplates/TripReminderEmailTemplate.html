@@ -1,10 +1,36 @@
 <html>
-    <body>
-        <h1>
-            Hello, {{name}}
-        </h1>
-        <p>
-            This is a reminder for your upcoming trip to {{destination}} on {{date}}.
+    <body style="font-family: Arial, sans-serif; margin:0; padding:0;">
+
+        <h1 style="color:#2c3e50;">Hello, {{FirstName}}</h1>
+        <p style="font-size:16px; color:#333;">
+            This is a reminder for your upcoming trip:
         </p>
+
+        <div style="
+            background-color:#ffffff;
+            border-radius:8px;
+            padding:20px;
+            box-shadow:0 2px 6px rgba(0,0,0,0.1);
+            max-width:600px;
+            margin:20px;
+        ">
+            <h2 style="margin-top:0; color:#2c3e50;">{{PropertyName}}</h2>
+
+            <p style="margin:5px 0; font-size:14px; color:#555;">
+                <strong>City:</strong> {{City}}
+            </p>
+            <p style="margin:5px 0; font-size:14px; color:#555;">
+                <strong>Country:</strong> {{Country}}
+            </p>
+            <p style="margin:5px 0; font-size:14px; color:#555;">
+                <strong>Dates:</strong> {{From}} - {{To}}
+            </p>
+        </div>
+        
+        <p style="font-size:14px; color:#555;">
+            Safe travels,<br>
+            BookingService
+        </p>
+
     </body>
 </html>

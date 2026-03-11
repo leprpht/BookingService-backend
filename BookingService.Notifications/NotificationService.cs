@@ -1,4 +1,5 @@
 ﻿using BookingService.Database;
+using BookingService.Housing.DTOs.Stay;
 using BookingService.Housing.Models;
 using BookingService.Notifications.Email;
 using Microsoft.EntityFrameworkCore;

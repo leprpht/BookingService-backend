@@ -1,6 +1,4 @@
-using BookingService.Housing.Models;
-
-namespace BookingService.Notifications;
+namespace BookingService.Housing.DTOs.Stay;
 
 public sealed class StayNotificationDto
 {

@@ -9,18 +9,24 @@ public class EmailService(IOptions<EmailServiceOptions> options) : IEmailService
 {
     private readonly EmailServiceOptions _options = options.Value;
 
-    public Task SendTripReminderEmailAsync(StayNotificationDto stay)
+    public Task SendTripReminderEmailAsync(TripReminderEmailDto dto)
     {
+        var state = string.IsNullOrWhiteSpace(dto.State) ? "" : $", {dto.State}";
+        
         var html = EmailTemplateLoader
             .LoadTemplate("TripReminderEmailTemplate.html")
-            .Replace("{{FirstName}}", stay.FirstName)
-            .Replace("{{PropertyName}}", stay.Stays[0].PropertyName)
-            .Replace("{{City}}", stay.Stays[0].City)
-            .Replace("{{Country}}", stay.Stays[0].Country)
-            .Replace("{{From}}", stay.Stays[0].From.ToString("dd MMM yyyy"))
-            .Replace("{{To}}", stay.Stays[0].To.ToString("dd MMM yyyy"));
+            .Replace("{{FirstName}}", dto.FirstName)
+            .Replace("{{BookingId}}", dto.BookingId.ToString())
+            .Replace("{{PropertyName}}", dto.PropertyName)
+            .Replace("{{City}}", dto.City)
+            .Replace("{{State}}", state)
+            .Replace("{{Country}}", dto.Country)
+            .Replace("{{UnitName}}", dto.UnitName)
+            .Replace("{{RoomNumber}}", dto.RoomNumber)
+            .Replace("{{CheckIn}}", dto.CheckIn.ToString("dd MMM yyyy"))
+            .Replace("{{CheckOut}}", dto.CheckOut.ToString("dd MMM yyyy"));
 
-        return SendAsync(stay.Email, "Reminder: Your trip is tomorrow!", html);
+        return SendAsync(dto.Email, "Reminder: Your trip is tomorrow!", html);
     }
 
     public Task SendBookingConfirmationToGuestAsync(BookingConfirmationEmailDto dto)

@@ -22,6 +22,14 @@
       <Content Include="EmailTemplates\TripReminderEmailTemplate.html">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
+      <None Remove="EmailTemplates\BookingConfirmationEmailTemplate.html" />
+      <Content Include="EmailTemplates\BookingConfirmationEmailTemplate.html">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="EmailTemplates\HostNewBookingTemplate.html" />
+      <Content Include="EmailTemplates\HostNewBookingEmailTemplate.html">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>

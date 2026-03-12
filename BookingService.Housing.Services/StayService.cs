@@ -1,6 +1,7 @@
 using AutoMapper;
 using BookingService.Housing.DTOs.Stay;
 using BookingService.Housing.Models;
+using BookingService.Notifications;
 using BookingService.Shared.Extensions;
 using BookingService.Shared.Infrastructure.Exceptions;
 using BookingService.Shared.Infrastructure.Service;
@@ -11,7 +12,8 @@ namespace BookingService.Housing.Services;
 public class StayService(
     IStayRepository repository,
     IRoomInstanceRepository roomRepository,
-    IMapper mapper)
+    IMapper mapper,
+    INotificationService notificationService)
     : BaseService<Stay, StayCreationDto, StayUpdateDto>(repository), IStayService
 {
     protected override Stay MapCreate(Guid userId, StayCreationDto dto) => dto.ToStay(userId, mapper);
@@ -35,6 +37,7 @@ public class StayService(
         stay.TotalPrice = room.Unit.Price * (dto.To.DayNumber - dto.From.DayNumber) + additionalCosts ?? 0;
 
         await repository.AddAsync(stay);
+        await notificationService.SendNewBookingNotificationsAsync(stay.Id);
     }
 
     public async Task UpdateStatusAsync(Guid stayId, Guid userId, StayStatus newStatus)
@@ -77,5 +80,6 @@ public class StayService(
         }
 
         await repository.UpdateStatusAsync(stayId, newStatus);
+        await notificationService.SendBookingStatusChangedNotificationAsync(stayId, newStatus.ToString());
     }
 }

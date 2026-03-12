@@ -3,19 +3,21 @@ using BookingService.Housing.DTOs.Stay;
 using BookingService.Housing.Models;
 using BookingService.Notifications.Email;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace BookingService.Notifications;
 
-public class NotificationService(BookingServiceDbContext context, IEmailService emailService, IConfiguration configuration) : INotificationService
-{
-    private async Task<List<StayNotificationDto>> GetUsersToSendReminders()
+public class NotificationService(
+    BookingServiceDbContext context,
+    IEmailService emailService) : INotificationService
+{ 
+    public async Task SendTripRemindersAsync()
     {
-        return await context.Users
-            .Where(u => u.Stays
-                .Any(s =>
-                    s.Status == StayStatus.Confirmed &&
-                    s.From == DateOnly.FromDateTime(DateTime.Today.AddDays(1))))
+        var tomorrow = DateOnly.FromDateTime(DateTime.Today.AddDays(1));
+
+        var usersToNotify = await context.Users
+            .Where(u => u.Stays.Any(s =>
+                s.Status == StayStatus.Confirmed &&
+                s.From == tomorrow))
             .Select(u => new StayNotificationDto
             {
                 Id = u.Id,
@@ -23,9 +25,10 @@ public class NotificationService(BookingServiceDbContext context, IEmailService 
                 FirstName = u.FirstName,
                 MiddleName = u.MiddleName,
                 LastName = u.LastName,
-                Stays = u.Stays.Where(s =>
+                Stays = u.Stays
+                    .Where(s =>
                         s.Status == StayStatus.Confirmed &&
-                        s.From == DateOnly.FromDateTime(DateTime.Today.AddDays(1)))
+                        s.From == tomorrow)
                     .Select(s => new StayDetailsNotificationDto
                     {
                         Id = s.Id,
@@ -36,56 +39,108 @@ public class NotificationService(BookingServiceDbContext context, IEmailService 
                         To = s.To,
                         PropertyId = s.RoomInstance.Unit.PropertyId,
                         PropertyName = s.RoomInstance.Unit.Property.Name
-                    }).ToList()
-            }).ToListAsync();
+                    })
+                    .ToList()
+            })
+            .ToListAsync();
+
+        var tasks = usersToNotify.Select(u => emailService.SendTripReminderEmailAsync(u));
+        await Task.WhenAll(tasks);
     }
 
-    public async Task SendTripRemindersAsync()
+    public async Task SendNewBookingNotificationsAsync(Guid stayId)
     {
-        var notification = new StayNotificationDto
+        var stay = await context.Stays
+            .Include(s => s.RoomInstance)
+                .ThenInclude(r => r.Unit)
+                    .ThenInclude(u => u.Property)
+            .FirstOrDefaultAsync(s => s.Id == stayId);
+
+        if (stay == null) return;
+
+        var guest = await context.Users.FindAsync(stay.UserId);
+        if (guest == null) return;
+
+        var property = stay.RoomInstance.Unit.Property;
+        var unit = stay.RoomInstance.Unit;
+        var host = await context.Users.FindAsync(property.OwnerId);
+        
+        var guestDto = new BookingConfirmationEmailDto
         {
-            Id = Guid.NewGuid(),
-            Email = configuration.GetSection("Testing")["RecipientEmail"] ?? ",",
-            FirstName = "Test Firstname",
-            MiddleName = "",
-            LastName = "Test Lastname",
-            Stays =
-            [
-                new StayDetailsNotificationDto
-                {
-                    Id = Guid.NewGuid(),
-                    City = "Test City",
-                    State = "Test State",
-                    Country = "Test Country",
-                    From = DateOnly.FromDateTime(DateTime.Today.AddDays(1)),
-                    To = DateOnly.FromDateTime(DateTime.Today.AddDays(5)),
-                    PropertyId = Guid.NewGuid(),
-                    PropertyName = "Test Property"
-                }
-            ]
+            Email = guest.Email,
+            FirstName = guest.FirstName,
+            LastName = guest.LastName,
+            BookingId = stay.Id,
+            PropertyName = property.Name,
+            PropertyAddress = property.Address,
+            City = property.City,
+            State = property.State,
+            Country = property.Country,
+            UnitName = unit.Name,
+            RoomNumber = stay.RoomInstance.RoomNumber,
+            CheckIn = stay.From,
+            CheckOut = stay.To,
+            TotalPrice = stay.TotalPrice
         };
         
-        await emailService.SendTripReminderEmailAsync(notification);
-        
-        /*
-        var usersToNotify = await GetUsersToSendReminders();
+        var guestFullName = string.IsNullOrWhiteSpace(guest.MiddleName)
+            ? $"{guest.FirstName} {guest.LastName}"
+            : $"{guest.FirstName} {guest.MiddleName} {guest.LastName}";
 
-        foreach (var user in usersToNotify)
+        var tasks = new List<Task>
         {
-            Console.WriteLine($"{user.FirstName} {user.LastName} - {user.Email}");
-            if (user.Stays.Count == 1)
+            emailService.SendBookingConfirmationToGuestAsync(guestDto)
+        };
+
+        if (host != null)
+        {
+            var hostDto = new HostBookingNotificationEmailDto
             {
-                Console.WriteLine($"  Reminder: You have a trip to {user.Stays[0].PropertyName} tomorrow!");
-            }
-            else
-            {
-                Console.WriteLine($"  Reminder: You have {user.Stays.Count} trips tomorrow!");
-                foreach (var stay in user.Stays)
-                {
-                    Console.WriteLine($"    - {stay.PropertyName} in {stay.City}, {stay.Country} from {stay.From} to {stay.To}");
-                }
-            }
+                HostEmail = host.Email,
+                HostFirstName = host.FirstName,
+                GuestFullName = guestFullName,
+                BookingId = stay.Id,
+                PropertyName = property.Name,
+                UnitName = unit.Name,
+                RoomNumber = stay.RoomInstance.RoomNumber,
+                CheckIn = stay.From,
+                CheckOut = stay.To,
+                TotalPrice = stay.TotalPrice
+            };
+            tasks.Add(emailService.SendNewBookingNotificationToHostAsync(hostDto));
         }
-        */
+
+        await Task.WhenAll(tasks);
+    }
+
+    public async Task SendBookingStatusChangedNotificationAsync(Guid stayId, string newStatus)
+    {
+        var stay = await context.Stays
+            .Include(s => s.RoomInstance)
+                .ThenInclude(r => r.Unit)
+                    .ThenInclude(u => u.Property)
+            .FirstOrDefaultAsync(s => s.Id == stayId);
+
+        if (stay == null) return;
+
+        var guest = await context.Users.FindAsync(stay.UserId);
+        if (guest == null) return;
+
+        var property = stay.RoomInstance.Unit.Property;
+
+        var dto = new BookingStatusChangedEmailDto
+        {
+            Email = guest.Email,
+            FirstName = guest.FirstName,
+            BookingId = stay.Id,
+            PropertyName = property.Name,
+            City = property.City,
+            Country = property.Country,
+            CheckIn = stay.From,
+            CheckOut = stay.To,
+            NewStatus = newStatus
+        };
+
+        await emailService.SendBookingStatusChangedToGuestAsync(dto);
     }
 }

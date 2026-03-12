@@ -1,0 +1,106 @@
+<html lang="en">
+<body style="margin:0; padding:0; background-color:#f4f6f8; font-family:Arial, sans-serif;">
+
+<table role="presentation" style="background-color:#f4f6f8; padding:32px 0; width:100%; border-spacing:0; border-collapse:separate;">
+    <tr>
+        <td style="text-align:center;">
+            <table role="presentation" style="background-color:#ffffff; border-radius:8px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.08); width:600px; margin:0 auto; border-spacing:0; border-collapse:separate;">
+                
+                <tr>
+                    <td style="background-color:#0f5c2e; padding:32px 40px; text-align:center;">
+                        <h1 style="margin:0; color:#ffffff; font-size:24px; font-weight:700; letter-spacing:-0.5px;">
+                            New Reservation Request
+                        </h1>
+                        <p style="margin:8px 0 0; color:#a8d5b5; font-size:14px;">
+                            A guest has placed a booking at one of your properties.
+                        </p>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="padding:32px 40px 0;">
+                        <p style="margin:0; font-size:16px; color:#333333;">
+                            Hello, <strong>{{HostFirstName}}</strong>,
+                        </p>
+                        <p style="margin:12px 0 0; font-size:15px; color:#555555; line-height:1.6;">
+                            You have a new booking request waiting for your review. Please confirm or decline it at your earliest convenience.
+                        </p>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="padding:24px 40px 0;">
+                        <p style="margin:0; font-size:12px; color:#888888; text-transform:uppercase; letter-spacing:1px;">Booking Reference</p>
+                        <p style="margin:4px 0 0; font-size:14px; color:#0f5c2e; font-family:monospace;">{{BookingId}}</p>
+                    </td>
+                </tr>
+                
+                <tr><td style="padding:24px 40px 0;"><hr style="border:none; border-top:1px solid #eaeaea; margin:0;" /></td></tr>
+                
+                <tr>
+                    <td style="padding:24px 40px 0;">
+                        <table role="presentation" style="width:100%; border-spacing:0; border-collapse:separate;">
+                            <tr>
+                                <td style="width:50%; vertical-align:top; padding-bottom:16px;">
+                                    <p style="margin:0; font-size:12px; color:#888888; text-transform:uppercase; letter-spacing:0.8px;">Guest</p>
+                                    <p style="margin:4px 0 0; font-size:15px; color:#333333; font-weight:600;">{{GuestFullName}}</p>
+                                </td>
+                                <td style="width:50%; vertical-align:top; padding-bottom:16px; padding-left:16px;">
+                                    <p style="margin:0; font-size:12px; color:#888888; text-transform:uppercase; letter-spacing:0.8px;">Property</p>
+                                    <p style="margin:4px 0 0; font-size:15px; color:#333333; font-weight:600;">{{PropertyName}}</p>
+                                    <p style="margin:2px 0 0; font-size:14px; color:#666666;">{{UnitName}} · Room {{RoomNumber}}</p>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="padding:8px 40px 0;">
+                        <table role="presentation" style="width:100%; background-color:#f3faf5; border-radius:6px; border:1px solid #c8e6c9; border-spacing:0; border-collapse:separate;">
+                            <tr>
+                                <td style="padding:16px 20px; width:50%; border-right:1px solid #c8e6c9;">
+                                    <p style="margin:0; font-size:12px; color:#888888; text-transform:uppercase; letter-spacing:0.8px;">Check-in</p>
+                                    <p style="margin:6px 0 0; font-size:20px; color:#0f5c2e; font-weight:700;">{{CheckIn}}</p>
+                                </td>
+                                <td style="padding:16px 20px; width:50%;">
+                                    <p style="margin:0; font-size:12px; color:#888888; text-transform:uppercase; letter-spacing:0.8px;">Check-out</p>
+                                    <p style="margin:6px 0 0; font-size:20px; color:#0f5c2e; font-weight:700;">{{CheckOut}}</p>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="padding:20px 40px 0;">
+                        <table role="presentation" style="width:100%; border-spacing:0; border-collapse:separate;">
+                            <tr>
+                                <td style="font-size:15px; color:#555555;">Total Booking Value</td>
+                                <td style="text-align:right; font-size:20px; font-weight:700; color:#0f5c2e;">{{TotalPrice}}</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                
+                <tr><td style="padding:24px 40px 0;"><hr style="border:none; border-top:1px solid #eaeaea; margin:0;" /></td></tr>
+                
+                <tr>
+                    <td style="padding:24px 40px 32px;">
+                        <p style="margin:0; font-size:13px; color:#888888; line-height:1.6;">
+                            Log in to your dashboard to confirm or decline this reservation. The guest is waiting for your response.
+                        </p>
+                        <p style="margin:20px 0 0; font-size:13px; color:#aaaaaa;">
+                            Best regards,<br>
+                            <strong style="color:#555555;">BookingService</strong>
+                        </p>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

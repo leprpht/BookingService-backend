@@ -4,5 +4,8 @@ namespace BookingService.Notifications.Email;
 
 public interface IEmailService
 {
-    public Task SendTripReminderEmailAsync(StayNotificationDto stay);
+    Task SendTripReminderEmailAsync(StayNotificationDto stay);
+    Task SendBookingConfirmationToGuestAsync(BookingConfirmationEmailDto dto);
+    Task SendNewBookingNotificationToHostAsync(HostBookingNotificationEmailDto dto);
+    Task SendBookingStatusChangedToGuestAsync(BookingStatusChangedEmailDto dto);
 }

@@ -1,5 +1,6 @@
 using BookingService.Search.GraphQL.Types.Property;
 using BookingService.Search.GraphQL.Types.Unit;
+using BookingService.Shared.Requests;
 using HotChocolate.Execution.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,6 +12,7 @@ public static partial class GraphQlModule
     {
         services
             .AddType<PropertyType>()
+            .AddType<PeriodRequest>()
             .AddType<PropertyPageType>()
             .AddType<UnitAdditionalServicesType>()
             .AddType<UnitCustomizationType>()

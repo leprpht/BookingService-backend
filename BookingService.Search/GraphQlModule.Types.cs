@@ -1,4 +1,5 @@
 using BookingService.Search.GraphQL.Types.Property;
+using BookingService.Search.GraphQL.Types.Review;
 using BookingService.Search.GraphQL.Types.Unit;
 using BookingService.Shared.Requests;
 using HotChocolate.Execution.Configuration;
@@ -17,7 +18,9 @@ public static partial class GraphQlModule
             .AddType<UnitAdditionalServicesType>()
             .AddType<UnitCustomizationType>()
             .AddType<UnitListType>()
-            .AddType<UnitType>();
+            .AddType<UnitType>()
+            .AddType<PropertyReviewType>()
+            .AddType<PropertyReviewResponseType>();
         
         return services;
     }

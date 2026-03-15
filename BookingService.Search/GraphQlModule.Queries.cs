@@ -12,7 +12,8 @@ public static partial class GraphQlModule
             .AddQueryType(d => d.Name("Query"))
             .AddTypeExtension<PropertyQuery>()
             .AddTypeExtension<UnitQuery>()
-            .AddTypeExtension<UnitAdditionalServicesQuery>();
+            .AddTypeExtension<UnitAdditionalServicesQuery>()
+            .AddTypeExtension<ReviewQuery>();
         
         return services;
     }

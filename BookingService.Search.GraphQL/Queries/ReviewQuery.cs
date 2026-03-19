@@ -23,13 +23,13 @@ public class ReviewQuery
                 Comment = r.Comment,
                 CreatedAt = r.CreatedAt,
                 PropertyReviewResponses = r.PropertyReviewResponses
-                    .Select(resp => new PropertyReviewResponseType 
-                    { 
+                    .Select(resp => new PropertyReviewResponseType
+                    {
                         Id = resp.Id,
                         PropertyReviewId = resp.PropertyReviewId,
                         UserId = resp.UserId,
                         Comment = resp.Comment,
-                        CreatedAt = resp.CreatedAt 
+                        CreatedAt = resp.CreatedAt
                     })
                     .OrderByDescending(resp => resp.CreatedAt)
                     .ToList()

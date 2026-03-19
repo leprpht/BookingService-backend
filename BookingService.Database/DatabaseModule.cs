@@ -14,9 +14,9 @@ public static class DatabaseModule
                 {
                     sql.MigrationsAssembly("BookingService.Database");
                     sql.EnableRetryOnFailure(
-                        maxRetryCount: 5,
-                        maxRetryDelay: TimeSpan.FromSeconds(10),
-                        errorNumbersToAdd: null);
+                        5,
+                        TimeSpan.FromSeconds(10),
+                        null);
                 }));
 
         return services;

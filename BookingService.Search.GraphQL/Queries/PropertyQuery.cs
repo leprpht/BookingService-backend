@@ -23,15 +23,15 @@ public class PropertyQuery
         filter.SearchQuery = filter.SearchQuery.Trim();
         filter.City = filter.City?.Trim();
         filter.Country = filter.Country?.Trim();
-        
+
         if (!string.IsNullOrWhiteSpace(filter.City))
         {
             var normalized =
                 await locationNormalization.NormalizeAsync(filter.City, null, filter.Country ?? string.Empty);
-            
+
             filter.City = normalized.City;
-            filter.Country = string.IsNullOrWhiteSpace(filter.Country) 
-                ? filter.Country 
+            filter.Country = string.IsNullOrWhiteSpace(filter.Country)
+                ? filter.Country
                 : normalized.Country;
         }
 
@@ -59,7 +59,8 @@ public class PropertyQuery
             .Where(p => !filter.MaxPrice.HasValue || p.Units.Min(u => u.Price) <= filter.MaxPrice.Value)
             .Where(p => filter.Tags == null || filter.Tags.Count == 0 || p.Tags.Any(t => filter.Tags.Contains(t.Id)))
             .Where(p => !filter.MinRating.HasValue || p.AverageRating >= filter.MinRating.Value)
-            .Where(p => filter.Capacities == null || filter.Capacities.Count == 0 || p.Units.Any(u => filter.Capacities.Contains(u.Capacity)))
+            .Where(p => filter.Capacities == null || filter.Capacities.Count == 0 ||
+                        p.Units.Any(u => filter.Capacities.Contains(u.Capacity)))
             .Select(p => new PropertyPageType
             {
                 Id = p.Id,
@@ -135,7 +136,7 @@ public class PropertyQuery
             })
             .FirstOrDefaultAsync();
     }
-    
+
     public async Task<List<PropertyPageType>> GetTopPropertiesByCity(
         [Service] BookingServiceDbContext context,
         [Service] ILocationNormalizationService locationNormalization,
@@ -149,7 +150,7 @@ public class PropertyQuery
             .Where(p => p.IsActive && p.City.Contains(canonicalCity))
             .Where(p => p.Units
                 .Any(u =>
-                    u.IsActive && 
+                    u.IsActive &&
                     u.Rooms.Any(r => r.Status == RoomStatus.Available)))
             .OrderByDescending(p => p.RankingScore)
             .Take(count)

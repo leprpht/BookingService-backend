@@ -12,7 +12,7 @@ public class AuthRepository(BookingServiceDbContext context)
     {
         return await DbSet.SingleOrDefaultAsync(u => u.Email == email);
     }
-    
+
     public new async Task<Guid> AddAsync(User entity)
     {
         var entry = await DbSet.AddAsync(entity);

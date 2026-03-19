@@ -13,7 +13,7 @@ public static class SharedModule
                 typeof(UnitMappingProfile).Assembly,
                 typeof(UserMappingProfile).Assembly,
                 typeof(StayMappingProfile).Assembly);
-        
+
         return services;
     }
 }

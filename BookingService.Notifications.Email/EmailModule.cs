@@ -9,9 +9,9 @@ public static class EmailModule
     {
         services.Configure<EmailServiceOptions>(
             configuration.GetSection(EmailServiceOptions.SectionName));
-        
+
         services.AddScoped<IEmailService, EmailService>();
-        
+
         return services;
     }
 }

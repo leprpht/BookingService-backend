@@ -30,13 +30,13 @@ public class UserPropertyController(
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         var userId = Guid.Parse(userIdClaim.Value);
-        
+
         await service.CreateAsync(userId, createPropertyDto);
         return Created();
     }
-    
+
     [HttpPost("{propertyId}/pictures")]
     [SwaggerOperation(
         Summary = "Add pictures to a property",
@@ -52,13 +52,13 @@ public class UserPropertyController(
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         var userId = Guid.Parse(userIdClaim.Value);
-        
+
         await pictureService.AddRangeAsync(propertyId, userId, pictureCreationDto);
         return Created();
     }
-    
+
     [HttpPut("{id}")]
     [SwaggerOperation(
         Summary = "Update a property",
@@ -74,13 +74,13 @@ public class UserPropertyController(
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         var userId = Guid.Parse(userIdClaim.Value);
 
         await service.UpdateAsync(userId, propertyUpdateDto);
         return Ok();
     }
-    
+
     [HttpPut("{id}/pictures")]
     [SwaggerOperation(
         Summary = "Update property pictures",
@@ -96,13 +96,13 @@ public class UserPropertyController(
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         var userId = Guid.Parse(userIdClaim.Value);
-        
+
         await pictureService.UpdateRangeAsync(id, userId, pictureUpdateDtos);
         return Ok();
     }
-    
+
     [HttpPut("{id}/tags")]
     [SwaggerOperation(
         Summary = "Update property tags",
@@ -119,13 +119,13 @@ public class UserPropertyController(
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         var userId = Guid.Parse(userIdClaim.Value);
-        
+
         await service.UpdateTagsAsync(id, userId, tagIds);
         return Ok();
     }
-    
+
     [HttpPatch("{id}/name")]
     [SwaggerOperation(
         Summary = "Update property name",
@@ -142,13 +142,13 @@ public class UserPropertyController(
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         var userId = Guid.Parse(userIdClaim.Value);
-        
+
         await service.UpdateNameAsync(id, userId, name);
         return Ok();
     }
-    
+
     [HttpPatch("{id}/description")]
     [SwaggerOperation(
         Summary = "Update property description",
@@ -165,13 +165,13 @@ public class UserPropertyController(
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         var userId = Guid.Parse(userIdClaim.Value);
-        
+
         await service.UpdateDescriptionAsync(id, userId, description);
         return Ok();
     }
-    
+
     [HttpDelete("{id}")]
     [SwaggerOperation(
         Summary = "Delete a property",
@@ -186,13 +186,13 @@ public class UserPropertyController(
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         var userId = Guid.Parse(userIdClaim.Value);
-        
+
         await service.DeleteAsync(id, userId);
         return NoContent();
     }
-    
+
     [HttpDelete("{propertyId}/pictures")]
     [SwaggerOperation(
         Summary = "Delete property pictures",
@@ -207,9 +207,9 @@ public class UserPropertyController(
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         var userId = Guid.Parse(userIdClaim.Value);
-        
+
         await pictureService.DeleteRangeAsync(propertyId, userId);
         return NoContent();
     }

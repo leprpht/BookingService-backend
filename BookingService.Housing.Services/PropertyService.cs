@@ -14,8 +14,15 @@ public class PropertyService(
     ILocationNormalizationService locationNormalization)
     : BaseService<Property, PropertyCreationDto, PropertyUpdateDto>(repository), IPropertyService
 {
-    protected override Property MapCreate(Guid userId, PropertyCreationDto dto) => dto.ToProperty(userId, mapper);
-    protected override Property MapUpdate(Guid userId, PropertyUpdateDto dto) => dto.ToProperty(userId, mapper);
+    protected override Property MapCreate(Guid userId, PropertyCreationDto dto)
+    {
+        return dto.ToProperty(userId, mapper);
+    }
+
+    protected override Property MapUpdate(Guid userId, PropertyUpdateDto dto)
+    {
+        return dto.ToProperty(userId, mapper);
+    }
 
     public override async Task CreateAsync(Guid userId, PropertyCreationDto dto)
     {
@@ -31,14 +38,20 @@ public class PropertyService(
         await repository.UpdateAsync(property);
     }
 
-    public async Task UpdateNameAsync(Guid id, Guid ownerId, string name) =>
+    public async Task UpdateNameAsync(Guid id, Guid ownerId, string name)
+    {
         await repository.UpdateNameAsync(id, ownerId, name);
+    }
 
-    public async Task UpdateDescriptionAsync(Guid id, Guid ownerId, string description) =>
+    public async Task UpdateDescriptionAsync(Guid id, Guid ownerId, string description)
+    {
         await repository.UpdateDescriptionAsync(id, ownerId, description);
+    }
 
-    public async Task UpdateTagsAsync(Guid id, Guid ownerId, List<Guid> tags) =>
+    public async Task UpdateTagsAsync(Guid id, Guid ownerId, List<Guid> tags)
+    {
         await repository.UpdateTagsAsync(id, ownerId, tags);
+    }
 
     // ── private helpers ──────────────────────────────────────────────────
 

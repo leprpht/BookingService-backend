@@ -19,10 +19,10 @@ public class LocationController(ILocationNormalizationService service) : Control
     {
         if (string.IsNullOrWhiteSpace(query) || query.Length < 3)
             return BadRequest(new { message = "Query must be at least 3 characters long" });
-        
+
         if (maxResults is < 1 or > 20)
             return BadRequest(new { message = "Max results must be between 1 and 20" });
-        
+
         var results = await service.AutocompleteAsync(query, maxResults);
         return Ok(new { suggestions = results });
     }

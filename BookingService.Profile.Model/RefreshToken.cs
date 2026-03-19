@@ -11,9 +11,9 @@ public class RefreshToken
     public string? RevokedByIp { get; set; }
     public DateTime? RevokedAt { get; set; }
     public string? ReplacedByToken { get; set; }
-    
+
     public User User { get; set; } = null!;
-    
+
     public bool IsExpired => DateTime.UtcNow >= ExpiresAt;
     public bool IsActive => !IsRevoked && !IsExpired;
 }

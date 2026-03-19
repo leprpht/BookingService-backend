@@ -8,7 +8,8 @@ namespace BookingService.Auth;
 
 public static partial class AuthModule
 {
-    private static IServiceCollection AddAuthenticationConfig(this IServiceCollection services, IConfiguration configuration)
+    private static IServiceCollection AddAuthenticationConfig(this IServiceCollection services,
+        IConfiguration configuration)
     {
         services
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -27,7 +28,7 @@ public static partial class AuthModule
                         Encoding.UTF8.GetBytes(jwt["Key"]!))
                 };
             });
-        
+
         return services;
     }
 }

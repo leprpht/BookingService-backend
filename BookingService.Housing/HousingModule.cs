@@ -11,7 +11,7 @@ public static partial class HousingModule
             .RegisterRangeRepositories()
             .RegisterServices()
             .RegisterRangeServices();
-        
+
         return services;
     }
 }

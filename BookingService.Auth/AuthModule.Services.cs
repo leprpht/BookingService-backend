@@ -14,7 +14,7 @@ public static partial class AuthModule
             .AddScoped<IJwtTokenGenerator, JwtTokenGenerator>()
             .AddScoped<IRefreshTokenService, RefreshTokenService>()
             .AddScoped<IAuthService, AuthService>();
-        
+
         return services;
     }
 }

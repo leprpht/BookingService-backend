@@ -17,7 +17,7 @@ public class IdMatchHandler : AuthorizationHandler<IdMatchRequirement, Guid>
             ? AdminOverride(context, requirement)
             : UserIdMatch(context, requirement, resourceId);
     }
-    
+
     private static Task AdminOverride(AuthorizationHandlerContext context, IdMatchRequirement requirement)
     {
         context.Succeed(requirement);
@@ -32,7 +32,7 @@ public class IdMatchHandler : AuthorizationHandler<IdMatchRequirement, Guid>
         var userIdClaim = context.User.FindFirst(JwtRegisteredClaimNames.Sub);
         if (userIdClaim == null)
             return Task.CompletedTask;
-        
+
         if (Guid.TryParse(userIdClaim.Value, out var userId) && userId == resourceId)
             context.Succeed(requirement);
 

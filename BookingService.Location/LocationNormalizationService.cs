@@ -4,7 +4,7 @@ public sealed class LocationNormalizationService(IGeoNamesService geoNames) : IL
 {
     public async Task<LocationNormalizationResult> NormalizeAsync(string city, string? state, string country)
     {
-        var places = await geoNames.FindCitiesAsync(city, country, maxRows: 1);
+        var places = await geoNames.FindCitiesAsync(city, country, 1);
         var place = places?.FirstOrDefault();
 
         if (place is null)
@@ -17,7 +17,8 @@ public sealed class LocationNormalizationService(IGeoNamesService geoNames) : IL
             ? state
             : place.AdminName1;
 
-        Console.WriteLine($"GeoNames normalized {city}, {state}, {country} to {place.Name}, {normalizedState}, {place.CountryName}");
+        Console.WriteLine(
+            $"GeoNames normalized {city}, {state}, {country} to {place.Name}, {normalizedState}, {place.CountryName}");
 
         return new LocationNormalizationResult
         {
@@ -34,9 +35,10 @@ public sealed class LocationNormalizationService(IGeoNamesService geoNames) : IL
         var places = await geoNames.FindCitiesAsync(city, maxRows: maxRows);
         return places?.Select(p => $"{p.Name}, {p.CountryName}").Distinct().ToList() ?? [];
     }
-    
+
     private static LocationNormalizationResult Fallback(string city, string? state, string country)
-        => new()
+    {
+        return new LocationNormalizationResult
         {
             City = city,
             State = state,
@@ -44,4 +46,5 @@ public sealed class LocationNormalizationService(IGeoNamesService geoNames) : IL
             CountryCode = null,
             IsNormalized = false
         };
+    }
 }

@@ -13,29 +13,29 @@ public class ReviewRepository(BookingServiceDbContext context)
     {
         var property = await Context.Properties.FirstOrDefaultAsync(x => x.Id == review.PropertyId);
         property?.UpdateRating();
-        
+
         await base.AddAsync(review);
     }
-    
+
     public async Task UpdateCommentAsync(Guid id, Guid userId, string comment)
     {
         var review = await DbSet.FirstOrDefaultAsync(r => r.Id == id);
-        
+
         if (review == null)
             throw new NotFoundException("Review not found.");
-        
+
         if (review.UserId != userId)
             throw new ForbidException();
-        
+
         review.Comment = comment;
         await Context.SaveChangesAsync();
     }
-    
+
     public override async Task DeleteAsync(Guid reviewId, Guid ownerId)
     {
         var property = await Context.Properties.FirstOrDefaultAsync(x => x.Id == reviewId);
         property?.UpdateRating();
-        
+
         await base.DeleteAsync(reviewId, ownerId);
     }
 }

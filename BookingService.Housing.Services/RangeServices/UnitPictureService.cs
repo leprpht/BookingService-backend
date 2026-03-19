@@ -12,12 +12,21 @@ namespace BookingService.Housing.Services.RangeServices;
 public class UnitPictureService(IUnitPictureRepository repository, IMapper mapper, BookingServiceDbContext context)
     : BaseRangeService<UnitPicture, UnitPictureCreationDto, UnitPictureUpdateDto>(repository), IUnitPictureService
 {
-    protected override UnitPicture MapCreate(Guid id, UnitPictureCreationDto dto) => dto.ToUnitPicture(id, mapper);
-    protected override UnitPicture MapUpdate(Guid id, UnitPictureUpdateDto dto) => dto.ToUnitPicture(id, mapper);
+    protected override UnitPicture MapCreate(Guid id, UnitPictureCreationDto dto)
+    {
+        return dto.ToUnitPicture(id, mapper);
+    }
 
-    protected override async Task<Guid?> GetOwnerIdAsync(Guid unitId) =>
-        await context.Units
+    protected override UnitPicture MapUpdate(Guid id, UnitPictureUpdateDto dto)
+    {
+        return dto.ToUnitPicture(id, mapper);
+    }
+
+    protected override async Task<Guid?> GetOwnerIdAsync(Guid unitId)
+    {
+        return await context.Units
             .Where(u => u.Id == unitId)
             .Select(u => (Guid?)u.OwnerId)
             .FirstOrDefaultAsync();
+    }
 }

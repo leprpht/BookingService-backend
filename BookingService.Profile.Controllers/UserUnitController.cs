@@ -9,7 +9,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace BookingService.Profile.Controllers;
 
 [ApiController]
-[Authorize (Roles = "Admin,Host")]
+[Authorize(Roles = "Admin,Host")]
 [Route("api/User/properties")]
 public class UserUnitController(
     IUnitService service,
@@ -33,16 +33,16 @@ public class UserUnitController(
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         if (createUnitDto.PropertyId != propertyId)
             return BadRequest("Property ID in URL does not match Property ID in body.");
-        
+
         var userId = Guid.Parse(userIdClaim.Value);
-        
+
         await service.CreateAsync(userId, createUnitDto);
         return Created();
     }
-    
+
     [HttpPost("{propertyId}/units/{unitId}/customizations")]
     [SwaggerOperation(
         Summary = "Add unit customizations",
@@ -58,17 +58,17 @@ public class UserUnitController(
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         var unit = await service.GetByIdAsync(unitId);
         if (unit == null || unit.PropertyId != propertyId)
             return BadRequest("Unit does not exist or does not belong to the specified property.");
-        
+
         var userId = Guid.Parse(userIdClaim.Value);
-        
+
         await customizationService.AddRangeAsync(unitId, userId, creationList);
         return Created();
     }
-    
+
     [HttpPost("{propertyId}/units/{unitId}/pictures")]
     [SwaggerOperation(
         Summary = "Add unit pictures",
@@ -84,17 +84,17 @@ public class UserUnitController(
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         var unit = await service.GetByIdAsync(unitId);
         if (unit == null || unit.PropertyId != propertyId)
             return BadRequest("Unit does not exist or does not belong to the specified property.");
-        
+
         var userId = Guid.Parse(userIdClaim.Value);
-        
+
         await pictureService.AddRangeAsync(unitId, userId, creationList);
         return Created();
     }
-    
+
     [HttpPost("{propertyId}/units/{unitId}/services")]
     [SwaggerOperation(
         Summary = "Add unit additional services",
@@ -110,17 +110,17 @@ public class UserUnitController(
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         var unit = await service.GetByIdAsync(unitId);
         if (unit == null || unit.PropertyId != propertyId)
             return BadRequest("Unit does not exist or does not belong to the specified property.");
-        
+
         var userId = Guid.Parse(userIdClaim.Value);
-        
+
         await additionalService.CreateAsync(userId, creationDto);
         return Created();
     }
-    
+
     [HttpPut("{propertyId}/units/{unitId}")]
     [SwaggerOperation(
         Summary = "Update a unit",
@@ -137,12 +137,12 @@ public class UserUnitController(
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         if (unitUpdateDto.Id != unitId || unitUpdateDto.PropertyId != propertyId)
             return BadRequest("Unit ID or Property ID in URL does not match those in body.");
-        
+
         var userId = Guid.Parse(userIdClaim.Value);
-        
+
         await service.UpdateAsync(userId, unitUpdateDto);
         return Ok();
     }
@@ -190,17 +190,17 @@ public class UserUnitController(
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         var unit = await service.GetByIdAsync(unitId);
         if (unit == null || unit.PropertyId != propertyId)
             return BadRequest("Unit does not exist or does not belong to the specified property.");
-        
+
         var userId = Guid.Parse(userIdClaim.Value);
-        
+
         await pictureService.UpdateRangeAsync(userId, unitId, updateList);
         return Ok();
     }
-    
+
     [HttpPatch("{propertyId}/units/active")]
     [SwaggerOperation(
         Summary = "Activation toggle for all units in a property",
@@ -217,7 +217,7 @@ public class UserUnitController(
             return Unauthorized();
 
         var userId = Guid.Parse(userIdClaim.Value);
-        
+
         await service.ToggleAllUnitsActiveStatusAsync(propertyId, userId);
         return Ok();
     }
@@ -243,7 +243,7 @@ public class UserUnitController(
             return BadRequest("Unit does not exist or does not belong to the specified property.");
 
         var userId = Guid.Parse(userIdClaim.Value);
-        
+
         await service.ToggleActiveStatusAsync(unitId, userId);
         return Ok();
     }
@@ -264,13 +264,13 @@ public class UserUnitController(
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         var unit = await service.GetByIdAsync(unitId);
         if (unit == null || unit.PropertyId != propertyId)
             return BadRequest("Unit does not exist or does not belong to the specified property.");
-        
+
         var userId = Guid.Parse(userIdClaim.Value);
-        
+
         await service.UpdateNameAsync(userId, unitId, name);
         return Ok();
     }
@@ -291,13 +291,13 @@ public class UserUnitController(
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         var unit = await service.GetByIdAsync(unitId);
         if (unit == null || unit.PropertyId != propertyId)
             return BadRequest("Unit does not exist or does not belong to the specified property.");
-        
+
         var userId = Guid.Parse(userIdClaim.Value);
-        
+
         await additionalService.UpdateAsync(userId, updateDto);
         return Ok();
     }
@@ -317,13 +317,13 @@ public class UserUnitController(
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         var unit = await service.GetByIdAsync(unitId);
         if (unit == null || unit.PropertyId != propertyId)
             return BadRequest("Unit does not exist or does not belong to the specified property.");
-        
+
         var userId = Guid.Parse(userIdClaim.Value);
-        
+
         await service.DeleteAsync(userId, unitId);
         return NoContent();
     }
@@ -343,17 +343,17 @@ public class UserUnitController(
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         var unit = await service.GetByIdAsync(unitId);
         if (unit == null || unit.PropertyId != propertyId)
             return BadRequest("Unit does not exist or does not belong to the specified property.");
-        
+
         var userId = Guid.Parse(userIdClaim.Value);
-        
+
         await customizationService.DeleteRangeAsync(userId, unitId);
         return NoContent();
     }
-    
+
     [HttpGet("{propertyId}/units/{unitId}/rooms")]
     [SwaggerOperation(
         Summary = "List rooms",
@@ -366,7 +366,7 @@ public class UserUnitController(
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         var unit = await service.GetByIdAsync(unitId);
         if (unit == null || unit.PropertyId != propertyId)
             return BadRequest("Unit does not exist or does not belong to the specified property.");
@@ -377,7 +377,7 @@ public class UserUnitController(
 
     [HttpPost("{propertyId}/units/{unitId}/rooms")]
     [SwaggerOperation(
-        Summary = "Add rooms", 
+        Summary = "Add rooms",
         Description = "Adds one or more physical room instances to a unit type.")]
     [SwaggerResponse(201)]
     [SwaggerResponse(400)]
@@ -402,7 +402,7 @@ public class UserUnitController(
 
     [HttpPatch("{propertyId}/units/{unitId}/rooms/{roomId}/status")]
     [SwaggerOperation(
-        Summary = "Update room status", 
+        Summary = "Update room status",
         Description = "Sets a room's status (Available / Maintenance / OutOfService).")]
     [SwaggerResponse(200)]
     [SwaggerResponse(400)]
@@ -423,14 +423,14 @@ public class UserUnitController(
             return BadRequest("Unit does not exist or does not belong to the specified property.");
 
         var userId = Guid.Parse(userIdClaim.Value);
-        
+
         await roomService.UpdateStatusAsync(roomId, userId, status);
         return Ok();
     }
 
     [HttpDelete("{propertyId}/units/{unitId}/rooms/{roomId}")]
     [SwaggerOperation(
-        Summary = "Delete a room", 
+        Summary = "Delete a room",
         Description = "Removes a physical room instance (only if it has no active stays).")]
     [SwaggerResponse(204)]
     [SwaggerResponse(400)]
@@ -447,7 +447,7 @@ public class UserUnitController(
             return BadRequest("Unit does not exist or does not belong to the specified property.");
 
         var userId = Guid.Parse(userIdClaim.Value);
-        
+
         await roomService.DeleteAsync(roomId, userId);
         return NoContent();
     }

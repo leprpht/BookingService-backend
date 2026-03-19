@@ -9,13 +9,15 @@ namespace BookingServices.Housing.Data;
 public class StayRepository(BookingServiceDbContext context)
     : BaseRepository<Stay>(context), IStayRepository
 {
-    public async Task<List<Stay>> GetByUserIdAsync(Guid userId) =>
-        await DbSet
+    public async Task<List<Stay>> GetByUserIdAsync(Guid userId)
+    {
+        return await DbSet
             .Where(s => s.UserId == userId)
             .Include(s => s.RoomInstance)
             .ThenInclude(r => r.Unit)
             .ThenInclude(u => u.Property)
             .ToListAsync();
+    }
 
     public async Task UpdateStatusAsync(Guid stayId, StayStatus status)
     {
@@ -26,10 +28,12 @@ public class StayRepository(BookingServiceDbContext context)
         await Context.SaveChangesAsync();
     }
 
-    public new async Task<Stay> GetByIdAsync(Guid id) =>
-        await DbSet
-            .Include(s => s.RoomInstance)
-            .ThenInclude(r => r.Unit)
-            .FirstOrDefaultAsync(s => s.Id == id)
-        ?? throw new NotFoundException("Stay not found.");
+    public new async Task<Stay> GetByIdAsync(Guid id)
+    {
+        return await DbSet
+                   .Include(s => s.RoomInstance)
+                   .ThenInclude(r => r.Unit)
+                   .FirstOrDefaultAsync(s => s.Id == id)
+               ?? throw new NotFoundException("Stay not found.");
+    }
 }

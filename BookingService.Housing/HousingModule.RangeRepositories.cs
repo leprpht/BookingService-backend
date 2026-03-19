@@ -11,7 +11,7 @@ public static partial class HousingModule
             .AddScoped<IPropertyPictureRepository, PropertyPictureRepository>()
             .AddScoped<IUnitCustomizationRepository, UnitCustomizationRepository>()
             .AddScoped<IUnitPictureRepository, UnitPictureRepository>();
-        
+
         return services;
     }
 }

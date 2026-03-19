@@ -27,13 +27,13 @@ public class BookingController(IStayService service) : ControllerBase
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         var userId = Guid.Parse(userIdClaim.Value);
 
         await service.CreateAsync(userId, stayCreationDto);
         return Created();
     }
-    
+
     [HttpPatch("{id}/status")]
     [SwaggerOperation(
         Summary = "Update stay status",
@@ -49,9 +49,9 @@ public class BookingController(IStayService service) : ControllerBase
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         var userId = Guid.Parse(userIdClaim.Value);
-        
+
         await service.UpdateStatusAsync(id, userId, status);
         return Ok();
     }

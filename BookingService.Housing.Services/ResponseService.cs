@@ -8,11 +8,21 @@ using BookingServices.Housing.Data;
 namespace BookingService.Housing.Services;
 
 public class ResponseService(IResponseRepository repository, IMapper mapper)
-    : BaseService<PropertyReviewResponse, PropertyReviewResponseCreationDto, PropertyReviewResponseUpdateDto>(repository), IResponseService
+    : BaseService<PropertyReviewResponse, PropertyReviewResponseCreationDto, PropertyReviewResponseUpdateDto>(
+        repository), IResponseService
 {
-    protected override PropertyReviewResponse MapCreate(Guid userId, PropertyReviewResponseCreationDto dto) => dto.ToPropertyReviewResponse(userId, mapper);
-    protected override PropertyReviewResponse MapUpdate(Guid userId, PropertyReviewResponseUpdateDto dto) => dto.ToPropertyReviewResponse(userId, mapper);
-    
-    public async Task UpdateCommentAsync(Guid id, Guid userId, string comment) =>
+    protected override PropertyReviewResponse MapCreate(Guid userId, PropertyReviewResponseCreationDto dto)
+    {
+        return dto.ToPropertyReviewResponse(userId, mapper);
+    }
+
+    protected override PropertyReviewResponse MapUpdate(Guid userId, PropertyReviewResponseUpdateDto dto)
+    {
+        return dto.ToPropertyReviewResponse(userId, mapper);
+    }
+
+    public async Task UpdateCommentAsync(Guid id, Guid userId, string comment)
+    {
         await repository.UpdateCommentAsync(id, userId, comment);
+    }
 }

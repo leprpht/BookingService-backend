@@ -5,7 +5,8 @@ using System.Linq.Expressions;
 
 namespace BookingService.Shared.Infrastructure.Repository;
 
-public abstract class BaseRangeRepository<TModel, TParent>(BookingServiceDbContext context) : IBaseRangeRepository<TModel>
+public abstract class BaseRangeRepository<TModel, TParent>(BookingServiceDbContext context)
+    : IBaseRangeRepository<TModel>
     where TModel : class
     where TParent : class
 {

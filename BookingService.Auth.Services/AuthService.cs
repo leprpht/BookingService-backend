@@ -15,7 +15,7 @@ public class AuthService(
     {
         if (!EmailValidator.IsValidEmail(email))
             throw new FormatException("Invalid email format.");
-        
+
         var existingUser = await repository.GetByEmailAsync(email);
         if (existingUser != null)
             return null;
@@ -34,7 +34,7 @@ public class AuthService(
         };
 
         var userId = await repository.AddAsync(user);
-        
+
         var accessToken = tokenGenerator.GenerateToken(userId, user.Email, user.Role);
         var refreshToken = await refreshTokenService.CreateRefreshTokenAsync(userId, ipAddress);
 
@@ -46,24 +46,24 @@ public class AuthService(
             RefreshTokenExpiresAt = refreshToken.ExpiresAt
         };
     }
-    
+
     public async Task<AuthResponseDto?> LoginAsync(string email, string password, string? ipAddress = null)
     {
         if (!EmailValidator.IsValidEmail(email))
             throw new FormatException("Invalid email format.");
-        
+
         var existingUser = await repository.GetByEmailAsync(email);
         if (existingUser == null)
             return null;
 
         var saltBytes = Convert.FromBase64String(existingUser.Salt);
         var passwordHash = HashPassword(password, saltBytes);
-        
+
         if (!CryptographicOperations.FixedTimeEquals(
-            Convert.FromBase64String(passwordHash), 
-            Convert.FromBase64String(existingUser.Password)))
+                Convert.FromBase64String(passwordHash),
+                Convert.FromBase64String(existingUser.Password)))
             return null;
-        
+
         var accessToken = tokenGenerator.GenerateToken(existingUser.Id, existingUser.Email, existingUser.Role);
         var refreshToken = await refreshTokenService.CreateRefreshTokenAsync(existingUser.Id, ipAddress);
 
@@ -79,17 +79,17 @@ public class AuthService(
     public async Task<AuthResponseDto?> RefreshTokenAsync(string refreshToken, string? ipAddress = null)
     {
         var token = await refreshTokenService.ValidateRefreshTokenAsync(refreshToken);
-        
+
         if (token == null)
             return null;
-        
+
         var user = token.User;
         var newAccessToken = tokenGenerator.GenerateToken(user.Id, user.Email, user.Role);
         var newRefreshToken = await refreshTokenService.CreateRefreshTokenAsync(user.Id, ipAddress);
-        
+
         await refreshTokenService.RevokeRefreshTokenAsync(
-            refreshToken, 
-            ipAddress, 
+            refreshToken,
+            ipAddress,
             newRefreshToken.Token);
 
         return new AuthResponseDto
@@ -109,10 +109,10 @@ public class AuthService(
     private static string HashPassword(string password, byte[] salt)
     {
         return Convert.ToBase64String(KeyDerivation.Pbkdf2(
-            password: password,
-            salt: salt,
-            prf: KeyDerivationPrf.HMACSHA256,
-            iterationCount: 100_000,
-            numBytesRequested: 256 / 8));
+            password,
+            salt,
+            KeyDerivationPrf.HMACSHA256,
+            100_000,
+            256 / 8));
     }
 }

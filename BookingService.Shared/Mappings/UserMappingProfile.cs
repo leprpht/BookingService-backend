@@ -11,8 +11,8 @@ public class UserMappingProfile : AutoMapper.Profile
             .ForMember(d => d.FullName,
                 o => o.MapFrom(s =>
                     $"{(string.IsNullOrEmpty(s.MiddleName)
-                        ? $"{s.FirstName } {s.LastName}" 
-                        : $"{s.FirstName } {s.MiddleName} {s.LastName}")}"));
+                        ? $"{s.FirstName} {s.LastName}"
+                        : $"{s.FirstName} {s.MiddleName} {s.LastName}")}"));
 
         CreateMap<User, UserDto>();
     }

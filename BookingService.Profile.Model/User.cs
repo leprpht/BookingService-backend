@@ -14,7 +14,7 @@ public class User
     public required string Salt { get; init; }
     public DateOnly DateOfBirth { get; set; }
     public required string Role { get; set; } = "User";
-    
+
     public ICollection<Stay> Stays { get; init; } = new List<Stay>();
     public ICollection<PropertyReview> Reviews { get; init; } = new List<PropertyReview>();
     public ICollection<Property> Properties { get; init; } = new List<Property>();

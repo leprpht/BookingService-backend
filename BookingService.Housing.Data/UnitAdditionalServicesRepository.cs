@@ -11,16 +11,16 @@ public class UnitAdditionalServicesRepository(BookingServiceDbContext context)
     public override async Task UpdateAsync(UnitAdditionalServices entity)
     {
         var existingEntity = await DbSet.FindAsync(entity.Id);
-        
+
         if (existingEntity == null)
             throw new NotFoundException("Additional service not found.");
-        
+
         if (entity.Price != null)
             existingEntity.Price = entity.Price;
-        
+
         if (entity.Name != null)
             existingEntity.Name = entity.Name;
-        
+
         await Context.SaveChangesAsync();
     }
 }

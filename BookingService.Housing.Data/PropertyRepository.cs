@@ -28,10 +28,10 @@ public class PropertyRepository(BookingServiceDbContext context)
 
         if (property == null)
             throw new NotFoundException();
-        
+
         if (property.OwnerId != ownerId)
             throw new ForbidException();
-        
+
         property.Name = name;
         await Context.SaveChangesAsync();
     }
@@ -39,13 +39,13 @@ public class PropertyRepository(BookingServiceDbContext context)
     public async Task UpdateDescriptionAsync(Guid propertyId, Guid ownerId, string description)
     {
         var property = await DbSet.SingleOrDefaultAsync(p => p.Id == propertyId);
-        
+
         if (property == null)
             throw new NotFoundException();
-        
+
         if (property.OwnerId != ownerId)
             throw new ForbidException();
-        
+
         property.Description = description;
         await Context.SaveChangesAsync();
     }
@@ -55,20 +55,17 @@ public class PropertyRepository(BookingServiceDbContext context)
         var property = await DbSet
             .Include(p => p.Tags)
             .SingleOrDefaultAsync(p => p.Id == id);
-        
+
         if (property == null)
             throw new NotFoundException();
-        
+
         if (property.OwnerId != ownerId)
             throw new ForbidException();
-        
+
         var tags = await Context.Tags.Where(t => tagIds.Contains(t.Id)).ToListAsync();
         property.Tags.Clear();
-        
-        foreach (var tag in tags)
-        {
-            property.Tags.Add(tag);
-        }
+
+        foreach (var tag in tags) property.Tags.Add(tag);
         await Context.SaveChangesAsync();
     }
 

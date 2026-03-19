@@ -20,11 +20,11 @@ public class UserStayController(IUserStayService service) : ControllerBase
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         var userId = Guid.Parse(userIdClaim.Value);
-        
+
         filter ??= new StaySearchFilter();
-        
+
         var stays = await service.GetUserStaysAsync(userId, pageRequest, filter);
         return Ok(stays);
     }

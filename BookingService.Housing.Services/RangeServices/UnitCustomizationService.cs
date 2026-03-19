@@ -9,15 +9,28 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookingService.Housing.Services.RangeServices;
 
-public class UnitCustomizationService(IUnitCustomizationRepository repository, IMapper mapper, BookingServiceDbContext context)
-    : BaseRangeService<UnitCustomization, UnitCustomizationCreationDto, UnitCustomizationUpdateDto>(repository), IUnitCustomizationService
+public class UnitCustomizationService(
+    IUnitCustomizationRepository repository,
+    IMapper mapper,
+    BookingServiceDbContext context)
+    : BaseRangeService<UnitCustomization, UnitCustomizationCreationDto, UnitCustomizationUpdateDto>(repository),
+        IUnitCustomizationService
 {
-    protected override UnitCustomization MapCreate(Guid id, UnitCustomizationCreationDto dto) => dto.ToUnitCustomization(id, mapper);
-    protected override UnitCustomization MapUpdate(Guid id, UnitCustomizationUpdateDto dto) => dto.ToUnitCustomization(id, mapper);
+    protected override UnitCustomization MapCreate(Guid id, UnitCustomizationCreationDto dto)
+    {
+        return dto.ToUnitCustomization(id, mapper);
+    }
 
-    protected override async Task<Guid?> GetOwnerIdAsync(Guid unitId) =>
-        await context.Units
+    protected override UnitCustomization MapUpdate(Guid id, UnitCustomizationUpdateDto dto)
+    {
+        return dto.ToUnitCustomization(id, mapper);
+    }
+
+    protected override async Task<Guid?> GetOwnerIdAsync(Guid unitId)
+    {
+        return await context.Units
             .Where(u => u.Id == unitId)
             .Select(u => (Guid?)u.OwnerId)
             .FirstOrDefaultAsync();
+    }
 }

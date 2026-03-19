@@ -8,8 +8,10 @@ namespace BookingServices.Housing.Data.RangeRepositories;
 public class UnitPictureRepository(BookingServiceDbContext context)
     : BaseRangeRepository<UnitPicture, Unit>(context), IUnitPictureRepository
 {
-    protected override Expression<Func<UnitPicture, bool>> ByParentId(Guid unitId) 
-        => up => up.UnitId == unitId;
-    
+    protected override Expression<Func<UnitPicture, bool>> ByParentId(Guid unitId)
+    {
+        return up => up.UnitId == unitId;
+    }
+
     protected override string ParentIdPropertyName => "UnitId";
 }

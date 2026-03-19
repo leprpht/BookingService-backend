@@ -7,29 +7,29 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\BookingService.Housing.DTOs\BookingService.Housing.DTOs.csproj" />
+        <ProjectReference Include="..\BookingService.Housing.DTOs\BookingService.Housing.DTOs.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Azure.Communication.Email" Version="1.1.0" />
-      <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.12" />
-      <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.12" />
-      <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.12" />
+        <PackageReference Include="Azure.Communication.Email" Version="1.1.0"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.12"/>
+        <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.12"/>
+        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.12"/>
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="EmailTemplates\TripReminderEmailTemplate.html" />
-      <Content Include="EmailTemplates\TripReminderEmailTemplate.html">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <None Remove="EmailTemplates\BookingConfirmationEmailTemplate.html" />
-      <Content Include="EmailTemplates\BookingConfirmationEmailTemplate.html">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <None Remove="EmailTemplates\HostNewBookingTemplate.html" />
-      <Content Include="EmailTemplates\HostNewBookingEmailTemplate.html">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
+        <None Remove="EmailTemplates\TripReminderEmailTemplate.html"/>
+        <Content Include="EmailTemplates\TripReminderEmailTemplate.html">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="EmailTemplates\BookingConfirmationEmailTemplate.html"/>
+        <Content Include="EmailTemplates\BookingConfirmationEmailTemplate.html">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="EmailTemplates\HostNewBookingTemplate.html"/>
+        <Content Include="EmailTemplates\HostNewBookingEmailTemplate.html">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
 </Project>

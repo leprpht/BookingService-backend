@@ -21,7 +21,7 @@ public static partial class GraphQlModule
             .AddType<UnitType>()
             .AddType<PropertyReviewType>()
             .AddType<PropertyReviewResponseType>();
-        
+
         return services;
     }
 }

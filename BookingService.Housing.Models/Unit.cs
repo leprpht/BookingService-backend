@@ -8,7 +8,7 @@ public sealed class Unit
     public double Price { get; set; }
     public int Size { get; set; }
     public bool IsActive { get; set; }
-    
+
     public ICollection<RoomInstance> Rooms { get; init; } = new List<RoomInstance>();
     public ICollection<UnitCustomization> Customizations { get; init; } = new List<UnitCustomization>();
     public ICollection<UnitPicture> Pictures { get; init; } = new List<UnitPicture>();

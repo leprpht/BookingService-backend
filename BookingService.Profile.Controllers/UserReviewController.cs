@@ -27,14 +27,14 @@ public class UserReviewController(
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         var userId = Guid.Parse(userIdClaim.Value);
         propertyReviewCreationDto.UserId = userId;
-        
+
         await reviewService.CreateAsync(userId, propertyReviewCreationDto);
         return Created();
     }
-    
+
     [HttpPut("{id}")]
     [SwaggerOperation(
         Summary = "Update a property review",
@@ -50,16 +50,16 @@ public class UserReviewController(
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         var userId = Guid.Parse(userIdClaim.Value);
-        
+
         if (id != propertyReviewUpdateDto.Id)
             return BadRequest("Review ID mismatch.");
-        
+
         await reviewService.UpdateAsync(userId, propertyReviewUpdateDto);
         return NoContent();
     }
-    
+
     [HttpPatch("{id}/comment")]
     [SwaggerOperation(
         Summary = "Update review comment",
@@ -75,9 +75,9 @@ public class UserReviewController(
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         var userId = Guid.Parse(userIdClaim.Value);
-        
+
         await reviewService.UpdateCommentAsync(userId, id, comment);
         return NoContent();
     }
@@ -100,7 +100,7 @@ public class UserReviewController(
         await reviewService.DeleteAsync(userId, id);
         return NoContent();
     }
-    
+
     [HttpPost("{reviewId}/responses")]
     [SwaggerOperation(
         Summary = "Create a review response",
@@ -114,10 +114,10 @@ public class UserReviewController(
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         var userId = Guid.Parse(userIdClaim.Value);
         responseCreationDto.UserId = userId;
-        
+
         await responseService.CreateAsync(userId, responseCreationDto);
         return Created();
     }
@@ -138,13 +138,13 @@ public class UserReviewController(
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         if (reviewId != responseUpdateDto.PropertyReviewId
             || responseId != responseUpdateDto.Id)
             return BadRequest("Response ID mismatch.");
-        
+
         var userId = Guid.Parse(userIdClaim.Value);
-        
+
         await responseService.UpdateAsync(userId, responseUpdateDto);
         return NoContent();
     }
@@ -165,13 +165,13 @@ public class UserReviewController(
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         var review = await reviewService.GetByIdAsync(reviewId);
         if (review == null || review.Id != reviewId)
             return NotFound("Review not found.");
-        
+
         var userId = Guid.Parse(userIdClaim.Value);
-        
+
         await responseService.UpdateCommentAsync(responseId, userId, comment);
         return NoContent();
     }
@@ -190,7 +190,7 @@ public class UserReviewController(
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         var review = await reviewService.GetByIdAsync(reviewId);
         if (review == null || review.Id != reviewId)
             return NotFound("Review not found.");

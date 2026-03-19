@@ -57,34 +57,38 @@ public static class PropertyExtensions
         return dto;
     }
 
-    public static PropertyReviewResponse ToPropertyReviewResponse(this PropertyReviewResponseCreationDto dto, Guid userId, IMapper mapper)
+    public static PropertyReviewResponse ToPropertyReviewResponse(this PropertyReviewResponseCreationDto dto,
+        Guid userId, IMapper mapper)
     {
         var response = mapper.Map<PropertyReviewResponse>(dto);
         response.UserId = userId;
         return response;
     }
-    
-    public static PropertyReviewResponse ToPropertyReviewResponse(this PropertyReviewResponseUpdateDto dto, Guid userId, IMapper mapper)
+
+    public static PropertyReviewResponse ToPropertyReviewResponse(this PropertyReviewResponseUpdateDto dto, Guid userId,
+        IMapper mapper)
     {
         var response = mapper.Map<PropertyReviewResponse>(dto);
         response.UserId = userId;
         return response;
     }
-    
-    public static PropertyReviewResponseDto ToPropertyReviewResponseDto(this PropertyReviewResponse response, User user, IMapper mapper)
+
+    public static PropertyReviewResponseDto ToPropertyReviewResponseDto(this PropertyReviewResponse response, User user,
+        IMapper mapper)
     {
         var dto = mapper.Map<PropertyReviewResponseDto>(response);
         dto.User = mapper.Map<UserInfoDto>(user);
         return dto;
     }
-    
-    public static PropertyPicture ToPropertyPicture(this PropertyPictureCreationDto dto, Guid propertyId, IMapper mapper)
+
+    public static PropertyPicture ToPropertyPicture(this PropertyPictureCreationDto dto, Guid propertyId,
+        IMapper mapper)
     {
         var picture = mapper.Map<PropertyPicture>(dto);
         picture.PropertyId = propertyId;
         return picture;
     }
-    
+
     public static PropertyPicture ToPropertyPicture(this PropertyPictureUpdateDto dto, Guid propertyId, IMapper mapper)
     {
         var picture = mapper.Map<PropertyPicture>(dto);

@@ -50,25 +50,25 @@ public class UnitMappingProfile : AutoMapper.Profile
         CreateMap<ICollection<UnitCustomization>, List<UnitCustomizationDto>>()
             .ConvertUsing(src =>
                 src.GroupBy(c => c.Type)
-                   .Select(g => new UnitCustomizationDto
-                   {
-                       Type = g.Key.ToString(),
-                       Customizations = g
-                           .Select(c => new UnitCustomizationGroupedDto
-                           {
-                               Id = c.Id,
-                               Text = c.Text
-                           })
-                           .ToList()
-                   })
-                   .ToList());
-        
+                    .Select(g => new UnitCustomizationDto
+                    {
+                        Type = g.Key.ToString(),
+                        Customizations = g
+                            .Select(c => new UnitCustomizationGroupedDto
+                            {
+                                Id = c.Id,
+                                Text = c.Text
+                            })
+                            .ToList()
+                    })
+                    .ToList());
+
         CreateMap<UnitPictureCreationDto, UnitPicture>()
             .ForMember(d => d.UnitId, o => o.Ignore());
-        
+
         CreateMap<UnitPictureUpdateDto, UnitPicture>()
             .ForMember(d => d.UnitId, o => o.Ignore());
-        
+
         CreateMap<UnitAdditionalServices, UnitAdditionalServicesDto>();
 
         CreateMap<UnitAdditionalServicesCreationDto, UnitAdditionalServices>();

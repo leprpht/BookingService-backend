@@ -20,7 +20,7 @@ public class PropertyMappingProfile : AutoMapper.Profile
             .ForMember(d => d.Rating,
                 o => o.MapFrom(s =>
                     s.Reviews.Any() ? s.Reviews.Average(r => r.Rating) : 0));
-        
+
         CreateMap<Property, PropertyPageDto>()
             .ForMember(d => d.Price,
                 o => o.MapFrom((src, _, _, ctx) =>
@@ -35,7 +35,7 @@ public class PropertyMappingProfile : AutoMapper.Profile
                 o => o.MapFrom(s => s.AverageRating));
 
         CreateMap<PropertyCreationDto, Property>();
-        
+
         CreateMap<PropertyUpdateDto, Property>();
 
         CreateMap<Property, PropertyInfoDto>()
@@ -53,20 +53,20 @@ public class PropertyMappingProfile : AutoMapper.Profile
             .ForMember(d => d.User, o => o.Ignore())
             .ForMember(d => d.Responses, o => o.Ignore())
             .ForMember(d => d.Property, o => o.MapFrom(s => s.Property));
-        
+
         CreateMap<PropertyReviewResponseCreationDto, PropertyReviewResponse>()
             .ForMember(d => d.CreatedAt,
                 o => o.MapFrom(_ => DateTime.UtcNow));
-        
+
         CreateMap<PropertyReviewResponseUpdateDto, PropertyReviewResponse>();
-        
+
         CreateMap<PropertyReviewResponse, PropertyReviewResponseDto>()
             .ForMember(d => d.User, o => o.Ignore())
             .ForMember(d => d.Property, o => o.MapFrom(s => s.Property));
-        
+
         CreateMap<PropertyPictureCreationDto, PropertyPicture>()
             .ForMember(d => d.PropertyId, o => o.Ignore());
-        
+
         CreateMap<PropertyPictureUpdateDto, PropertyPicture>()
             .ForMember(d => d.PropertyId, o => o.Ignore());
     }

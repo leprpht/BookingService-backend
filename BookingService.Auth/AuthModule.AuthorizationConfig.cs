@@ -10,7 +10,7 @@ public static partial class AuthModule
     {
         services.AddAuthorizationBuilder()
             .AddPolicy("IdMatch", policy => policy.AddRequirements(new IdMatchRequirement()));
-            
+
         return services;
     }
 }

@@ -15,7 +15,7 @@ public static partial class HousingModule
             .AddScoped<IStayService, StayService>()
             .AddScoped<IUnitAdditionalService, UnitAdditionalService>()
             .AddScoped<IUnitService, UnitService>();
-        
+
         return services;
     }
 }

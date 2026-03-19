@@ -7,13 +7,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.12" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.12"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\BookingService.Database\BookingService.Database.csproj" />
-      <ProjectReference Include="..\BookingService.Housing.DTOs\BookingService.Housing.DTOs.csproj" />
-      <ProjectReference Include="..\BookingService.Notifications.Email\BookingService.Notifications.Email.csproj" />
+        <ProjectReference Include="..\BookingService.Database\BookingService.Database.csproj"/>
+        <ProjectReference Include="..\BookingService.Housing.DTOs\BookingService.Housing.DTOs.csproj"/>
+        <ProjectReference Include="..\BookingService.Notifications.Email\BookingService.Notifications.Email.csproj"/>
     </ItemGroup>
 
 </Project>

@@ -33,7 +33,7 @@ public class UnitRepository(BookingServiceDbContext context)
     public async Task ToggleActiveStatusAsync(Guid unitId, Guid userId)
     {
         var unit = await DbSet.FindAsync(unitId)
-            ?? throw new NotFoundException("Unit not found.");
+                   ?? throw new NotFoundException("Unit not found.");
 
         if (unit.OwnerId != userId)
             throw new ForbidException();
@@ -45,7 +45,7 @@ public class UnitRepository(BookingServiceDbContext context)
     public async Task UpdateNameAsync(Guid unitId, Guid userId, string name)
     {
         var unit = await DbSet.FindAsync(unitId)
-            ?? throw new NotFoundException("Unit not found.");
+                   ?? throw new NotFoundException("Unit not found.");
 
         if (unit.OwnerId != userId)
             throw new ForbidException();

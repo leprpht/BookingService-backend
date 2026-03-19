@@ -9,15 +9,28 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookingService.Housing.Services.RangeServices;
 
-public class PropertyPictureService(IPropertyPictureRepository repository, IMapper mapper, BookingServiceDbContext context)
-    : BaseRangeService<PropertyPicture, PropertyPictureCreationDto, PropertyPictureUpdateDto>(repository), IPropertyPictureService
+public class PropertyPictureService(
+    IPropertyPictureRepository repository,
+    IMapper mapper,
+    BookingServiceDbContext context)
+    : BaseRangeService<PropertyPicture, PropertyPictureCreationDto, PropertyPictureUpdateDto>(repository),
+        IPropertyPictureService
 {
-    protected override PropertyPicture MapCreate(Guid id, PropertyPictureCreationDto dto) => dto.ToPropertyPicture(id, mapper);
-    protected override PropertyPicture MapUpdate(Guid id, PropertyPictureUpdateDto dto) => dto.ToPropertyPicture(id, mapper);
+    protected override PropertyPicture MapCreate(Guid id, PropertyPictureCreationDto dto)
+    {
+        return dto.ToPropertyPicture(id, mapper);
+    }
 
-    protected override async Task<Guid?> GetOwnerIdAsync(Guid propertyId) =>
-        await context.Properties
+    protected override PropertyPicture MapUpdate(Guid id, PropertyPictureUpdateDto dto)
+    {
+        return dto.ToPropertyPicture(id, mapper);
+    }
+
+    protected override async Task<Guid?> GetOwnerIdAsync(Guid propertyId)
+    {
+        return await context.Properties
             .Where(p => p.Id == propertyId)
             .Select(p => (Guid?)p.OwnerId)
             .FirstOrDefaultAsync();
+    }
 }

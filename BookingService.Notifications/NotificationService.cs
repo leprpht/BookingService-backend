@@ -8,7 +8,7 @@ namespace BookingService.Notifications;
 public class NotificationService(
     BookingServiceDbContext context,
     IEmailService emailService) : INotificationService
-{ 
+{
     public async Task SendTripRemindersAsync()
     {
         var tomorrow = DateOnly.FromDateTime(DateTime.Today.AddDays(1));
@@ -16,8 +16,8 @@ public class NotificationService(
         var staysToRemind = await context.Stays
             .Where(s => s.Status == StayStatus.Confirmed && s.From == tomorrow)
             .Include(s => s.RoomInstance)
-                .ThenInclude(r => r.Unit)
-                    .ThenInclude(u => u.Property)
+            .ThenInclude(r => r.Unit)
+            .ThenInclude(u => u.Property)
             .Select(s => new
             {
                 Stay = s,
@@ -57,8 +57,8 @@ public class NotificationService(
     {
         var stay = await context.Stays
             .Include(s => s.RoomInstance)
-                .ThenInclude(r => r.Unit)
-                    .ThenInclude(u => u.Property)
+            .ThenInclude(r => r.Unit)
+            .ThenInclude(u => u.Property)
             .FirstOrDefaultAsync(s => s.Id == stayId);
 
         if (stay == null) return;
@@ -69,7 +69,7 @@ public class NotificationService(
         var property = stay.RoomInstance.Unit.Property;
         var unit = stay.RoomInstance.Unit;
         var host = await context.Users.FindAsync(property.OwnerId);
-        
+
         var guestDto = new BookingConfirmationEmailDto
         {
             Email = guest.Email,
@@ -87,7 +87,7 @@ public class NotificationService(
             CheckOut = stay.To,
             TotalPrice = stay.TotalPrice
         };
-        
+
         var guestFullName = string.IsNullOrWhiteSpace(guest.MiddleName)
             ? $"{guest.FirstName} {guest.LastName}"
             : $"{guest.FirstName} {guest.MiddleName} {guest.LastName}";
@@ -122,8 +122,8 @@ public class NotificationService(
     {
         var stay = await context.Stays
             .Include(s => s.RoomInstance)
-                .ThenInclude(r => r.Unit)
-                    .ThenInclude(u => u.Property)
+            .ThenInclude(r => r.Unit)
+            .ThenInclude(u => u.Property)
             .FirstOrDefaultAsync(s => s.Id == stayId);
 
         if (stay == null) return;

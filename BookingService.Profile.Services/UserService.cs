@@ -14,7 +14,8 @@ public class UserService(IUserRepository repository, IMapper mapper) : IUserServ
         return user?.ToUserDto(mapper);
     }
 
-    public async Task UpdateUserAsync(Guid id, UserInfoUpdate userUpdate) =>
+    public async Task UpdateUserAsync(Guid id, UserInfoUpdate userUpdate)
+    {
         await repository.UpdateUserAsync(
             id,
             userUpdate.Name.FirstName,
@@ -22,21 +23,29 @@ public class UserService(IUserRepository repository, IMapper mapper) : IUserServ
             userUpdate.Name.LastName,
             userUpdate.ProfilePictureUrl,
             userUpdate.DateOfBirth);
+    }
 
-    public async Task UpdateUserNameAsync(Guid id, UserNameDto userNameUpdate) =>
-        await repository.UpdateUserNameAsync(id, userNameUpdate.FirstName, userNameUpdate.MiddleName, userNameUpdate.LastName);
+    public async Task UpdateUserNameAsync(Guid id, UserNameDto userNameUpdate)
+    {
+        await repository.UpdateUserNameAsync(id, userNameUpdate.FirstName, userNameUpdate.MiddleName,
+            userNameUpdate.LastName);
+    }
 
     public async Task UpdateUserEmailAsync(Guid id, string email)
     {
         if (!EmailValidator.IsValidEmail(email))
             throw new FormatException("Invalid email format.");
-        
+
         await repository.UpdateUserEmailAsync(id, email);
     }
 
-    public async Task UpdateProfilePictureAsync(Guid id, string pfpUrl) =>
+    public async Task UpdateProfilePictureAsync(Guid id, string pfpUrl)
+    {
         await repository.UpdateUserProfilePictureAsync(id, pfpUrl);
+    }
 
-    public async Task UpgradeToHostAsync(Guid id) =>
+    public async Task UpgradeToHostAsync(Guid id)
+    {
         await repository.UpgradeToHostAsync(id);
+    }
 }

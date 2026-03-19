@@ -8,9 +8,6 @@ public static partial class ModelRegistration
         this ModelBuilder modelBuilder,
         params Action<ModelBuilder>[] registrations)
     {
-        foreach (var registration in registrations)
-        {
-            registration(modelBuilder);
-        }
+        foreach (var registration in registrations) registration(modelBuilder);
     }
 }

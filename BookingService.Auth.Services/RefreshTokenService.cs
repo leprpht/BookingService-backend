@@ -9,7 +9,7 @@ public class RefreshTokenService(
     IRefreshTokenRepository repository,
     IConfiguration configuration) : IRefreshTokenService
 {
-    private readonly int _refreshTokenExpiryDays = 
+    private readonly int _refreshTokenExpiryDays =
         configuration.GetValue<int>("Jwt:RefreshTokenExpiryDays", 7);
 
     public string GenerateRefreshToken()
@@ -49,7 +49,7 @@ public class RefreshTokenService(
     public async Task RevokeRefreshTokenAsync(string token, string? ipAddress = null, string? replacedByToken = null)
     {
         var refreshToken = await repository.GetByTokenAsync(token);
-        
+
         if (refreshToken == null || !refreshToken.IsActive)
             return;
 

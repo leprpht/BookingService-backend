@@ -11,7 +11,7 @@ public static class LocationModule
     {
         services.Configure<GeoNamesOptions>(
             configuration.GetSection(GeoNamesOptions.SectionName));
-        
+
         services.AddHttpClient<IGeoNamesService, GeoNamesService>(client =>
         {
             client.Timeout = TimeSpan.FromSeconds(5);

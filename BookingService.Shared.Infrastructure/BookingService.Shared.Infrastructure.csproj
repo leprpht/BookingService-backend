@@ -7,11 +7,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\BookingService.Database\BookingService.Database.csproj" />
+        <ProjectReference Include="..\BookingService.Database\BookingService.Database.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.12" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.12"/>
     </ItemGroup>
 
 </Project>

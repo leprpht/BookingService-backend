@@ -11,12 +11,12 @@ public class JwtTokenGenerator(IConfiguration configuration) : IJwtTokenGenerato
     public string GenerateToken(Guid id, string email, string role)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
-        
+
         var jwtKey = configuration["Jwt:Key"]
                      ?? throw new InvalidOperationException("Jwt:Key is not configured");
-        
+
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
-        
+
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(
@@ -28,7 +28,7 @@ public class JwtTokenGenerator(IConfiguration configuration) : IJwtTokenGenerato
             Expires = DateTime.UtcNow.AddHours(1),
             SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
         };
-        
+
         var token = tokenHandler.CreateToken(tokenDescriptor);
         return tokenHandler.WriteToken(token);
     }

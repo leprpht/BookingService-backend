@@ -7,17 +7,17 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\BookingService.Database\BookingService.Database.csproj" />
-      <ProjectReference Include="..\BookingService.Housing.DTOs\BookingService.Housing.DTOs.csproj" />
-      <ProjectReference Include="..\BookingService.Housing.Models\BookingService.Housing.Models.csproj" />
-      <ProjectReference Include="..\BookingService.Profile.Model\BookingService.Profile.Model.csproj" />
-      <ProjectReference Include="..\BookingService.Shared.Infrastructure\BookingService.Shared.Infrastructure.csproj" />
+        <ProjectReference Include="..\BookingService.Database\BookingService.Database.csproj"/>
+        <ProjectReference Include="..\BookingService.Housing.DTOs\BookingService.Housing.DTOs.csproj"/>
+        <ProjectReference Include="..\BookingService.Housing.Models\BookingService.Housing.Models.csproj"/>
+        <ProjectReference Include="..\BookingService.Profile.Model\BookingService.Profile.Model.csproj"/>
+        <ProjectReference Include="..\BookingService.Shared.Infrastructure\BookingService.Shared.Infrastructure.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="AutoMapper" Version="12.0.1" />
-      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.12" />
+        <PackageReference Include="AutoMapper" Version="12.0.1"/>
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.12"/>
     </ItemGroup>
 
 </Project>

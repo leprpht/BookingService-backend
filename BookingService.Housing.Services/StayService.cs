@@ -16,24 +16,31 @@ public class StayService(
     INotificationService notificationService)
     : BaseService<Stay, StayCreationDto, StayUpdateDto>(repository), IStayService
 {
-    protected override Stay MapCreate(Guid userId, StayCreationDto dto) => dto.ToStay(userId, mapper);
-    protected override Stay MapUpdate(Guid userId, StayUpdateDto dto) => dto.ToStay(userId, mapper);
-    
+    protected override Stay MapCreate(Guid userId, StayCreationDto dto)
+    {
+        return dto.ToStay(userId, mapper);
+    }
+
+    protected override Stay MapUpdate(Guid userId, StayUpdateDto dto)
+    {
+        return dto.ToStay(userId, mapper);
+    }
+
     public override async Task CreateAsync(Guid userId, StayCreationDto dto)
     {
         var room = await roomRepository.FindAvailableAsync(dto.UnitId, dto.From, dto.To)
-            ?? throw new InvalidOperationException(
-                "No rooms are available for the requested unit and period.");
+                   ?? throw new InvalidOperationException(
+                       "No rooms are available for the requested unit and period.");
 
         var stay = MapCreate(userId, dto);
         stay.RoomInstanceId = room.Id;
-        
+
         var additionalCosts = room.Unit.AdditionalServices
             .Where(s => dto.AdditionalServiceIds != null
                         && dto.AdditionalServiceIds.Contains(s.Id))
             .Select(s => s.Price)
             .Sum();
-        
+
         stay.TotalPrice = room.Unit.Price * (dto.To.DayNumber - dto.From.DayNumber) + additionalCosts ?? 0;
 
         await repository.AddAsync(stay);

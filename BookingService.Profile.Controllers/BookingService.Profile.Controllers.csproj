@@ -7,13 +7,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\BookingService.Auth.Services\BookingService.Auth.Services.csproj" />
-      <ProjectReference Include="..\BookingService.Housing.Services\BookingService.Housing.Services.csproj" />
-      <ProjectReference Include="..\BookingService.Profile.Services\BookingService.Profile.Services.csproj" />
+        <ProjectReference Include="..\BookingService.Auth.Services\BookingService.Auth.Services.csproj"/>
+        <ProjectReference Include="..\BookingService.Housing.Services\BookingService.Housing.Services.csproj"/>
+        <ProjectReference Include="..\BookingService.Profile.Services\BookingService.Profile.Services.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="9.0.6" />
+        <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="9.0.6"/>
     </ItemGroup>
 
 </Project>

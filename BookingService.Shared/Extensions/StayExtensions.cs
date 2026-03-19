@@ -13,18 +13,25 @@ public static class StayExtensions
         return stay;
     }
 
-    public static Stay ToStay(this StayUpdateDto dto, Guid userId, IMapper mapper) =>
-        mapper.Map<Stay>(dto);
-
-    public static StayDto ToStayDto(this Stay stay, IMapper mapper) =>
-        mapper.Map<StayDto>(stay);
-
-    private static string StayStatusToString(this StayStatus status) => status switch
+    public static Stay ToStay(this StayUpdateDto dto, Guid userId, IMapper mapper)
     {
-        StayStatus.Pending => "Pending",
-        StayStatus.Confirmed => "Confirmed",
-        StayStatus.Cancelled => "Cancelled",
-        StayStatus.Completed => "Completed",
-        _ => "Unknown"
-    };
+        return mapper.Map<Stay>(dto);
+    }
+
+    public static StayDto ToStayDto(this Stay stay, IMapper mapper)
+    {
+        return mapper.Map<StayDto>(stay);
+    }
+
+    private static string StayStatusToString(this StayStatus status)
+    {
+        return status switch
+        {
+            StayStatus.Pending => "Pending",
+            StayStatus.Confirmed => "Confirmed",
+            StayStatus.Cancelled => "Cancelled",
+            StayStatus.Completed => "Completed",
+            _ => "Unknown"
+        };
+    }
 }

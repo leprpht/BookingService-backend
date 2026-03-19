@@ -11,8 +11,10 @@ public abstract class BaseService<TModel, TCreateDto, TUpdateDto>(IBaseRepositor
     protected abstract TModel MapCreate(Guid userId, TCreateDto dto);
     protected abstract TModel MapUpdate(Guid userId, TUpdateDto dto);
 
-    public Task<TModel?> GetByIdAsync(Guid id) =>
-        repository.GetByIdAsync(id)!;
+    public Task<TModel?> GetByIdAsync(Guid id)
+    {
+        return repository.GetByIdAsync(id)!;
+    }
 
     public virtual async Task CreateAsync(Guid userId, TCreateDto createDto)
     {
@@ -27,7 +29,7 @@ public abstract class BaseService<TModel, TCreateDto, TUpdateDto>(IBaseRepositor
     }
 
     public virtual async Task DeleteAsync(Guid id, Guid userId)
-    { 
+    {
         await repository.GetByOwnerIdAsync(id);
         await repository.DeleteAsync(id, userId);
     }

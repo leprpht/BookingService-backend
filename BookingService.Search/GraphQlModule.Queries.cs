@@ -14,7 +14,7 @@ public static partial class GraphQlModule
             .AddTypeExtension<UnitQuery>()
             .AddTypeExtension<UnitAdditionalServicesQuery>()
             .AddTypeExtension<ReviewQuery>();
-        
+
         return services;
     }
 }

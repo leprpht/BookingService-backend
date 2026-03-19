@@ -20,12 +20,12 @@ public class UserAuthController(IAuthService service) : ControllerBase
     {
         var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
         var response = await service.RegisterAsync(request.Email, request.Password, ipAddress);
-        
+
         if (response == null)
             return BadRequest(new { message = "User already exists" });
-        
+
         SetRefreshTokenCookie(response.RefreshToken);
-        
+
         return Ok(new
         {
             response.AccessToken,
@@ -44,12 +44,12 @@ public class UserAuthController(IAuthService service) : ControllerBase
     {
         var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
         var response = await service.LoginAsync(request.Email, request.Password, ipAddress);
-        
+
         if (response == null)
             return BadRequest(new { message = "Invalid email or password" });
-        
+
         SetRefreshTokenCookie(response.RefreshToken);
-        
+
         return Ok(new
         {
             response.AccessToken,
@@ -68,18 +68,18 @@ public class UserAuthController(IAuthService service) : ControllerBase
     public async Task<IActionResult> RefreshToken()
     {
         var refreshToken = Request.Cookies["refreshToken"];
-        
+
         if (string.IsNullOrEmpty(refreshToken))
             return BadRequest(new { message = "Refresh token is required" });
 
         var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
         var response = await service.RefreshTokenAsync(refreshToken, ipAddress);
-        
+
         if (response == null)
             return Unauthorized(new { message = "Invalid or expired refresh token" });
-        
+
         SetRefreshTokenCookie(response.RefreshToken);
-        
+
         return Ok(new
         {
             response.AccessToken,
@@ -97,15 +97,15 @@ public class UserAuthController(IAuthService service) : ControllerBase
     public async Task<IActionResult> RevokeToken()
     {
         var refreshToken = Request.Cookies["refreshToken"];
-        
+
         if (string.IsNullOrEmpty(refreshToken))
             return BadRequest(new { message = "Refresh token is required" });
 
         var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
         await service.RevokeTokenAsync(refreshToken, ipAddress);
-        
+
         Response.Cookies.Delete("refreshToken");
-        
+
         return Ok(new { message = "Token revoked successfully" });
     }
 
@@ -118,7 +118,7 @@ public class UserAuthController(IAuthService service) : ControllerBase
             SameSite = SameSiteMode.Strict,
             Expires = DateTime.UtcNow.AddDays(7)
         };
-        
+
         Response.Cookies.Append("refreshToken", refreshToken, cookieOptions);
     }
 }

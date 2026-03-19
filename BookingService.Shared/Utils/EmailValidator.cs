@@ -15,7 +15,7 @@ public static partial class EmailValidator
             throw new ArgumentException("Email cannot be empty.", nameof(email));
 
         email = email.Trim();
-        
+
         try
         {
             var addr = new MailAddress(email);
@@ -26,7 +26,7 @@ public static partial class EmailValidator
         {
             return false;
         }
-        
+
         return EmailRegex().IsMatch(email)
                && !email.Contains("..")
                && !email.StartsWith('.')

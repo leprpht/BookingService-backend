@@ -11,7 +11,7 @@ public static partial class AuthModule
             .RegisterServices()
             .AddAuthenticationConfig(configuration)
             .AddAuthorizationConfig();
-        
+
         return services;
     }
 }

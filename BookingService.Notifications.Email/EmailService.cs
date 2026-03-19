@@ -12,7 +12,7 @@ public class EmailService(IOptions<EmailServiceOptions> options) : IEmailService
     public Task SendTripReminderEmailAsync(TripReminderEmailDto dto)
     {
         var state = string.IsNullOrWhiteSpace(dto.State) ? "" : $", {dto.State}";
-        
+
         var html = EmailTemplateLoader
             .LoadTemplate("TripReminderEmailTemplate.html")
             .Replace("{{FirstName}}", dto.FirstName)
@@ -106,7 +106,7 @@ public class EmailService(IOptions<EmailServiceOptions> options) : IEmailService
         var client = new EmailClient(_options.ConnectionString);
 
         var message = new EmailMessage(
-            senderAddress: _options.SenderAddress,
+            _options.SenderAddress,
             content: new EmailContent(subject)
             {
                 Html = htmlBody
@@ -116,35 +116,38 @@ public class EmailService(IOptions<EmailServiceOptions> options) : IEmailService
         return client.SendAsync(WaitUntil.Completed, message);
     }
 
-    private static (string color, string subtitleColor, string icon, string statusMessage, string bodyText) ResolveStatusContent(string status) =>
-        status switch
+    private static (string color, string subtitleColor, string icon, string statusMessage, string bodyText)
+        ResolveStatusContent(string status)
     {
-        "Confirmed" => (
-            "#0f5c2e",
-            "#a8d5b5",
-            "✓",
-            "Your host has confirmed your reservation.",
-            "Great news! Your booking has been confirmed by the host. Everything is set — we look forward to your stay."),
+        return status switch
+        {
+            "Confirmed" => (
+                "#0f5c2e",
+                "#a8d5b5",
+                "✓",
+                "Your host has confirmed your reservation.",
+                "Great news! Your booking has been confirmed by the host. Everything is set — we look forward to your stay."),
 
-        "Cancelled" => (
-            "#c0392b",
-            "#f5b7b1",
-            "✕",
-            "Your reservation has been cancelled.",
-            "We're sorry to let you know that this booking has been cancelled. If you did not request this cancellation, please contact support."),
+            "Cancelled" => (
+                "#c0392b",
+                "#f5b7b1",
+                "✕",
+                "Your reservation has been cancelled.",
+                "We're sorry to let you know that this booking has been cancelled. If you did not request this cancellation, please contact support."),
 
-        "Completed" => (
-            "#7d3c98",
-            "#d2b4de",
-            "★",
-            "Your stay has been marked as completed.",
-            "We hope you had a wonderful experience! Thank you for choosing BookingService. We'd love to hear your feedback — don't forget to leave a review."),
+            "Completed" => (
+                "#7d3c98",
+                "#d2b4de",
+                "★",
+                "Your stay has been marked as completed.",
+                "We hope you had a wonderful experience! Thank you for choosing BookingService. We'd love to hear your feedback — don't forget to leave a review."),
 
-        _ => (
-            "#555555",
-            "#cccccc",
-            "ℹ",
-            "Your booking status has been updated.",
-            "There has been an update to your reservation. Please log in for full details.")
-    };
+            _ => (
+                "#555555",
+                "#cccccc",
+                "ℹ",
+                "Your booking status has been updated.",
+                "There has been an update to your reservation. Please log in for full details.")
+        };
+    }
 }

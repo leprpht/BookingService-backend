@@ -7,18 +7,18 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="AutoMapper" Version="12.0.1" />
-      <PackageReference Include="HotChocolate.AspNetCore" Version="15.1.12" />
-      <PackageReference Include="HotChocolate.Data" Version="15.1.12" />
+        <PackageReference Include="AutoMapper" Version="12.0.1"/>
+        <PackageReference Include="HotChocolate.AspNetCore" Version="15.1.12"/>
+        <PackageReference Include="HotChocolate.Data" Version="15.1.12"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\BookingService.Auth.Services\BookingService.Auth.Services.csproj" />
-      <ProjectReference Include="..\BookingService.Housing.Data\BookingService.Housing.Data.csproj" />
-      <ProjectReference Include="..\BookingService.Housing.Models\BookingService.Housing.Models.csproj" />
-      <ProjectReference Include="..\BookingService.Location\BookingService.Location.csproj" />
-      <ProjectReference Include="..\BookingService.Profile.Model\BookingService.Profile.Model.csproj" />
-      <ProjectReference Include="..\BookingService.Shared\BookingService.Shared.csproj" />
+        <ProjectReference Include="..\BookingService.Auth.Services\BookingService.Auth.Services.csproj"/>
+        <ProjectReference Include="..\BookingService.Housing.Data\BookingService.Housing.Data.csproj"/>
+        <ProjectReference Include="..\BookingService.Housing.Models\BookingService.Housing.Models.csproj"/>
+        <ProjectReference Include="..\BookingService.Location\BookingService.Location.csproj"/>
+        <ProjectReference Include="..\BookingService.Profile.Model\BookingService.Profile.Model.csproj"/>
+        <ProjectReference Include="..\BookingService.Shared\BookingService.Shared.csproj"/>
     </ItemGroup>
 
 </Project>

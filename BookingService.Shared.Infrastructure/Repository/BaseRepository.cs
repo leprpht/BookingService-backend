@@ -12,10 +12,10 @@ public abstract class BaseRepository<T>(BookingServiceDbContext context) : IBase
     public async Task<T> GetByIdAsync(Guid id)
     {
         var entity = await DbSet.FindAsync(id);
-        
+
         if (entity == null)
             throw new NotFoundException("Entity not found.");
-        
+
         return entity;
     }
 
@@ -25,10 +25,10 @@ public abstract class BaseRepository<T>(BookingServiceDbContext context) : IBase
             .GetType()
             .GetProperty("OwnerId")!
             .GetValue(p)!.Equals(ownerId));
-        
+
         if (parent == null)
             throw new NotFoundException("Parent entity not found.");
-        
+
         return parent;
     }
 

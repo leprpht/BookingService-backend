@@ -26,10 +26,7 @@ builder.Services
 
 builder.Services
     .AddControllers()
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-    });
+    .AddJsonOptions(options => { options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); });
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c => c.EnableAnnotations());
@@ -51,10 +48,7 @@ var app = builder.Build();
 await app.MigrateDatabaseAsync();
 
 var shouldSeedDatabase = builder.Configuration.GetValue("Database:SeedOnStartup", false);
-if (shouldSeedDatabase)
-{
-    await app.SeedDatabaseAsync();
-}
+if (shouldSeedDatabase) await app.SeedDatabaseAsync();
 
 app
     .UseMiddleware<ControllerExceptionHandler>()

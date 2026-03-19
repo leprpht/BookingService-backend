@@ -61,6 +61,7 @@ public class RefreshTokenRepository(BookingServiceDbContext context) : IRefreshT
             token.RevokedAt = DateTime.UtcNow;
             token.RevokedByIp = revokedByIp;
         }
+
         await context.SaveChangesAsync();
     }
 }

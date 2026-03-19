@@ -4,4 +4,5 @@ using BookingService.Shared.Infrastructure.Service;
 
 namespace BookingService.Housing.Services;
 
-public interface IUnitAdditionalService : IBaseService<UnitAdditionalServices, UnitAdditionalServicesCreationDto, UnitAdditionalServicesUpdateDto>;
+public interface IUnitAdditionalService : IBaseService<UnitAdditionalServices, UnitAdditionalServicesCreationDto,
+    UnitAdditionalServicesUpdateDto>;

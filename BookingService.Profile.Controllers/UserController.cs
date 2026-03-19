@@ -24,10 +24,10 @@ public class UserController(IUserService service) : ControllerBase
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         var userId = Guid.Parse(userIdClaim.Value);
         var user = await service.GetByIdAsync(userId);
-        
+
         return user == null
             ? NotFound()
             : Ok(user);
@@ -46,13 +46,13 @@ public class UserController(IUserService service) : ControllerBase
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         var userId = Guid.Parse(userIdClaim.Value);
         await service.UpdateUserAsync(userId, userUpdate);
-        
+
         return NoContent();
     }
-    
+
     [HttpPatch("name")]
     [SwaggerOperation(
         Summary = "Update user name",
@@ -66,13 +66,13 @@ public class UserController(IUserService service) : ControllerBase
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         var userId = Guid.Parse(userIdClaim.Value);
         await service.UpdateUserNameAsync(userId, name);
-        
+
         return NoContent();
     }
-    
+
     [HttpPatch("email")]
     [SwaggerOperation(
         Summary = "Update user email",
@@ -87,13 +87,13 @@ public class UserController(IUserService service) : ControllerBase
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         var userId = Guid.Parse(userIdClaim.Value);
         await service.UpdateUserEmailAsync(userId, email);
-        
+
         return NoContent();
     }
-    
+
     [HttpPatch("profile-picture")]
     [SwaggerOperation(
         Summary = "Update user profile picture",
@@ -107,10 +107,10 @@ public class UserController(IUserService service) : ControllerBase
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         var userId = Guid.Parse(userIdClaim.Value);
         await service.UpdateProfilePictureAsync(userId, profilePictureUrl);
-        
+
         return NoContent();
     }
 
@@ -128,10 +128,10 @@ public class UserController(IUserService service) : ControllerBase
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null)
             return Unauthorized();
-        
+
         var userId = Guid.Parse(userIdClaim.Value);
         await service.UpgradeToHostAsync(userId);
-        
+
         return NoContent();
     }
 }

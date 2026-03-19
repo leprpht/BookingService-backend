@@ -26,14 +26,16 @@ public static class UnitExtensions
         return unit;
     }
 
-    public static UnitCustomization ToUnitCustomization(this UnitCustomizationCreationDto dto, Guid unitId, IMapper mapper)
+    public static UnitCustomization ToUnitCustomization(this UnitCustomizationCreationDto dto, Guid unitId,
+        IMapper mapper)
     {
         var customization = mapper.Map<UnitCustomization>(dto);
         customization.UnitId = unitId;
         return customization;
     }
 
-    public static UnitCustomization ToUnitCustomization(this UnitCustomizationUpdateDto dto, Guid unitId, IMapper mapper)
+    public static UnitCustomization ToUnitCustomization(this UnitCustomizationUpdateDto dto, Guid unitId,
+        IMapper mapper)
     {
         var customization = mapper.Map<UnitCustomization>(dto);
         customization.UnitId = unitId;
@@ -56,7 +58,7 @@ public static class UnitExtensions
             })
             .ToList();
     }
-    
+
     public static UnitPicture ToUnitPicture(this UnitPictureCreationDto dto, Guid unitId, IMapper mapper)
     {
         var picture = mapper.Map<UnitPicture>(dto);
@@ -71,12 +73,14 @@ public static class UnitExtensions
         return picture;
     }
 
-    public static UnitAdditionalServices ToUnitAdditionalServices(this UnitAdditionalServicesCreationDto dto, IMapper mapper)
+    public static UnitAdditionalServices ToUnitAdditionalServices(this UnitAdditionalServicesCreationDto dto,
+        IMapper mapper)
     {
         return mapper.Map<UnitAdditionalServices>(dto);
     }
-    
-    public static UnitAdditionalServices ToUnitAdditionalServices(this UnitAdditionalServicesUpdateDto dto, IMapper mapper)
+
+    public static UnitAdditionalServices ToUnitAdditionalServices(this UnitAdditionalServicesUpdateDto dto,
+        IMapper mapper)
     {
         return mapper.Map<UnitAdditionalServices>(dto);
     }

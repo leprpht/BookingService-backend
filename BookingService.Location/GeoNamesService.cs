@@ -7,13 +7,13 @@ namespace BookingService.Location;
 public sealed class GeoNamesService(
     HttpClient httpClient,
     IOptions<GeoNamesOptions> options
-    ) : IGeoNamesService
+) : IGeoNamesService
 {
     private readonly GeoNamesOptions _options = options.Value;
 
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
-        PropertyNameCaseInsensitive = true,
+        PropertyNameCaseInsensitive = true
     };
 
     // Feature codes that represent meaningful populated places.
@@ -21,7 +21,8 @@ public sealed class GeoNamesService(
     private static readonly string[] PopulatedPlaceCodes =
         ["PPLC", "PPLA", "PPLA2", "PPLA3", "PPL"];
 
-    public async Task<IEnumerable<GeoNamesPlace>?> FindCitiesAsync(string city, string? countryHint = null, int maxRows = 5)
+    public async Task<IEnumerable<GeoNamesPlace>?> FindCitiesAsync(string city, string? countryHint = null,
+        int maxRows = 5)
     {
         if (string.IsNullOrWhiteSpace(city))
             return null;
@@ -30,12 +31,12 @@ public sealed class GeoNamesService(
         {
             var url = BuildSearchUrl(city, countryHint, maxRows * 4);
             var response = await httpClient.GetFromJsonAsync<GeoNamesSearchResponse>(url, JsonOptions);
-            
+
             var best = response?.Geonames
                 .OrderBy(p => Array.IndexOf(PopulatedPlaceCodes, p.FeatureCode) is var idx && idx >= 0 ? idx : 99)
                 .ThenByDescending(p => p.Population)
                 .Take(maxRows);
-            
+
             return best;
         }
         catch (Exception ex)
@@ -44,7 +45,7 @@ public sealed class GeoNamesService(
             return null;
         }
     }
-    
+
     private string BuildSearchUrl(string city, string? countryHint, int maxRows)
     {
         var url =
@@ -54,7 +55,7 @@ public sealed class GeoNamesService(
             $"&maxRows={maxRows}" +
             "&style=MEDIUM" +
             $"&username={Uri.EscapeDataString(_options.Username)}";
-        
+
         if (!string.IsNullOrWhiteSpace(countryHint))
             url += $"&countryBias={Uri.EscapeDataString(countryHint)}";
 

@@ -12,24 +12,24 @@ public static partial class ModelRegistration
             .WithOne(e => e.Property)
             .HasForeignKey(e => e.PropertyId)
             .IsRequired();
-        
+
         modelBuilder.Entity<Property>()
             .HasMany(e => e.Pictures)
             .WithOne(e => e.Property)
             .HasForeignKey(e => e.PropertyId)
             .IsRequired();
-        
+
         modelBuilder.Entity<Property>()
             .HasMany(e => e.Reviews)
             .WithOne(e => e.Property)
             .HasForeignKey(e => e.PropertyId)
             .IsRequired();
-        
+
         modelBuilder.Entity<Property>()
             .HasMany(e => e.Tags)
             .WithMany(e => e.Properties)
             .UsingEntity(typeBuilder => typeBuilder.ToTable("PropertyTags"));
-        
+
         modelBuilder.Entity<Tag>()
             .HasIndex(t => t.Text)
             .IsUnique();

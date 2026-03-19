@@ -46,7 +46,8 @@ public class ControllerExceptionHandler(RequestDelegate next, ILogger<Controller
         {
             logger.LogError(ex, "An unhandled exception occurred while processing the request.");
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-            await context.Response.WriteAsJsonAsync(new { error = "An unexpected error occurred. Please try again later." });
+            await context.Response.WriteAsJsonAsync(new
+                { error = "An unexpected error occurred. Please try again later." });
         }
     }
 }

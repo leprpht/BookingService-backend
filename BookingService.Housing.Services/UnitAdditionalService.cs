@@ -8,8 +8,16 @@ using BookingServices.Housing.Data;
 namespace BookingService.Housing.Services;
 
 public class UnitAdditionalService(IUnitAdditionalServicesRepository repository, IMapper mapper)
-    : BaseService<UnitAdditionalServices, UnitAdditionalServicesCreationDto, UnitAdditionalServicesUpdateDto>(repository), IUnitAdditionalService
+    : BaseService<UnitAdditionalServices, UnitAdditionalServicesCreationDto, UnitAdditionalServicesUpdateDto>(
+        repository), IUnitAdditionalService
 {
-    protected override UnitAdditionalServices MapCreate(Guid id, UnitAdditionalServicesCreationDto dto) => dto.ToUnitAdditionalServices(mapper);
-    protected override UnitAdditionalServices MapUpdate(Guid id, UnitAdditionalServicesUpdateDto dto) => dto.ToUnitAdditionalServices(mapper);
+    protected override UnitAdditionalServices MapCreate(Guid id, UnitAdditionalServicesCreationDto dto)
+    {
+        return dto.ToUnitAdditionalServices(mapper);
+    }
+
+    protected override UnitAdditionalServices MapUpdate(Guid id, UnitAdditionalServicesUpdateDto dto)
+    {
+        return dto.ToUnitAdditionalServices(mapper);
+    }
 }

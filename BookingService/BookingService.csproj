@@ -8,40 +8,40 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="AutoMapper" Version="12.0.1" />
-        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
-        <PackageReference Include="HotChocolate.AspNetCore" Version="15.1.12" />
-        <PackageReference Include="HotChocolate.Data" Version="15.1.12" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.12" />
+        <PackageReference Include="AutoMapper" Version="12.0.1"/>
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1"/>
+        <PackageReference Include="HotChocolate.AspNetCore" Version="15.1.12"/>
+        <PackageReference Include="HotChocolate.Data" Version="15.1.12"/>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.12"/>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.12"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.12" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.12" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.12"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.12"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.12">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="8.15.0" />
-        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="9.0.6" />
-        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="9.0.6" />
-        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.15.0" />
+        <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="8.15.0"/>
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="9.0.6"/>
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="9.0.6"/>
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.15.0"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
+        <Content Include="..\.dockerignore">
+            <Link>.dockerignore</Link>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\BookingService.Auth\BookingService.Auth.csproj" />
-      <ProjectReference Include="..\BookingService.Booking.Controllers\BookingService.Booking.Controllers.csproj" />
-      <ProjectReference Include="..\BookingService.Housing\BookingService.Housing.csproj" />
-      <ProjectReference Include="..\BookingService.Location.Controllers\BookingService.Location.Controllers.csproj" />
-      <ProjectReference Include="..\BookingService.Notifications.Email\BookingService.Notifications.Email.csproj" />
-      <ProjectReference Include="..\BookingService.Notifications\BookingService.Notifications.csproj" />
-      <ProjectReference Include="..\BookingService.Profile.Controllers\BookingService.Profile.Controllers.csproj" />
-      <ProjectReference Include="..\BookingService.Profile\BookingService.Profile.csproj" />
-      <ProjectReference Include="..\BookingService.Search\BookingService.Search.csproj" />
+        <ProjectReference Include="..\BookingService.Auth\BookingService.Auth.csproj"/>
+        <ProjectReference Include="..\BookingService.Booking.Controllers\BookingService.Booking.Controllers.csproj"/>
+        <ProjectReference Include="..\BookingService.Housing\BookingService.Housing.csproj"/>
+        <ProjectReference Include="..\BookingService.Location.Controllers\BookingService.Location.Controllers.csproj"/>
+        <ProjectReference Include="..\BookingService.Notifications.Email\BookingService.Notifications.Email.csproj"/>
+        <ProjectReference Include="..\BookingService.Notifications\BookingService.Notifications.csproj"/>
+        <ProjectReference Include="..\BookingService.Profile.Controllers\BookingService.Profile.Controllers.csproj"/>
+        <ProjectReference Include="..\BookingService.Profile\BookingService.Profile.csproj"/>
+        <ProjectReference Include="..\BookingService.Search\BookingService.Search.csproj"/>
     </ItemGroup>
 
 </Project>

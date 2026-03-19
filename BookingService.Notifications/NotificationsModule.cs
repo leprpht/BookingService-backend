@@ -12,10 +12,10 @@ public static class NotificationsModule
     {
         services
             .RegisterEmailModule(configuration);
-        
+
         services
             .AddScoped<INotificationService, NotificationService>();
-        
+
         return services;
     }
 }

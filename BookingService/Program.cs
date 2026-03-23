@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 using BookingService.Auth;
 using BookingService.Database;
 using BookingService.Housing;
+using BookingService.Hubs;
 using BookingService.Location;
 using BookingService.Notifications;
 using BookingService.Notifications.Email;
@@ -22,7 +23,8 @@ builder.Services
     .RegisterProfileModule()
     .RegisterAuthModule(builder.Configuration)
     .RegisterGraphQlModule()
-    .RegisterNotificationsModule(builder.Configuration);
+    .RegisterNotificationsModule(builder.Configuration)
+    .RegisterSignalRModule();
 
 builder.Services
     .AddControllers()
@@ -59,6 +61,7 @@ app
 
 app.MapControllers();
 app.MapGraphQL();
+app.MapHub<BookingHub>("/hubs/booking");
 
 if (app.Environment.IsDevelopment())
 {

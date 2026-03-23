@@ -14,7 +14,7 @@ public static class DatabaseModule
                 {
                     sql.MigrationsAssembly("BookingService.Database");
                     sql.EnableRetryOnFailure(
-                        5,
+                        25,
                         TimeSpan.FromSeconds(10),
                         null);
                 }));

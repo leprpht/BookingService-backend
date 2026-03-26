@@ -24,11 +24,11 @@ public class UserAuthController(IAuthService service) : ControllerBase
         if (response == null)
             return BadRequest(new { message = "User already exists" });
 
+        SetAccessTokenCookie(response.AccessToken, response.AccessTokenExpiresAt);
         SetRefreshTokenCookie(response.RefreshToken);
 
         return Ok(new
         {
-            response.AccessToken,
             response.AccessTokenExpiresAt,
             response.RefreshTokenExpiresAt
         });
@@ -48,11 +48,11 @@ public class UserAuthController(IAuthService service) : ControllerBase
         if (response == null)
             return BadRequest(new { message = "Invalid email or password" });
 
+        SetAccessTokenCookie(response.AccessToken, response.AccessTokenExpiresAt);
         SetRefreshTokenCookie(response.RefreshToken);
 
         return Ok(new
         {
-            response.AccessToken,
             response.AccessTokenExpiresAt,
             response.RefreshTokenExpiresAt
         });
@@ -78,11 +78,11 @@ public class UserAuthController(IAuthService service) : ControllerBase
         if (response == null)
             return Unauthorized(new { message = "Invalid or expired refresh token" });
 
+        SetAccessTokenCookie(response.AccessToken, response.AccessTokenExpiresAt);
         SetRefreshTokenCookie(response.RefreshToken);
 
         return Ok(new
         {
-            response.AccessToken,
             response.AccessTokenExpiresAt,
             response.RefreshTokenExpiresAt
         });
@@ -105,8 +105,22 @@ public class UserAuthController(IAuthService service) : ControllerBase
         await service.RevokeTokenAsync(refreshToken, ipAddress);
 
         Response.Cookies.Delete("refreshToken");
+        Response.Cookies.Delete("accessToken");
 
-        return Ok(new { message = "Token revoked successfully" });
+        return Ok(new { message = "Tokens revoked successfully" });
+    }
+
+    private void SetAccessTokenCookie(string accessToken, DateTime expiresAt)
+    {
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.Strict,
+            Expires = expiresAt
+        };
+
+        Response.Cookies.Append("accessToken", accessToken, cookieOptions);
     }
 
     private void SetRefreshTokenCookie(string refreshToken)

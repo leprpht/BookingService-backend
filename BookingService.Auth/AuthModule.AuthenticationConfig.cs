@@ -27,6 +27,15 @@ public static partial class AuthModule
                     IssuerSigningKey = new SymmetricSecurityKey(
                         Encoding.UTF8.GetBytes(jwt["Key"]!))
                 };
+                
+                options.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        context.Token = context.Request.Cookies["accessToken"];
+                        return Task.CompletedTask;
+                    }
+                };
             });
 
         return services;

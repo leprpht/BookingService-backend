@@ -2,13 +2,16 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace BookingService.Profile.Controllers;
 
 [ApiController]
 [Route("api/User/auth")]
-public class UserAuthController(IAuthService service) : ControllerBase
+public class UserAuthController(
+    IAuthService service,
+    IHostEnvironment env) : ControllerBase
 {
     [HttpPost("register")]
     [SwaggerOperation(
@@ -112,27 +115,23 @@ public class UserAuthController(IAuthService service) : ControllerBase
 
     private void SetAccessTokenCookie(string accessToken, DateTime expiresAt)
     {
-        var cookieOptions = new CookieOptions
+        Response.Cookies.Append("accessToken", accessToken, new CookieOptions
         {
             HttpOnly = true,
-            Secure = true,
-            SameSite = SameSiteMode.Strict,
+            Secure = !env.IsDevelopment(),
+            SameSite = SameSiteMode.Lax,
             Expires = expiresAt
-        };
-
-        Response.Cookies.Append("accessToken", accessToken, cookieOptions);
+        });
     }
 
     private void SetRefreshTokenCookie(string refreshToken)
     {
-        var cookieOptions = new CookieOptions
+        Response.Cookies.Append("refreshToken", refreshToken, new CookieOptions
         {
             HttpOnly = true,
-            Secure = true,
-            SameSite = SameSiteMode.Strict,
+            Secure = !env.IsDevelopment(),
+            SameSite = SameSiteMode.Lax,
             Expires = DateTime.UtcNow.AddDays(7)
-        };
-
-        Response.Cookies.Append("refreshToken", refreshToken, cookieOptions);
+        });
     }
 }
